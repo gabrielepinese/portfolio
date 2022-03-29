@@ -334,14 +334,14 @@ h1, h2, h3, h4, h5, h6, figure {
   padding-top: 0;
 }
 .info li .first-block {
-  width: 40%;
+  width: 35%;
   display: inline-block;
   float: left;
   color: #000;
   font-weight: bold;
 }
 .info li .second-block {
-  width: 50%;
+  width: 65%;
   display: inline-block;
   overflow-wrap: break-word;
   color: rgba(0, 0, 0, 0.5);
