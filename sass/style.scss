@@ -356,6 +356,7 @@ h1, h2, h3, h4, h5, h6, figure {
 #fh5co-pricing,
 #fh5co-contact{
 	padding: 2em 0;
+	padding-bottom: 0px;
 	clear: both;
 	@media screen and (max-width: $screen-sm) {
 		padding: 3em 0;
@@ -986,6 +987,8 @@ h1, h2, h3, h4, h5, h6, figure {
 	padding: 50px 0;
 	float: left;
 	width: 100%;
+	color: #fff;
+	background: #2F3C4F;
 	p {
 		&:last-child {
 			margin-bottom: 0;
