@@ -51,8 +51,14 @@ a {
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
+  background-color: #fff;
 }
-a:hover, a:active, a:focus {
+
+a.active{
+  background-color: #0673ff;
+}
+
+a:hover, a:focus {
   color: #0673ff;
   outline: none;
   text-decoration: none;
@@ -800,6 +806,7 @@ h1, h2, h3, h4, h5, h6, figure {
 #fh5co-started .fh5co-heading p {
   color: rgba(255, 255, 255, 0.8);
 }
+
 #fh5co-started .btn {
   height: 54px;
   border: none !important;
@@ -1086,6 +1093,20 @@ input[type="text"] {
 .gototop a:hover, .gototop a:active, .gototop a:focus {
   text-decoration: none;
   outline: none;
+}
+
+.social-icon-external {
+  border-radius: 10px;
+  padding: 5px;
+  width: 30px;
+  height: 40px;
+  cursor: pointer;
+  font-family: CoolveticaRg;
+  font-size: 16px;
+  color: rgb(112, 112, 112);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn {
