@@ -46,22 +46,34 @@ body {
   content: "";
 }
 
-a {
-  color: #0673ff;
+a{
+  color: white;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
-  background-color: none;
 }
 
-a.active{
-  background-color: #0673ff;
+a:active{
+  background: #fff;
 }
 
+/*
 a:hover, a:focus {
-  color: #0673ff;
+  color: #fff;
   outline: none;
   text-decoration: none;
+}
+*/
+a.translate {
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+  padding: 0 15px;
+  font-weight: bold;
+}
+a.translate:active {
+  color: #000;
+  background: #000;
 }
 
 p {
@@ -88,6 +100,34 @@ h1, h2, h3, h4, h5, h6, figure {
 ::selection {
   color: #fff;
   background: #0673ff;
+}
+
+.lang {
+  margin: 0 auto;
+}
+
+.button_lang {
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.25em 0em;
+  border-radius: 10px;
+  width: 40px;
+  transition: 0.25s ease;
+  margin-right: 5px;
+  font-weight: bold;
+  color:white;
+}
+
+.button_lang:hover {
+  background: white;
+  color:#404040;
+  transition: 0.25s ease;
+}
+
+.current_lang {
+  background: white;
+  color: #404040;
 }
 
 #fh5co-header,
@@ -365,6 +405,7 @@ h1, h2, h3, h4, h5, h6, figure {
   display: inline-block;
   zoom: 1;
   *display: inline;
+  text-decoration: none;
 }
 .fh5co-social-icons li a {
   display: -moz-inline-stack;
@@ -374,9 +415,11 @@ h1, h2, h3, h4, h5, h6, figure {
   color: #fff;
   padding-left: 10px;
   padding-right: 10px;
+  text-decoration: none;
 }
 .fh5co-social-icons li a i {
   font-size: 20px;
+  text-decoration: none;
 }
 
 #fh5co-about .fh5co-social-icons {
@@ -806,7 +849,6 @@ h1, h2, h3, h4, h5, h6, figure {
 #fh5co-started .fh5co-heading p {
   color: rgba(255, 255, 255, 0.8);
 }
-
 #fh5co-started .btn {
   height: 54px;
   border: none !important;
@@ -1093,20 +1135,6 @@ input[type="text"] {
 .gototop a:hover, .gototop a:active, .gototop a:focus {
   text-decoration: none;
   outline: none;
-}
-
-.social-icon-external {
-  border-radius: 10px;
-  padding: 5px;
-  width: 30px;
-  height: 40px;
-  cursor: pointer;
-  font-family: CoolveticaRg;
-  font-size: 16px;
-  color: rgb(112, 112, 112);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .btn {
