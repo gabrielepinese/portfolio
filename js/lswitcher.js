@@ -54,8 +54,8 @@ function change(lang_on, lang_off1) {
   }
 
   if (lang_on.innerHTML == "EN") {
-    change_text.classList.add("english");
-    change_text.classList.remove("italian");
+    about.classList.add("english");
+    about.classList.remove("italian");
 
     about.innerHTML = "About Me";
     hi.innerHTML = "Hi!";
@@ -80,9 +80,9 @@ function change(lang_on, lang_off1) {
   }
   
   else if (lang_on.innerHTML == "IT") {
-    change_text.classList.add("italian");
+    about.classList.add("italian");
     // first line adds the corrent language class to the text
-    change_text.classList.remove("english");
+    about.classList.remove("english");
     // second and third line removes the other language classes
     // this allows you to apply CSS that is specific to each language
   
