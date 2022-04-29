@@ -2,25 +2,25 @@ var english = document.getElementById("en"),
   italian = document.getElementById("it"),
   
   //Testo in inglese
-  about = document.getElementById("about");
-  hi = document.getElementById("hi");
-  firstdesc = document.getElementById("firstdesc");
-  secdesc = document.getElementById("secdesc");
-  exp = document.getElementById("exp");
-  workexp = document.getElementById("workexp");
-  twow = document.getElementById("twow");
-  twoy = document.getElementById("twoy");
-  twodesc = document.getElementById("twodesc");
-  onew = document.getElementById("onew");
-  onedesc = document.getElementById("onedesc");
-  study = document.getElementById("study");
-  twostudy = document.getElementById("twostudy");
-  twostudyy = document.getElementById("twostudyy");
-  twostudydesc = document.getElementById("twostudydesc");
-  onestudy = document.getElementById("onestudy");
-  onestudyy = document.getElementById("onestudyy");
-  onestudydesc = document.getElementById("onestudydesc");
-  contactme = document.getElementById("contactme");
+  about = document.getElementById("about"),
+  hi = document.getElementById("hi"),
+  firstdesc = document.getElementById("firstdesc"),
+  secdesc = document.getElementById("secdesc"),
+  exp = document.getElementById("exp"),
+  workexp = document.getElementById("workexp"),
+  twow = document.getElementById("twow"),
+  twoy = document.getElementById("twoy"),
+  twodesc = document.getElementById("twodesc"),
+  onew = document.getElementById("onew"),
+  onedesc = document.getElementById("onedesc"),
+  study = document.getElementById("study"),
+  twostudy = document.getElementById("twostudy"),
+  twostudyy = document.getElementById("twostudyy"),
+  twostudydesc = document.getElementById("twostudydesc"),
+  onestudy = document.getElementById("onestudy"),
+  onestudyy = document.getElementById("onestudyy"),
+  onestudydesc = document.getElementById("onestudydesc"),
+  contactme = document.getElementById("contactme"),
   portfolio = document.getElementById("portfolio");
   
   //Testo in italiano
