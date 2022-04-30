@@ -22,8 +22,8 @@ body {
 #page {
   position: relative;
   overflow-x: hidden;
-  width: 100%;
-  height: 100%;
+  width: 100em;
+  height: 100em;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
@@ -102,10 +102,6 @@ h1, h2, h3, h4, h5, h6, figure {
   background: #0673ff;
 }
 
-.lang {
-  margin: 0 auto;
-}
-
 .button_lang {
   text-align: center;
   cursor: pointer;
@@ -137,7 +133,7 @@ h1, h2, h3, h4, h5, h6, figure {
   background-attachment: fixed;
   position: relative;
   height: auto;
-  width: 100%;
+  width: 100em;
 }
 #fh5co-header .overlay,
 .fh5co-cover .overlay {
@@ -150,7 +146,7 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 #fh5co-header .display-t,
 .fh5co-cover .display-t {
-  width: 100%;
+  width: 100em;
   display: table;
 }
 #fh5co-header .display-tc,
@@ -253,10 +249,10 @@ h1, h2, h3, h4, h5, h6, figure {
   width: 200px;
   margin: 0 auto;
   margin-bottom: 30px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  border-radius: 50%;
+  -webkit-border-radius: 50em;
+  -moz-border-radius: 50em;
+  -ms-border-radius: 50em;
+  border-radius: 50em;
 }
 #fh5co-header .display-tc .fh5co-social-icons li a,
 .fh5co-cover .display-tc .fh5co-social-icons li a {
@@ -293,10 +289,10 @@ h1, h2, h3, h4, h5, h6, figure {
   margin: 0 auto;
   background: #fff;
   margin-bottom: 20px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  border-radius: 50%;
+  -webkit-border-radius: 50em;
+  -moz-border-radius: 50em;
+  -ms-border-radius: 50em;
+  border-radius: 50em;
 }
 #fh5co-features .feature-left .icon i {
   font-size: 50px;
@@ -306,7 +302,7 @@ h1, h2, h3, h4, h5, h6, figure {
   color: #0673ff !important;
 }
 #fh5co-features .feature-left .feature-copy {
-  width: 100%;
+  width: 100em;
 }
 #fh5co-features .feature-left h3 {
   font-size: 24px;
@@ -362,7 +358,7 @@ h1, h2, h3, h4, h5, h6, figure {
 .info {
   margin: 0;
   padding: 0;
-  width: 90%;
+  width: 90em;
   float: left;
 }
 @media screen and (max-width: 768px) {
@@ -371,7 +367,7 @@ h1, h2, h3, h4, h5, h6, figure {
   }
 }
 .info li {
-  width: 100%;
+  width: 100em;
   float: left;
   list-style: none;
   padding: 10px 0;
@@ -380,14 +376,14 @@ h1, h2, h3, h4, h5, h6, figure {
   padding-top: 0;
 }
 .info li .first-block {
-  width: 35%;
+  width: 35em;
   display: inline-block;
   float: left;
   color: #000;
   font-weight: bold;
 }
 .info li .second-block {
-  width: 65%;
+  width: 65em;
   display: inline-block;
   overflow-wrap: break-word;
   color: rgba(0, 0, 0, 0.5);
@@ -494,7 +490,7 @@ h1, h2, h3, h4, h5, h6, figure {
   content: " ";
   width: 2px;
   background-color: #e6e6e6;
-  left: 50%;
+  left: 50em;
   margin-left: 0px;
 }
 @media screen and (max-width: 768px) {
@@ -548,7 +544,7 @@ h1, h2, h3, h4, h5, h6, figure {
   clear: both;
 }
 .timeline > li > .timeline-panel {
-  width: 45%;
+  width: 45em;
   float: left;
   margin-bottom: 0;
   position: relative;
@@ -559,12 +555,12 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 @media screen and (max-width: 768px) {
   .timeline > li > .timeline-panel {
-    width: 85% !important;
+    width: 85em !important;
   }
 }
 @media screen and (max-width: 480px) {
   .timeline > li > .timeline-panel {
-    width: 75% !important;
+    width: 75em !important;
   }
   .timeline > li > .timeline-panel:before {
     top: 30px;
@@ -582,15 +578,15 @@ h1, h2, h3, h4, h5, h6, figure {
   text-align: center;
   position: absolute;
   top: 40px;
-  left: 50%;
+  left: 50em;
   margin-left: -21px;
   background-color: #1e90ff;
   z-index: 100;
   display: table;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  border-radius: 50%;
+  -webkit-border-radius: 50em;
+  -moz-border-radius: 50em;
+  -ms-border-radius: 50em;
+  border-radius: 50em;
 }
 @media screen and (max-width: 768px) {
   .timeline > li > .timeline-badge {
@@ -659,9 +655,9 @@ h1, h2, h3, h4, h5, h6, figure {
   }
 
   ul.timeline > li > .timeline-panel {
-    width: calc(100% - 200px);
-    width: -moz-calc(100% - 200px);
-    width: -webkit-calc(100% - 200px);
+    width: calc(100em - 200px);
+    width: -moz-calc(100em - 200px);
+    width: -webkit-calc(100em - 200px);
   }
 
   ul.timeline > li > .timeline-badge {
@@ -689,7 +685,7 @@ h1, h2, h3, h4, h5, h6, figure {
   }
 }
 .progress-wrap {
-  width: 100%;
+  width: 100em;
   float: left;
   margin-bottom: 10px;
 }
@@ -698,7 +694,7 @@ h1, h2, h3, h4, h5, h6, figure {
   display: block;
   margin-bottom: 10px;
   float: left;
-  width: 100%;
+  width: 100em;
 }
 .progress-wrap h3 .name-left {
   float: left;
@@ -708,7 +704,7 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 .progress {
-  width: 100%;
+  width: 100em;
   float: left;
   height: 5px;
   box-shadow: none;
@@ -745,10 +741,10 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 .chart span {
   position: absolute;
-  top: 50%;
+  top: 50em;
   left: 0;
   margin-top: -30px;
-  width: 100%;
+  width: 100em;
 }
 .chart span strong {
   display: block;
@@ -765,7 +761,7 @@ h1, h2, h3, h4, h5, h6, figure {
   background-repeat: no-repeat;
   position: relative;
   height: 270px;
-  width: 100%;
+  width: 100em;
   display: table;
   overflow: hidden;
 }
@@ -837,7 +833,7 @@ h1, h2, h3, h4, h5, h6, figure {
   background-repeat: no-repeat;
   position: relative;
   float: left;
-  width: 100%;
+  width: 100em;
 }
 #fh5co-started .fh5co-heading {
   margin-bottom: 0;
@@ -862,18 +858,18 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 .fh5co-blog {
-  width: 100%;
+  width: 100em;
   float: left;
   margin-bottom: 40px;
 }
 @media screen and (max-width: 768px) {
   .fh5co-blog {
-    width: 100%;
+    width: 100em;
   }
 }
 .fh5co-blog .blog-bg {
   display: block;
-  width: 100%;
+  width: 100em;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -893,7 +889,7 @@ h1, h2, h3, h4, h5, h6, figure {
 .fh5co-blog .blog-text {
   margin-bottom: 30px;
   position: relative;
-  width: 100%;
+  width: 100em;
   padding: 30px;
   float: left;
   background: #fff;
@@ -966,7 +962,7 @@ h1, h2, h3, h4, h5, h6, figure {
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
   -moz-flex-wrap: wrap;
-  width: 100%;
+  width: 100em;
   float: left;
 }
 #fh5co-consult .video, #fh5co-consult .choose {
@@ -974,12 +970,12 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 @media screen and (max-width: 768px) {
   #fh5co-consult .video, #fh5co-consult .choose {
-    width: 100% !important;
+    width: 100em !important;
   }
 }
 #fh5co-consult .video {
   display: table;
-  width: 50%;
+  width: 50em;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -999,12 +995,12 @@ h1, h2, h3, h4, h5, h6, figure {
   }
 }
 #fh5co-consult .choose {
-  width: 50%;
+  width: 50em;
   padding: 4em;
 }
 @media screen and (max-width: 768px) {
   #fh5co-consult .choose {
-    width: 100%;
+    width: 100em;
     padding: 4em 1em;
   }
 }
@@ -1032,7 +1028,7 @@ h1, h2, h3, h4, h5, h6, figure {
 #fh5co-footer {
   padding: 25px 0;
   float: left;
-  width: 100%;
+  width: 100em;
   color: #fff;
 }
 #fh5co-footer p:last-child {
@@ -1090,7 +1086,7 @@ input[type="text"] {
 }
 
 #map {
-  width: 100%;
+  width: 100em;
   height: 500px;
   position: relative;
 }
@@ -1122,10 +1118,10 @@ input[type="text"] {
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   text-align: center;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  border-radius: 50%;
+  -webkit-border-radius: 50em;
+  -moz-border-radius: 50em;
+  -ms-border-radius: 50em;
+  border-radius: 50em;
 }
 .gototop a i {
   height: 50px;
@@ -1281,7 +1277,7 @@ input[type="text"] {
   opacity: 0;
   position: absolute;
   right: 0px;
-  top: 50%;
+  top: 50em;
   margin-top: -8px;
   -webkit-transition: 0.2s;
   -o-transition: 0.2s;
@@ -1333,8 +1329,8 @@ input[type="text"] {
   position: fixed;
   left: 0px;
   top: 0px;
-  width: 100%;
-  height: 100%;
+  width: 100em;
+  height: 100em;
   z-index: 9999;
   background: url(../images/loader.gif) center no-repeat #fff;
 }
