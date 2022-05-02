@@ -121,6 +121,13 @@ h1, h2, h3, h4, h5, h6, figure {
   transition: 0.25s ease;
 }
 
+#download{
+  color:white;
+}
+#download:hover{
+  color:#404040;
+}
+
 .current_lang {
   background: white;
   color: #404040;
