@@ -283,8 +283,7 @@ p{
 .class_header{
   overflow: hidden;
   position: relative;
-  padding-top: 65px;
-  padding-bottom: 100px;
+  padding: 10rem 1rem 10rem 1rem;
   z-index: 50;
   /* 152a8e
     5D3FD3*/
@@ -318,15 +317,6 @@ hr{
 /* ------------------------------ */
 /* ----------Home---------- */
 /* ------------------------------ */
-
-.section{
-  padding: 10% 12% 8% 15%;
-  flex-wrap: wrap;
-  background: transparent;
-  display: block;
-  width: 100%;
-  z-index: 50;
-}
 
 .blob {
   position: absolute;
