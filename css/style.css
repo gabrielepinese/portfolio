@@ -2,20 +2,6 @@
 /* ----------Utils---------- */
 /* ------------------------------ */
 
-/* Circle element */
-
-.circle-el{
-  background-size: cover !important;
-  background-repeat: no-repeat;
-  position: relative;
-  margin: 0 auto;
-  margin-bottom: 30px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  border-radius: 50%;
-}
-
 .center-el{
   /* margin: 0 auto; */
   display: flex;
@@ -79,40 +65,19 @@
     margin-top: -1.8em;
     margin-left: -1.8em;
     background-size: cover;
-    background-position-x: center;
     background-image: url(../images/profilepic.webp);
 }
 
 /* Circle of font awesome icon */
 
-.fa-stack .fa.fa-circle {
+.fa-stack .fa-circle {
   background: -webkit-linear-gradient(left top, #152a8e, #5D3FD3);
   background: -moz-linear-gradient(bottom right, #152a8e, #5D3FD3);
+  background: -ms-linear-gradient(bottom right, #152a8e, #5D3FD3);
   background: -o-linear-gradient(bottom right, #152a8e, #5D3FD3);
   background: linear-gradient(to bottom right, #152a8e, #5D3FD3);
   -webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-}
-
-/* Underline cool */
-
-@property --offset {
-  syntax: '<length>';
-  inherits: false;
-  initial-value: 0;
-}
-
-.underline-cool{
-  color: inherit;
-  text-underline-offset: var(--offset, 0.4em);
-  text-decoration: underline 0.13em;
-  transition: --offset 400ms, text-decoration-color 400ms;
-}
-
-.underline-cool:hover,
-.underline-cool:focus {
-  --offset: 0.4em;
-  text-decoration-color: #00afff;
 }
 
 /* ------------------------------ */
@@ -126,7 +91,7 @@ html, body{
     color: white;
 }
 
-#btn-back-to-top {
+.btn-back-to-top {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -134,7 +99,7 @@ html, body{
   z-index: 100;
 }
 
-.btn.btn-fab {
+.btn-fab {
     width: 56px;
     min-width: 56px;
     height: 56px;
@@ -142,7 +107,7 @@ html, body{
     border-radius: 50%;
 }
 
-.btn.btn-raised {
+.btn-raised {
     box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
 }
 
@@ -195,7 +160,7 @@ p{
 /* ------------------------------ */
 
 .navbar-custom {
-  background-color: #12257F!important;
+  background-color: #12257F;
   min-height: 65px;
   margin: 0 auto;
 }
@@ -207,7 +172,7 @@ p{
     margin-right: 1rem;
 }
 
-.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .active .nav-link,
 .navbar-custom .nav-item:hover .nav-link{
     color: #ffffff;
     margin-right: 1rem;
@@ -219,7 +184,7 @@ p{
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
-.custom-toggler.navbar-toggler {
+.custom-toggler .navbar-toggler {
   border-color: white;
 }
 
@@ -252,7 +217,7 @@ p{
   right: 0;
   margin: auto;
   background-color: #fff;
-  width: 0%;
+  width: 0;
   content: "";
   height: 2px;
   transition: all 0.5s;
@@ -268,10 +233,10 @@ p{
   }
 }
 
-.navbar.center .navbar-inner {
+.center .navbar-inner {
     text-align: center;
 }
-.navbar.center .navbar-inner .nav {
+.center .navbar-inner .nav {
     float: none;
     display:inline-block;
     vertical-align: middle;
@@ -343,7 +308,7 @@ hr{
   background: -moz-linear-gradient(bottom right, #FFF90D, #f3ae4b);
   background: linear-gradient(to bottom right, #FFF90D, #f3ae4b);
   top: 80%;
-  right: 0%;
+  right: 0;
   animation: blob 10s ease-in-out infinite, float 2000s ease-in-out infinite;
 }
 
@@ -354,7 +319,7 @@ hr{
   background: -o-linear-gradient(bottom right, #FFF90D, #f3ae4b);
   background: -moz-linear-gradient(bottom right, #FFF90D, #f3ae4b);
   background: linear-gradient(to bottom right, #FFF90D, #f3ae4b);
-  top: 0%;
+  top: 0;
   right: 90%;
   animation: blob 10s ease-in-out infinite;
 }
@@ -522,7 +487,7 @@ hr{
   width: 2px;
   background-color: #C0C0C0;
   left: 50%;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 .timeline .timeline-heading > div h3 {
