@@ -25,8 +25,8 @@
   border-right: 1px solid #C0C0C0;
 }
 
-@media only screen and (max-width: 767px) {
-  /* For mobile phones: */
+@media only screen and (max-width: 991px) {
+  /* For mobile and tablet phones: */
   .borderD{
     border-right: none;
   }
@@ -159,6 +159,10 @@ p{
 /* ----------Navbar---------- */
 /* ------------------------------ */
 
+.navbar{
+  justify-content: end;
+}
+
 .navbar-custom {
   background-color: #12257F;
   min-height: 65px;
@@ -200,7 +204,7 @@ p{
 
 /* Underline item navbar */
 
-.navbar .navbar-nav .nav-link {
+/* .navbar .navbar-nav .nav-link {
   color: #fff;
   font-size: 1.1em;
 }
@@ -240,7 +244,7 @@ p{
     float: none;
     display:inline-block;
     vertical-align: middle;
-}
+} */
 /* ------------------------------ */
 /* ----------Body---------- */
 /* ------------------------------ */
