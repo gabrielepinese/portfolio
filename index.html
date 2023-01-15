@@ -18,7 +18,8 @@
 
 	<!-- Bootstrap  -->
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 	<!-- Theme style  -->
 
@@ -43,7 +44,7 @@
 
 <!-- NAVBAR -->
 
-	 <nav class="navbar navbar-expand-lg navbar-custom center">
+	 <nav class="d-none navbar navbar-expand-lg navbar-custom center">
 
 		<button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
@@ -69,6 +70,45 @@
 	    </ul>
 	  </div>
 	</nav>
+
+	<nav class="navbar navbar-expand-lg navbar-custom center navbar navbar-dark red lighten-1">
+
+  <!-- Navbar brand -->
+  <a class="navbar-brand ms-3" href="#">Gabriele Pinese</a>
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler second-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent23"
+    aria-controls="navbarSupportedContent23" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="animated-icon2"><span></span><span></span><span></span><span></span></div>
+  </button>
+
+  <!-- Collapsible content -->
+  <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent23">
+
+    <!-- Links -->
+    <ul class="navbar-nav ms-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="#AboutMe">About Me</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#Experience">Experience</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#Skills">Skills</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#Contacts">Contacts</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link download" href="cv/CV_Gabriele_Pinese.pdf" download="CV_Gabriele_Pinese.pdf">Curriculum  <i class="fa-solid fa-arrow-down fa-bounce downloadIcon"></i></a>
+			</li>
+    </ul>
+    <!-- Links -->
+
+  </div>
+  <!-- Collapsible content -->
+
+</nav>
 
 <!-- END NAVBAR -->
 
@@ -392,6 +432,14 @@
 	<!-- Main JS-->
 
 	<script src="js/top.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('.second-button').on('click', function () {
+
+				$('.animated-icon2').toggleClass('open');
+			});
+		});
+	</script>
 
 </body>
 </html>
