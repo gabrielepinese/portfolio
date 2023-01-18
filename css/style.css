@@ -68,6 +68,16 @@
     background-image: url(../images/profilepic.webp);
 }
 
+.img-homePage{
+  width: 270px;
+  height: 270px;
+  z-index: 99;
+}
+
+.descHome{
+  color: #707070;
+}
+
 /* Circle of font awesome icon */
 
 .fa-stack .fa-circle {
@@ -252,7 +262,7 @@ p{
 }
 
 .navbar-custom {
-  background-color: #12257F;
+  background-color: white;
 }
 
 
@@ -310,123 +320,66 @@ hr{
 /* ----------Home---------- */
 /* ------------------------------ */
 
-.blob {
+.overlayBlob{
   position: absolute;
-  z-index: 0;
-}
-
-.blob-1 {
-  height: 13rem;
-  width: 13rem;
-  background: -webkit-linear-gradient(left top, #FF8112, #FF3131);
-  background: -o-linear-gradient(bottom right, #FF8112, #FF3131);
-  background: -moz-linear-gradient(bottom right, #FF8112, #FF3131);
-  background: linear-gradient(to bottom right, #FF8112, #FF3131);
-  top: 80%;
-  right: 80%;
-  animation: blob 10s ease-in-out infinite;
-}
-
-.blob-2 {
-  height: 10rem;
-  width: 10rem;
-  background: -webkit-linear-gradient(left top, #FFF90D, #f3ae4b);
-  background: -o-linear-gradient(bottom right, #FFF90D, #f3ae4b);
-  background: -moz-linear-gradient(bottom right, #FFF90D, #f3ae4b);
-  background: linear-gradient(to bottom right, #FFF90D, #f3ae4b);
-  top: 80%;
+  height: 100%;
+  width: 100%;
+  top:0;
+  bottom: 0;
   right: 0;
-  animation: blob 10s ease-in-out infinite, float 2000s ease-in-out infinite;
+  left: 0;
 }
 
-.blob-3 {
-  height: 20rem;
-  width: 20rem;
-  background: -webkit-linear-gradient(left top, #FFF90D, #f3ae4b);
-  background: -o-linear-gradient(bottom right, #FFF90D, #f3ae4b);
-  background: -moz-linear-gradient(bottom right, #FFF90D, #f3ae4b);
-  background: linear-gradient(to bottom right, #FFF90D, #f3ae4b);
-  top: 0;
-  right: 90%;
-  animation: blob 10s ease-in-out infinite;
+.gradientName{
+  /* font-size: 72px; */
+  background: -webkit-linear-gradient(#5C7CFF, #B8C6FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.blob-4 {
-  height: 6rem;
-  width: 6rem;
-  background: -webkit-linear-gradient(left top, #FFF90D, #f3ae4b);
-  background: -o-linear-gradient(bottom right, #FFF90D, #f3ae4b);
-  background: -moz-linear-gradient(bottom right, #FFF90D, #f3ae4b);
-  background: linear-gradient(to bottom right, #FFF90D, #f3ae4b);
-  top: 55%;
-  right: 15%;
-  animation: blob 10s ease-in-out infinite;
+.waves {
+  position:relative;
+  width: 100%;
+  height:15vh;
+  margin-bottom:-7px; /*Fix for safari gap*/
+  min-height:100px;
+  max-height:150px;
 }
 
-.blob-5 {
-  height: 6rem;
-  width: 6rem;
-  background: -webkit-linear-gradient(left top, #0F1AFF, #D928FE);
-  background: -o-linear-gradient(bottom right, #0F1AFF, #D928FE);
-  background: -moz-linear-gradient(bottom right, #0F1AFF, #D928FE);
-  background: linear-gradient(to bottom right, #0F1AFF, #D928FE);
-  top: 35%;
-  right: 68%;
-  animation: blob 10s ease-in-out infinite, float 2000s ease-in-out infinite;
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
 }
-
-.blob-6 {
-  height: 24rem;
-  width: 24rem;
-  background: -webkit-linear-gradient(left top, #FF8112, #FF3131);
-  background: -o-linear-gradient(bottom right, #FF8112, #FF3131);
-  background: -moz-linear-gradient(bottom right, #FF8112, #FF3131);
-  background: linear-gradient(to bottom right, #FF8112, #FF3131);
-  top: -10%;
-  left: 80%;
-  animation: blob 10s ease-in-out infinite;
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
 }
-
-.blob-7 {
-  height: 1rem;
-  width: 1rem;
-  background: -webkit-linear-gradient(left top, #0F1AFF, #D928FE);
-  background: -o-linear-gradient(bottom right, #0F1AFF, #D928FE);
-  background: -moz-linear-gradient(bottom right, #0F1AFF, #D928FE);
-  background: linear-gradient(to bottom right, #0F1AFF, #D928FE);
-  top: 80%;
-  right: 45%;
-  animation: blob 10s ease-in-out infinite, float 120s ease-in-out infinite;
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
 }
-
-@keyframes blob {
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
   0% {
-    border-radius: 65% 60% 35% 50% / 65% 38% 75% 36%;
-  }
-  25% {
-    border-radius: 89% 54% 62% 42% / 83% 45% 75% 63%;
-  }
-  50% {
-    border-radius: 65% 60% 35% 50% / 65% 38% 75% 36%;   }
-    25% {
-    border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%;
-  }
-  50% {
-    border-radius: 61% 39% 67% 33% / 70% 50% 50% 30%;   }
-  75% {
-    border-radius: 89% 54% 62% 42% / 83% 45% 75% 63%;
+   transform: translate3d(-90px,0,0);
   }
   100% {
-    border-radius: 65% 60% 35% 50% / 65% 38% 75% 36%;   }
+    transform: translate3d(85px,0,0);
+  }
 }
-
-@keyframes float {
- 0% {  transform: rotate(0deg) translateX(0%) translateY(0%); }
- 25% {  transform: rotate(10deg) translateX(35%) translateY(-100%);}
- 50% {  transform: rotate(0deg) translateX(-35%) translateY(100%);}
- 100% {  transform: rotate(0deg) translateX(0%) translateY(0%); }
+/*Shrinking for mobile*/
+@media (max-width: 768px) {
+  .waves {
+    height:40px;
+    min-height:40px;
+  }
 }
-
 /* ------------------------------ */
 /* ----------About Me---------- */
 /* ------------------------------ */
