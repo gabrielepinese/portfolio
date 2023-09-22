@@ -1,9 +1,23 @@
+@import "src/assets/color/colors.variables.scss";
+@import "src/assets/styles/responsive.mixin.scss";
+
+//Main container
 .sidenav-container {
-  height: 100%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
 }
 
+//Sidenav content
+.sidenav-content {
+  height: 64px;
+  background: $blank;
+}
+
+//Sidenav
 .sidenav {
-  width: 200px;
+  width: 100%;
 }
 
 .sidenav .mat-toolbar {

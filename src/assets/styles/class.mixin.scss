@@ -1,0 +1,27 @@
+@import "./responsive.mixin.scss";
+
+@mixin apply-style-to-container($class) {
+  .#{$class}-container {
+    padding-top: 64px;
+    background: white;
+  }
+}
+
+@mixin apply-style-to-content($class) {
+  .#{$class}-content {
+    color: black;
+
+    @include screen-down("xl") {
+      max-width: 1160px;
+      margin: auto;
+    }
+
+    @include screen-up("xl") {
+      margin: 0 140px;
+    }
+
+    @include screen-up("lg") {
+      margin: 0 21px;
+    }
+  }
+}

@@ -38,14 +38,25 @@ $portfolio-theme: mat.define-light-theme(
 
 @import "./assets/fonts/typography.mixin.scss";
 @import "./assets/styles/responsive.mixin.scss";
+@import "./assets/styles/class.mixin.scss";
 
 //------------------ GLOBAL STYLE --------------------
-
 html,
 body {
   height: 100%;
   margin: 0;
   font-family: "Open Sans", sans-serif !important;
+}
+
+//Class list
+$lista-classi: "hero";
+
+@each $classe in $lista-classi {
+  @include apply-style-to-content($classe);
+}
+
+@each $classe in $lista-classi {
+  @include apply-style-to-container($classe);
 }
 
 /* ------------------------- FONTS ------------------------ */
