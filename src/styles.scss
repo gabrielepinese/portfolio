@@ -118,3 +118,29 @@ $lista-classi: "hero";
 .bold {
   @include bold;
 }
+
+//----- Cool Text
+
+.cool-text {
+  background: rgb(24, 175, 231);
+  background: -moz-linear-gradient(
+    332deg,
+    rgba(24, 175, 231, 1) 0%,
+    rgba(67, 82, 186, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    332deg,
+    rgba(24, 175, 231, 1) 0%,
+    rgba(67, 82, 186, 1) 100%
+  );
+  background: linear-gradient(
+    332deg,
+    rgba(24, 175, 231, 1) 0%,
+    rgba(67, 82, 186, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#18afe7",endColorstr="#4352ba",GradientType=1);
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
