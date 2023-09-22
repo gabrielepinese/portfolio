@@ -3,6 +3,21 @@
 .hero-content {
   height: 100%;
 
+  opacity: 0; // Imposta l'opacità iniziale a 0
+  animation: fade-in 1s ease forwards; // Applica l'animazione
+  transform: translateY(20px);
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0; // Al punto di inizio, l'opacità è 0
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1; // Dopo 1 secondo (durata dell'animazione), l'opacità è al 100%
+      transform: translateY(0);
+    }
+  }
+
   .row {
     margin-top: 10%;
     height: inherit;
@@ -23,6 +38,7 @@
   }
 
   .img-container {
+    border-radius: 8px;
     background: rgb(24, 175, 231);
     background: -moz-linear-gradient(
       332deg,
@@ -47,6 +63,7 @@
     align-items: center;
 
     img {
+      border-radius: 8px;
       margin-bottom: -30px;
       margin-right: -30px;
       height: 400px;
