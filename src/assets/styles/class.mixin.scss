@@ -2,7 +2,6 @@
 
 @mixin apply-style-to-container($class) {
   .#{$class}-container {
-    padding-top: 64px;
     background: white;
   }
 }

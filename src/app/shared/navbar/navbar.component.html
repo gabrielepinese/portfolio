@@ -23,16 +23,29 @@
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
     <mat-toolbar class="nav-main">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async"
-      >
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>portfolio</span>
+      <!-- Logo website -->
+      <div class="logo"><span>portfolio</span></div>
+
+      <!-- Eye container -->
+      <div class="eye-container">
+        <div class="eye"></div>
+      </div>
+
+      <!-- Links container -->
+      <div class="links-container">
+        <button>Prova</button>
+        <button>Prova2</button>
+        <button>Prova3</button>
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async"
+        >
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      </div>
     </mat-toolbar>
     <!-- Add Content Here -->
   </mat-sidenav-content>
