@@ -21,14 +21,17 @@
       <a mat-list-item href="#">Link 3</a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content class="sidenav-content">
+  <mat-sidenav-content
+    class="sidenav-content"
+    [ngClass]="{ 'scrolling-effect': isScrolling }"
+  >
     <mat-toolbar class="nav-main">
       <!-- Logo website -->
       <div class="logo"><span>portfolio</span></div>
 
       <!-- Eye container -->
       <div class="eye-container">
-        <div class="eye"></div>
+        <div id="eye" class="eye" [style]="styleEye"></div>
       </div>
 
       <!-- Links container -->

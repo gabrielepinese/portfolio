@@ -2,7 +2,7 @@
 
 //----------- COUNTER
 
-@mixin counter {
+@mixin bigTitle {
   font-size: 90px;
   font-weight: 700;
   font-family: "Open Sans", sans-serif;
@@ -12,13 +12,13 @@
   }
 }
 
-@mixin subCounter {
+@mixin bigTitle2 {
   font-size: 60px;
   font-weight: 700;
   font-family: "Open Sans", sans-serif;
 
   @include screen-up("lg") {
-    font-size: 24px;
+    font-size: 50px;
   }
 }
 

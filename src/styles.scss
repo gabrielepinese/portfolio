@@ -78,11 +78,11 @@ $lista-classi: "hero", "about-me";
 
 /* ------------------------- FONTS ------------------------ */
 
-.counter {
-  @include counter;
+.bigTitle {
+  @include bigTitle;
 }
-.subCounter {
-  @include subCounter;
+.bigTitle2 {
+  @include bigTitle2;
 }
 .italicCounter {
   @include italicCounter;

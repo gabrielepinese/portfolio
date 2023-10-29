@@ -1,4 +1,10 @@
-import { Component, ElementRef, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  inject,
+} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -9,6 +15,9 @@ import { map, shareReplay } from 'rxjs/operators';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
+  @Input()
+  styleEye: any;
+
   private breakpointObserver = inject(BreakpointObserver);
 
   events: string[] = [];
@@ -32,4 +41,16 @@ export class NavbarComponent {
       map((result) => result.matches),
       shareReplay()
     );
+
+  isScrolling: boolean = false;
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event) {
+    // Verifica se la pagina è stata scrollata
+    if (window.scrollY > 0) {
+      this.isScrolling = true;
+    } else {
+      this.isScrolling = false;
+    }
+  }
 }

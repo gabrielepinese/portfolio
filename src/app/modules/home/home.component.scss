@@ -2,20 +2,18 @@
 
 .hero-container {
   height: 100vh;
-  padding-top: 64px;
   background-color: transparent;
-  // background-image: url("../../../assets/images/bg-home.svg");
-  // background-position: center;
-  // background-repeat: no-repeat;
-  // background-size: cover;
 }
 
 .hero-content {
   height: 100%;
-
   opacity: 0; // Imposta l'opacità iniziale a 0
   animation: fade-in 1s ease forwards; // Applica l'animazione
   transform: translateY(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 
   @keyframes fade-in {
     0% {
@@ -25,57 +23,6 @@
     100% {
       opacity: 1; // Dopo 1 secondo (durata dell'animazione), l'opacità è al 100%
       transform: translateY(0);
-    }
-  }
-
-  .row {
-    height: inherit;
-    align-items: center;
-
-    div:has(div.img-container) {
-      display: flex;
-      justify-content: start;
-      align-items: center;
-    }
-  }
-
-  .text-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 24%;
-  }
-
-  .img-container {
-    border-radius: 8px;
-    background: rgb(24, 175, 231);
-    background: -moz-linear-gradient(
-      332deg,
-      rgba(24, 175, 231, 1) 0%,
-      rgba(67, 82, 186, 1) 100%
-    );
-    background: -webkit-linear-gradient(
-      332deg,
-      rgba(24, 175, 231, 1) 0%,
-      rgba(67, 82, 186, 1) 100%
-    );
-    background: linear-gradient(
-      332deg,
-      rgba(24, 175, 231, 1) 0%,
-      rgba(67, 82, 186, 1) 100%
-    );
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#18afe7",endColorstr="#4352ba",GradientType=1);
-    width: 300px;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img {
-      border-radius: 8px;
-      margin-bottom: -30px;
-      margin-right: -30px;
-      height: 400px;
     }
   }
 }
