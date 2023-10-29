@@ -1,0 +1,37 @@
+@import "../../../assets/styles/responsive.mixin.scss";
+@import "../../../assets/color/colors.variables.scss";
+
+.about-container {
+  height: 100vh;
+  background-color: transparent;
+}
+
+.about-content {
+  height: 100%;
+  opacity: 0; // Imposta l'opacità iniziale a 0
+  animation: fade-in 1s ease forwards; // Applica l'animazione
+  transform: translateY(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0; // Al punto di inizio, l'opacità è 0
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1; // Dopo 1 secondo (durata dell'animazione), l'opacità è al 100%
+      transform: translateY(0);
+    }
+  }
+}
+
+.bigTitle2 {
+  color: $hero;
+}
+
+.body16 {
+  color: $heroDesc;
+}

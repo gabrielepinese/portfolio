@@ -39,10 +39,26 @@
 
       <!-- Links container -->
       <div class="links-container" *ngIf="(isHandset$ | async) === false">
-        <button class="nav-btn body18">Work</button>
-        <button class="nav-btn body18">About me</button>
-        <button class="nav-btn body18">Contact</button>
-        <button class="nav-btn body18">Download CV</button>
+        <button
+          class="nav-btn body18"
+          type="button"
+          (click)="navigate('/')"
+          [ngClass]="{ active: currentRouteValue === '/' }"
+        >
+          Work
+        </button>
+        <button
+          class="nav-btn body18"
+          type="button"
+          (click)="navigate('/about')"
+          [ngClass]="{ active: currentRouteValue === '/about' }"
+        >
+          About me
+        </button>
+        <button class="nav-btn body18" type="button" (click)="navigate('/')">
+          Contact
+        </button>
+        <button class="nav-btn body18" type="button">Download CV</button>
       </div>
 
       <!-- Open Sidenav -->

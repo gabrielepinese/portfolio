@@ -6,6 +6,13 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./modules/home/home.module').then((m) => m.HomeModule),
+    data: { routeName: 'Home' },
+  },
+  {
+    path: 'about',
+    loadChildren: () =>
+      import('./modules/about/about.module').then((m) => m.AboutModule),
+    data: { routeName: 'About' },
   },
 ];
 

@@ -106,3 +106,10 @@
 svg {
   fill: $hero;
 }
+
+//Active route
+.active {
+  &::before {
+    width: 100%;
+  }
+}
