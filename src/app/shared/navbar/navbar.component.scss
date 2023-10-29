@@ -13,7 +13,7 @@
 //Sidenav content
 .sidenav-content {
   height: 64px;
-  border-radius: 48px;
+  border-radius: 8px;
   background: inherit;
   transition: all 0.2s ease;
   margin: 8px;
@@ -43,37 +43,61 @@
   z-index: 1;
 }
 
+//Toolbar Desktop view
 .nav-main {
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   background: inherit;
+
+  @include screen-up("lg") {
+    padding: 0 16px;
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.container {
-  width: 100%;
-}
-
+// EYE Cntainer
 .eye-container {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .eye {
+    position: relative;
+    display: inline-block;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background: white;
+  }
+  .eye:after {
+    /*pupil*/
+    position: absolute;
+    bottom: 17px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    background: #000;
+    border-radius: 50%;
+    content: " ";
+  }
 }
-.eye {
-  position: relative;
-  display: inline-block;
-  border-radius: 50%;
-  height: 30px;
-  width: 30px;
-  background: white;
+
+.links-container {
+  text-align: right;
+
+  .nav-btn {
+    margin-right: 8px;
+  }
+  .nav-btn:last-child {
+    margin-right: 8px;
+  }
 }
-.eye:after {
-  /*pupil*/
-  position: absolute;
-  bottom: 17px;
-  right: 10px;
-  width: 10px;
-  height: 10px;
-  background: #000;
-  border-radius: 50%;
-  content: " ";
+
+.open-sidenav-container {
+  text-align: right;
+}
+
+svg {
+  fill: $hero;
 }

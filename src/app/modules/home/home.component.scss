@@ -1,4 +1,5 @@
 @import "../../../assets/styles/responsive.mixin.scss";
+@import "../../../assets/color/colors.variables.scss";
 
 .hero-container {
   height: 100vh;
@@ -25,4 +26,12 @@
       transform: translateY(0);
     }
   }
+}
+
+.bigTitle2 {
+  color: $hero;
+}
+
+.body16 {
+  color: $heroDesc;
 }

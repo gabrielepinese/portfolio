@@ -30,23 +30,39 @@
       <div class="logo"><span>portfolio</span></div>
 
       <!-- Eye container -->
-      <div class="eye-container">
+      <div
+        class="eye-container"
+        *ngIf="(isHandset$ | async) === false && (isTablet$ | async) === false"
+      >
         <div id="eye" class="eye" [style]="styleEye"></div>
       </div>
 
       <!-- Links container -->
-      <div class="links-container">
-        <button>Prova</button>
-        <button>Prova2</button>
-        <button>Prova3</button>
+      <div class="links-container" *ngIf="(isHandset$ | async) === false">
+        <button class="nav-btn body18">Work</button>
+        <button class="nav-btn body18">About me</button>
+        <button class="nav-btn body18">Contact</button>
+        <button class="nav-btn body18">Download CV</button>
+      </div>
+
+      <!-- Open Sidenav -->
+      <div class="open-sidenav-container" *ngIf="isHandset$ | async">
         <button
           type="button"
+          class="img-btn"
           aria-label="Toggle sidenav"
-          mat-icon-button
           (click)="drawer.toggle()"
-          *ngIf="isHandset$ | async"
         >
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="1em"
+            viewBox="0 0 448 512"
+          >
+            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <path
+              d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
+            />
+          </svg>
         </button>
       </div>
     </mat-toolbar>

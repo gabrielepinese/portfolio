@@ -34,18 +34,18 @@ $portfolio-theme: mat.define-light-theme(
 // that you are using.
 @include mat.all-component-themes($portfolio-theme);
 
-//Imports
+//------------------ IMPORTS --------------------
 
 @import "./assets/fonts/typography.mixin.scss";
 @import "./assets/styles/responsive.mixin.scss";
 @import "./assets/styles/class.mixin.scss";
+@import "./assets/styles/buttons.mixin.scss";
 
 //------------------ GLOBAL STYLE --------------------
 html,
 body {
   height: 100%;
   margin: 0;
-  font-family: "Open Sans", sans-serif !important;
   background: rgb(139, 44, 64);
   background: -moz-linear-gradient(
     324deg,
@@ -134,6 +134,16 @@ $lista-classi: "hero", "about-me";
 }
 .bold {
   @include bold;
+}
+
+/* ------------------------- BUTTONS ------------------------ */
+
+.nav-btn {
+  @include nav-btn;
+}
+
+.img-btn {
+  @include img-btn;
 }
 
 //----- Cool Text

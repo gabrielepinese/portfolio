@@ -5,7 +5,6 @@
 @mixin bigTitle {
   font-size: 90px;
   font-weight: 700;
-  font-family: "Open Sans", sans-serif;
 
   @include screen-up("lg") {
     font-size: 24px;
@@ -14,9 +13,7 @@
 
 @mixin bigTitle2 {
   font-size: 60px;
-  font-weight: 700;
-  font-family: "Open Sans", sans-serif;
-
+  font-family: "Lilita One", sans-serif;
   @include screen-up("lg") {
     font-size: 50px;
   }
@@ -25,7 +22,6 @@
 @mixin italicCounter {
   font-size: 50px;
   font-weight: 400;
-  font-family: "Open Sans", sans-serif;
 
   @include screen-up("lg") {
     font-size: 24px;
@@ -37,7 +33,7 @@
 @mixin heading1 {
   font-size: 56px;
   font-weight: 700;
-  font-family: "Open Sans", sans-serif;
+
   margin-bottom: 32px;
   line-height: 79px;
   @include screen-up("lg") {
@@ -49,7 +45,6 @@
   font-size: 48px;
   font-weight: 700;
   margin-bottom: 16px;
-  font-family: "Open Sans", sans-serif;
 
   @include screen-up("lg") {
     font-size: 32px;
@@ -59,7 +54,6 @@
 @mixin heading3 {
   font-size: 40px;
   font-weight: 600;
-  font-family: "Open Sans", sans-serif;
 
   @include screen-up("lg") {
     font-size: 32px;
@@ -74,7 +68,6 @@
   line-height: 1.25;
   margin-bottom: 16px;
   letter-spacing: normal;
-  font-family: "Open Sans", sans-serif;
 
   @include screen-up("lg") {
     font-size: 24px;
@@ -85,7 +78,6 @@
   font-size: 24px;
   font-weight: 400;
   margin-bottom: 16px;
-  font-family: "Open Sans", sans-serif;
 
   @include screen-up("lg") {
     font-size: 18px;
@@ -95,8 +87,6 @@
 @mixin body20 {
   font-size: 20px;
   font-weight: 400;
-  font-family: "Open Sans", sans-serif;
-
   @include screen-up("lg") {
     font-size: 16px;
   }
@@ -104,23 +94,19 @@
 
 @mixin body18 {
   font-size: 18px;
-  font-weight: 400;
-  line-height: 1.56;
-  margin-bottom: 32px;
+  font-family: "Lilita One", sans-serif;
   letter-spacing: normal;
-  font-family: "Open Sans", sans-serif;
 }
 
 @mixin body16 {
   font-size: 16px;
   font-weight: 400;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Lilita One", sans-serif;
 }
 
 @mixin body14 {
   font-size: 14px;
   font-weight: 400;
-  font-family: "Open Sans", sans-serif;
 }
 
 //----------- CTA
@@ -128,7 +114,6 @@
 @mixin cta {
   font-size: 18px;
   font-weight: 700;
-  font-family: "Open Sans", sans-serif;
 }
 
 //----------- CAPTION
@@ -137,7 +122,6 @@
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 14px;
-  font-family: "Open Sans", sans-serif;
 }
 
 //----------- BREADCRUMBS
@@ -145,13 +129,11 @@
 @mixin breadcrumbsBold {
   font-size: 12px;
   font-weight: 700;
-  font-family: "Open Sans", sans-serif;
 }
 
 @mixin breadcrumbs {
   font-size: 12px;
   font-weight: 400;
-  font-family: "Open Sans", sans-serif;
 }
 
 //----------- BOLD/SEMIBOLD
