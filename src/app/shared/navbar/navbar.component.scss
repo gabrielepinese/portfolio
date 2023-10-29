@@ -12,11 +12,16 @@
 
 //Sidenav content
 .sidenav-content {
+  max-width: 1440px;
+  margin: 8px auto;
   height: 64px;
   border-radius: 8px;
   background: inherit;
   transition: all 0.2s ease;
-  margin: 8px;
+
+  @include screen-up("xl") {
+    margin: 8px;
+  }
 }
 
 //Scrolling effect on navbar div
@@ -48,9 +53,9 @@
   height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  background: inherit;
+  background: transparent;
 
-  @include screen-up("lg") {
+  @include screen-up("md") {
     padding: 0 16px;
     grid-template-columns: repeat(2, 1fr);
   }

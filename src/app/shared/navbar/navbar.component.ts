@@ -29,14 +29,14 @@ export class NavbarComponent {
   );
 
   isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
+    .observe('(min-width: 0px) and (max-width: 767px)')
     .pipe(
       map((result) => result.matches),
       shareReplay()
     );
 
   isTablet$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Tablet)
+    .observe('(min-width: 768px) and (max-width: 991px)')
     .pipe(
       map((result) => result.matches),
       shareReplay()
