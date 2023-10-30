@@ -46,27 +46,17 @@ html,
 body {
   height: 100%;
   margin: 0;
-  background: rgb(139, 44, 64);
-  background: -moz-linear-gradient(
-    324deg,
-    rgba(139, 44, 64, 1) 0%,
-    rgba(67, 108, 137, 1) 100%
-  );
-  background: -webkit-linear-gradient(
-    324deg,
-    rgba(139, 44, 64, 1) 0%,
-    rgba(67, 108, 137, 1) 100%
-  );
-  background: linear-gradient(
-    324deg,
-    rgba(139, 44, 64, 1) 0%,
-    rgba(67, 108, 137, 1) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8b2c40",endColorstr="#436c89",GradientType=1);
+  background-color: rgba(67, 108, 137, 1);
+  position: relative;
+}
+
+body {
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 //Class list
-$lista-classi: "hero", "about-me";
+$lista-classi: "hero", "about";
 
 @each $classe in $lista-classi {
   @include apply-style-to-content($classe);

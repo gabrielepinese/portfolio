@@ -2,16 +2,18 @@
 @import "src/assets/styles/responsive.mixin.scss";
 
 //Main container
-.sidenav-container {
+.navbar-container {
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   z-index: 999;
   background: transparent;
 }
 
-//Sidenav content
-.sidenav-content {
+//navbar content
+.navbar-content {
   max-width: 1440px;
   margin: 8px auto;
   height: 64px;
@@ -22,30 +24,21 @@
   @include screen-up("xl") {
     margin: 8px;
   }
+
+  @include screen-up("lg") {
+    margin: 8px auto;
+    border-radius: 48px;
+    width: fit-content;
+  }
 }
 
 //Scrolling effect on navbar div
 .scrolling-effect {
   // background: hsla(204.857, 34%, 40%, 1.7);
-  background: rgba(139, 44, 64, 0.7);
+  background: rgba(67, 108, 137, 0.7);
   transition: all 0.2s ease;
   backdrop-filter: blur(20px) saturate(0.7);
   -webkit-backdrop-filter: blur(20px) saturate(1.7);
-}
-
-//Sidenav
-.sidenav {
-  width: 100%;
-}
-
-.sidenav .mat-toolbar {
-  background: inherit;
-}
-
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
 }
 
 //Toolbar Desktop view
@@ -56,8 +49,7 @@
   background: transparent;
 
   @include screen-up("md") {
-    padding: 0 16px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
@@ -88,7 +80,8 @@
   }
 }
 
-.links-container {
+//Links container Mobile
+.links-container-mob {
   text-align: right;
 
   .nav-btn {
@@ -99,16 +92,31 @@
   }
 }
 
-.open-sidenav-container {
-  text-align: right;
+//Links container Desktop
+.links-container-dsk {
+  text-align: center;
+
+  .nav-btn {
+    margin-right: 16px;
+  }
+  .nav-btn:last-child {
+    margin-right: 0;
+  }
 }
 
 svg {
   fill: $hero;
 }
 
-//Active route
-.active {
+//Active route Desktop
+.active-dsk {
+  &::before {
+    width: 100%;
+  }
+}
+
+//Active route Mobile
+.active-mob {
   &::before {
     width: 100%;
   }

@@ -2,19 +2,20 @@
 @import "../../../assets/color/colors.variables.scss";
 
 .hero-container {
-  height: 100vh;
   background-color: transparent;
 }
 
 .hero-content {
-  height: 100%;
   opacity: 0; // Imposta l'opacità iniziale a 0
   animation: fade-in 1s ease forwards; // Applica l'animazione
   transform: translateY(20px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   text-align: center;
+
+  .full {
+    grid-column: span 2;
+  }
 
   @keyframes fade-in {
     0% {

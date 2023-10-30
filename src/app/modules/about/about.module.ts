@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { AboutRoutingModule } from './about-routing.module';
 import { AboutComponent } from './about.component';
+import { SkillsComponent } from './section/skills/skills.component';
 
 
 @NgModule({
   declarations: [
-    AboutComponent
+    AboutComponent,
+    SkillsComponent
   ],
   imports: [
     CommonModule,
