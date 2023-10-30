@@ -82,7 +82,9 @@
 
 //Links container Mobile
 .links-container-mob {
-  text-align: right;
+  @include screen-down("lg") {
+    text-align: right;
+  }
 
   .nav-btn {
     margin-right: 16px;
