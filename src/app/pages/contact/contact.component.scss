@@ -1,21 +1,26 @@
-//Home content
-.home-content {
+//About content
+.about-content {
+  display: grid;
+  align-items: center;
+  height: inherit;
+
   .title-container {
     display: grid;
     height: 100%;
+    margin: auto 100px;
 
     .heading1 {
       text-align: center;
     }
 
     .title-content {
-      margin: auto auto 140px auto;
+      margin: auto auto 0 auto;
     }
   }
 
   .timeline-container {
     display: grid;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: auto 92px auto;
     align-items: center;
 
     .timeline-content {
@@ -26,13 +31,13 @@
       div:first-child {
         margin-right: 4px;
       }
+    }
 
-      .circle {
-        border: 1px solid black;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-      }
+    .circle {
+      border: 1px solid black;
+      border-radius: 50%;
+      width: 8px;
+      height: 8px;
     }
     .line {
       border: 1px solid black;

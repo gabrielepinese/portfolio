@@ -14,4 +14,20 @@ export const routes: Routes = [
       import('./pages/about/about.component').then((mod) => mod.AboutComponent),
     data: { animation: 'AboutPage' },
   },
+  {
+    path: 'skills',
+    loadComponent: () =>
+      import('./pages/skills/skills.component').then(
+        (mod) => mod.SkillsComponent
+      ),
+    data: { animation: 'SkillsPage' },
+  },
+  {
+    path: 'contact',
+    loadComponent: () =>
+      import('./pages/contact/contact.component').then(
+        (mod) => mod.ContactComponent
+      ),
+    data: { animation: 'ContactPage' },
+  },
 ];
