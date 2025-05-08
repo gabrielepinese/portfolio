@@ -11,7 +11,8 @@ body {
   font-family: "Lora", serif;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: $brown2;
+  background-color: $brown1;
+  font-family: "Dosis", sans-serif;
 }
 
 $class-list: "home", "about";
@@ -25,6 +26,29 @@ $class-list: "home", "about";
 
 .heading1 {
   @include heading1;
+}
+.prova {
+  @include prova;
+}
+
+.dosis-700 {
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+.dosis-600 {
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+//COLORS ------
+
+.primary-dark {
+  color: $primary-dark;
+}
+.primary {
+  color: $primary;
 }
 
 //BUTTONS ------

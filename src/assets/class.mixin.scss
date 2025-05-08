@@ -2,7 +2,7 @@
 
 @mixin apply-style-to-container($class) {
   .#{$class}-container {
-    background-color: $brown2;
+    background-color: $brown1;
     height: 100%;
     width: 100%;
   }
