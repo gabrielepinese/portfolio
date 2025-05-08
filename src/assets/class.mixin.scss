@@ -1,10 +1,17 @@
+@import "color/colors.variables";
+
 @mixin apply-style-to-container($class) {
   .#{$class}-container {
-    background-color: white;
+    background-color: $brown2;
+    height: 100%;
+    width: 100%;
   }
 }
 @mixin apply-style-to-content($class) {
   .#{$class}-content {
-    background-color: white;
+    display: grid;
+    grid-template-rows: 70% 30px auto;
+    align-items: center;
+    height: inherit;
   }
 }

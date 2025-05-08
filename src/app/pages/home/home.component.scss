@@ -1,5 +1,41 @@
-.shaped-div {
-  width: 200px;
-  height: 200px;
-  background: red;
+//Home content
+.home-content {
+  .title-container {
+    display: grid;
+    height: 100%;
+
+    .heading1 {
+      text-align: center;
+    }
+
+    .title-content {
+      margin: auto auto 0 auto;
+    }
+  }
+
+  .timeline-container {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    align-items: center;
+
+    .timeline-content {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+
+      div:first-child {
+        margin-right: 4px;
+      }
+
+      .circle {
+        border: 1px solid black;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .line {
+      border: 1px solid black;
+    }
+  }
 }

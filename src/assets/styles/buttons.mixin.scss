@@ -1,0 +1,13 @@
+@import "../color/colors.variables.scss";
+
+@mixin neutral-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  letter-spacing: normal;
+  font-stretch: normal;
+  font-style: normal;
+  border: none;
+  background-color: transparent;
+}

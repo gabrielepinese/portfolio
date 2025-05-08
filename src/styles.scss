@@ -1,16 +1,38 @@
 //Imports
 @import "./assets/class.mixin.scss";
+@import "./assets/fonts/typography.mixin.scss";
+@import "./assets/styles/buttons.mixin.scss";
 
 //Global styles ---------
 html,
 body {
   height: 100%;
   margin: 0;
+  font-family: "Lora", serif;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: $brown2;
 }
 
-$class-list: "page";
+$class-list: "home", "about";
 
 @each $class in $class-list {
   @include apply-style-to-container($class);
   @include apply-style-to-content($class);
+}
+
+//FONTS ------
+
+.heading1 {
+  @include heading1;
+}
+
+//BUTTONS ------
+
+button {
+  cursor: pointer;
+}
+
+.neutral-btn {
+  @include neutral-btn;
 }

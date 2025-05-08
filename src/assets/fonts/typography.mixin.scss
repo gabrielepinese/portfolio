@@ -1,0 +1,12 @@
+@import "../responsive.mixin.scss";
+
+// -------- HEADING
+
+@mixin heading1 {
+  font-size: 56px;
+  line-height: 64px;
+  @include screen-down("lg") {
+    font-size: 40px;
+    line-height: 46px;
+  }
+}

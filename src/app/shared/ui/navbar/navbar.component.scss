@@ -1,0 +1,12 @@
+.navbar-container {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  .navbar-content {
+    padding: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 12px;
+    justify-content: center;
+  }
+}
