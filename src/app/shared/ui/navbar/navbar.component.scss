@@ -5,9 +5,9 @@
   .navbar-content {
     padding: 12px;
     display: grid;
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(2, auto);
     gap: 20px;
-    justify-content: center;
+    justify-content: space-between;
     align-items: baseline;
   }
 }

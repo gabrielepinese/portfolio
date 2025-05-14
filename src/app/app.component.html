@@ -1,4 +1,10 @@
-<app-navbar></app-navbar>
-<div class="h-100" [@routeAnimations]="getRouteAnimationData(outlet)">
-  <router-outlet #outlet="outlet"></router-outlet>
+<!-- <app-navbar></app-navbar> -->
+<div class="frame">
+  <!-- Bordo superiore bianco -->
+  <div class="frame-empty top"></div>
+  <div class="app-layout" [@routeAnimations]="getRouteAnimationData(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </div>
+  <!-- Bordo superiore bianco -->
+  <div class="frame-empty bottom"></div>
 </div>

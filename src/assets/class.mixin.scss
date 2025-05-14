@@ -2,16 +2,15 @@
 
 @mixin apply-style-to-container($class) {
   .#{$class}-container {
-    background-color: $brown1;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    padding: 48px;
+    background: $redPeach2;
   }
 }
 @mixin apply-style-to-content($class) {
   .#{$class}-content {
-    display: grid;
-    grid-template-rows: 70% 30px auto;
-    align-items: center;
-    height: inherit;
+    width: 100%;
+    padding-bottom: 100px;
   }
 }
