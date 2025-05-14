@@ -92,6 +92,30 @@
 
   .neutral-btn {
     justify-content: left;
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+
+    .heading1 {
+      position: relative;
+      display: inline-block;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 5px; // regola la distanza dalla scritta
+        height: 15px;
+        width: 0;
+        background-color: $redPeach2;
+        z-index: -1;
+        transition: width 0.3s ease;
+      }
+
+      &:hover::after {
+        width: 100%;
+      }
+    }
   }
 }
 

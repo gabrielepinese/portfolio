@@ -57,6 +57,32 @@
   }
 }
 
+.neutral-btn {
+  position: relative;
+  display: inline-block;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0.1em;
+    height: 2px;
+    width: 0;
+    background-color: white;
+    z-index: -1;
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
 @keyframes sali {
   to {
     opacity: 1;
