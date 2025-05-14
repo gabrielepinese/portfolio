@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
@@ -31,4 +32,16 @@ export class NavbarComponent {
       this.menuOpen = true;
     }
   }
+
+  // Funzione per alternare la visibilità della descrizione
+  toggleDescription(section: string): void {
+    this.showDescription[section] = !this.showDescription[section];
+  }
+
+  // Stato delle descrizioni
+  showDescription: { [key: string]: boolean } = {
+    home: false,
+    about: false,
+    contact: false,
+  };
 }

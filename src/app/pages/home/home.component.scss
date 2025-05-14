@@ -55,56 +55,6 @@
       animation-delay: 0.8s;
     }
   }
-
-  .timeline-container {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    align-items: center;
-
-    .timeline-content {
-      display: flex;
-      align-items: center;
-      margin-left: auto;
-
-      .welcome-text {
-        // margin-right: 8px;
-        opacity: 0; // default hidden
-        animation: pop-up 0.8s ease-out forwards;
-        animation-delay: 0.7s;
-
-        border: 2px solid $primary-dark;
-        border-radius: 50px;
-        padding: 4px 8px;
-        background: $brown1;
-        z-index: 1;
-      }
-
-      // div:first-child {
-      //   margin-right: 4px;
-      // }
-
-      // .circle {
-      //   border: 1px solid black;
-      //   border-radius: 50%;
-      //   width: 20px;
-      //   height: 20px;
-      // }
-    }
-
-    .animated-line {
-      height: 2px;
-      background-color: black;
-      width: 100%;
-      transform-origin: right;
-      transform: scaleX(0);
-      animation: line-grow-right-to-left 0.4s ease-out forwards;
-      animation-delay: 0.2s;
-    }
-
-    .line {
-      border: 1px solid $primary-dark;
-    }
-  }
 }
 
 @keyframes sali {
