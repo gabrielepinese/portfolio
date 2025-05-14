@@ -1,16 +1,104 @@
 @import "../responsive.mixin.scss";
 
+@mixin bigTitle {
+  font-size: 64px;
+  line-height: 64px;
+  font-weight: 400;
+
+  // @include screen-down("lg") {
+  //   font-size: 40px;
+  //   line-height: 46px;
+  // }
+}
+
 // -------- HEADING
 
 @mixin heading1 {
   font-size: 56px;
   line-height: 64px;
+  font-weight: 400;
+
   @include screen-down("lg") {
     font-size: 40px;
     line-height: 46px;
   }
 }
 
-@mixin prova {
+@mixin heading2 {
+  font-size: 48px;
+  line-height: 50px;
+  font-weight: 400;
+
+  @include screen-down("lg") {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+@mixin heading3 {
+  font-size: 40px;
+  line-height: 50px;
+  font-weight: 400;
+
+  @include screen-down("lg") {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+@mixin body32 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 400;
+
+  @include screen-down("lg") {
+    font-size: 24px;
+  }
+}
+@mixin body28 {
+  font-size: 28px;
+  font-weight: 400;
+}
+
+@mixin body24 {
+  font-size: 24px;
+  font-weight: 400;
+
+  @include screen-down("lg") {
+    font-size: 18px;
+  }
+}
+
+@mixin body20 {
   font-size: 20px;
+  line-height: 28px;
+  font-weight: 400;
+
+  @include screen-down("lg") {
+    font-size: 18px;
+  }
+}
+
+@mixin body18 {
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 400;
+}
+
+@mixin body14 {
+  font-size: 14px;
+  line-height: 26px;
+  font-weight: 400;
+}
+
+@mixin breadcrumbs {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+@mixin bold {
+  font-weight: 800;
+}
+@mixin semibold {
+  font-weight: 600;
 }

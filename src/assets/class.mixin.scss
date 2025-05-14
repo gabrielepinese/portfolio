@@ -6,11 +6,14 @@
     height: 100%;
     padding: 48px;
     background: $redPeach2;
+    display: grid;
   }
 }
 @mixin apply-style-to-content($class) {
   .#{$class}-content {
+    margin: auto;
     width: 100%;
     padding-bottom: 100px;
+    max-width: 1200px;
   }
 }

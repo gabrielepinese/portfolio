@@ -10,7 +10,7 @@ body {
   height: 100%;
   margin: 0;
   background: white;
-  font-family: "Dosis", sans-serif;
+  font-family: "Vidaloka", sans-serif;
 }
 
 $class-list: "home", "about";
@@ -22,11 +22,45 @@ $class-list: "home", "about";
 
 //FONTS ------
 
+.bigTitle {
+  @include bigTitle;
+}
+
 .heading1 {
   @include heading1;
 }
-.prova {
-  @include prova;
+.heading2 {
+  @include heading2;
+}
+.heading3 {
+  @include heading3;
+}
+.body32 {
+  @include body32;
+}
+.body28 {
+  @include body28;
+}
+.body24 {
+  @include body24;
+}
+.body20 {
+  @include body20;
+}
+.body18 {
+  @include body18;
+}
+.body14 {
+  @include body14;
+}
+.breadcrumbs {
+  @include breadcrumbs;
+}
+.bold {
+  @include bold;
+}
+.semibold {
+  @include semibold;
 }
 
 .dosis-700 {
@@ -42,8 +76,8 @@ $class-list: "home", "about";
 
 //COLORS ------
 
-.primary-dark {
-  color: $primary-dark;
+.redPeachPrimary {
+  color: $redPeachPrimary;
 }
 .primary {
   color: $primary;
@@ -60,6 +94,12 @@ button {
 }
 
 //Other class
+
+.text-con-bordo {
+  text-shadow: 4px 0 $redPeach2, -4px 0 $redPeach2, 0 4px $redPeach2,
+    0 -4px $redPeach2, 3px 3px $redPeach2, -3px -3px $redPeach2,
+    3px -3px $redPeach2, -3px 3px $redPeach2;
+}
 
 .frame {
   width: 100%;
