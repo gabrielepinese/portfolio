@@ -1,48 +1,8 @@
-<!-- Navbar container
-<div class="navbar-container">
-  Navbar content
-  <div class="navbar-content">
-    <button
-      class="neutral-btn"
-      (click)="navigate('home')"
-      type="button"
-      role="button"
-    >
-      Home
-    </button>
-    <button
-      class="neutral-btn"
-      (click)="navigate('about')"
-      type="button"
-      role="button"
-    >
-      AboutUs
-    </button>
-    <div class="dosis-700 prova primary-dark">Gabriele P.</div>
-    <button
-      class="neutral-btn"
-      (click)="navigate('skills')"
-      type="button"
-      role="button"
-    >
-      Skills
-    </button>
-    <button
-      class="neutral-btn"
-      (click)="navigate('contact')"
-      type="button"
-      role="button"
-    >
-      Contact me
-    </button>
-  </div>
-</div> -->
-
 <div class="navbar-container">
   <div class="navbar-content">
     <button
       class="neutral-btn"
-      (click)="navigate('home')"
+      (click)="toggleMenu()"
       type="button"
       role="button"
     >
@@ -50,3 +10,21 @@
     </button>
   </div>
 </div>
+
+<!-- MENU OVERLAY -->
+@if (menuOpen) {
+<div class="menu-overlay" [class.closing]="menuClosing" (click)="toggleMenu()">
+  <div
+    class="menu-content"
+    (click)="$event.stopPropagation()"
+    [class.closing]="menuClosing"
+  >
+    <button class="close-btn" (click)="toggleMenu()">×</button>
+    <nav>
+      <a (click)="navigate('home')">Home</a>
+      <a (click)="navigate('about')">Chi siamo</a>
+      <a (click)="navigate('contact')">Contatti</a>
+    </nav>
+  </div>
+</div>
+}
