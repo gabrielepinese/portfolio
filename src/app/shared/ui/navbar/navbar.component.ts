@@ -42,7 +42,7 @@ export class NavbarComponent {
     const routeColors: { [key: string]: string } = {
       home: '#f1a661',
       about: '#aac4ff',
-      contact: '#10B981',
+      contact: '#c4d7b2',
     };
 
     return routeColors[path] || '#000';
@@ -65,7 +65,12 @@ export class NavbarComponent {
     }, 300);
 
     setTimeout(() => {
-      this.router.navigateByUrl(path);
+      this.router.navigateByUrl(path).then(() => {
+        const frame = document.querySelector('.frame');
+        if (frame) {
+          frame.scrollTop = 0; // Scorrimento istantaneo
+        }
+      });
       this.showRouteTransition = false;
       this.startTransition = false;
     }, 800);

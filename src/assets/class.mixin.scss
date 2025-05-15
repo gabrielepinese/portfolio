@@ -15,6 +15,9 @@
     &.about {
       background: $purple2;
     }
+    &.contact {
+      background: $green2;
+    }
   }
 }
 @mixin apply-style-to-content($class) {
