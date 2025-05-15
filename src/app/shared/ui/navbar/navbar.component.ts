@@ -13,6 +13,13 @@ import { filter } from 'rxjs';
 export class NavbarComponent {
   routeColor: string | undefined;
 
+  menuOpen = false;
+  menuClosing = false;
+
+  transitionColor = '';
+  showRouteTransition = false;
+  startTransition = false;
+
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -30,14 +37,39 @@ export class NavbarComponent {
     }
     return route;
   }
-  //Navigate function, switch to another page
-  navigate(path: string) {
-    this.toggleMenu();
-    this.router.navigateByUrl(path);
+
+  getRouteColor(path: string): string {
+    const routeColors: { [key: string]: string } = {
+      home: '#f1a661',
+      about: '#aac4ff',
+      contact: '#10B981',
+    };
+
+    return routeColors[path] || '#000';
   }
 
-  menuOpen = false;
-  menuClosing = false;
+  navigate(path: string) {
+    const currentPath = this.router.url.replace(/^\/+/, '');
+
+    if (currentPath === path) {
+      this.toggleMenu();
+      return;
+    }
+
+    this.transitionColor = this.getRouteColor(path);
+    this.showRouteTransition = true;
+    this.startTransition = true;
+
+    setTimeout(() => {
+      this.toggleMenu();
+    }, 300);
+
+    setTimeout(() => {
+      this.router.navigateByUrl(path);
+      this.showRouteTransition = false;
+      this.startTransition = false;
+    }, 800);
+  }
 
   toggleMenu() {
     if (this.menuOpen && !this.menuClosing) {
@@ -50,16 +82,4 @@ export class NavbarComponent {
       this.menuOpen = true;
     }
   }
-
-  // Funzione per alternare la visibilità della descrizione
-  toggleDescription(section: string): void {
-    this.showDescription[section] = !this.showDescription[section];
-  }
-
-  // Stato delle descrizioni
-  showDescription: { [key: string]: boolean } = {
-    home: false,
-    about: false,
-    contact: false,
-  };
 }

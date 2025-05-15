@@ -11,6 +11,13 @@
   </div>
 </div>
 
+<!--Secondary Overlay -->
+<div
+  class="route-transition"
+  [class.show]="startTransition"
+  [ngStyle]="{ backgroundColor: transitionColor }"
+></div>
+
 <!-- Menu Overlay -->
 <div
   *ngIf="menuOpen"
