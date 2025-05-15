@@ -2,6 +2,7 @@
 @import "./assets/class.mixin.scss";
 @import "./assets/fonts/typography.mixin.scss";
 @import "./assets/styles/buttons.mixin.scss";
+@import "./app/animations/animations.scss";
 
 //Global styles ---------
 
@@ -16,7 +17,7 @@ body {
   font-variation-settings: "wdth" 100;
 }
 
-$class-list: "home", "about";
+$class-list: "about";
 
 @each $class in $class-list {
   @include apply-style-to-container($class);
@@ -144,4 +145,24 @@ button {
   background-color: white;
   padding: 24px;
   flex: 1 1;
+}
+
+//Scroll line info
+.scroll-line {
+  padding-top: 56px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  letter-spacing: 2px;
+  display: grid;
+  justify-content: left;
+  align-items: center;
+  gap: 16px;
+  animation: showUp 0.5s ease-out forwards;
+  animation-delay: 1.2s;
+  opacity: 0;
+
+  img {
+    animation: bounce 2s ease infinite;
+    // animation-delay: 4s;
+    margin: auto;
+  }
 }

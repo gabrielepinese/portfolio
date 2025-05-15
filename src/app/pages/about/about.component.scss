@@ -4,7 +4,6 @@
 .title-container {
   display: grid;
   max-width: 1000px;
-  height: 100%;
   align-items: center;
   position: relative;
 
@@ -30,5 +29,24 @@
     gap: 28px;
     margin: auto;
     text-align: left;
+  }
+}
+
+.about-container {
+  // display: grid;
+  // grid-template-rows: 100vh 100vh; // due sezioni verticali
+  width: 100%;
+  // min-height: 100vh;
+}
+
+.about-main-section {
+  display: grid;
+  // gap: 300px;
+  font-family: "Quicksand", sans-serif;
+  max-width: 1200px;
+
+  .about-study-section {
+    display: grid;
+    grid-template-columns: 50% auto;
   }
 }
