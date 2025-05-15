@@ -1,0 +1,57 @@
+@keyframes showUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes expandWithBounce {
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+// Keyframe Animations
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+/* Animazione per far apparire il pulsante 2 */
+// @keyframes showUp {
+//   from {
+//     opacity: 0;
+//     transform: translateY(20px); /* Inizia più in basso */
+//   }
+//   to {
+//     opacity: 1;
+//     transform: translateY(0); /* Arriva alla posizione finale */
+//   }
+// }
+
+@keyframes letterSpacing {
+  0% {
+    letter-spacing: 2px;
+  }
+  100% {
+    letter-spacing: 4px;
+  }
+}

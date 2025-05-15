@@ -14,8 +14,8 @@ export class NavbarComponent {
 
   //Navigate function, switch to another page
   navigate(path: string) {
+    this.toggleMenu();
     this.router.navigateByUrl(path);
-    this.menuOpen = false;
   }
 
   menuOpen = false;

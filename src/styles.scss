@@ -80,11 +80,8 @@ $class-list: "home", "about";
 
 //COLORS ------
 
-.redPeachPrimary {
-  color: $redPeachPrimary;
-}
-.primary {
-  color: $primary;
+.orangePrimary {
+  color: $orangePrimary;
 }
 
 //BUTTONS ------
@@ -100,11 +97,11 @@ button {
 //Other class
 
 .text-con-bordo {
-  text-shadow: 4px 0 $redPeach2, -4px 0 $redPeach2, 0 4px $redPeach2,
-    0 -4px $redPeach2, 3px 3px $redPeach2, -3px -3px $redPeach2,
-    3px -3px $redPeach2, -3px 3px $redPeach2;
+  text-shadow: 4px 0 $orange2, -4px 0 $orange2, 0 4px $orange2, 0 -4px $orange2,
+    3px 3px $orange2, -3px -3px $orange2, 3px -3px $orange2, -3px 3px $orange2;
 }
 
+//Wrapper router ----
 .frame {
   width: 100%;
   height: 100%;
@@ -114,8 +111,9 @@ button {
   flex-direction: column;
 }
 
+//Frame Portfolio ----
 .frame-empty {
-  height: 24px; // altezza della cornice
+  height: 24px;
   flex-shrink: 0;
   background: white;
   z-index: 1;
@@ -130,6 +128,7 @@ button {
   }
 }
 
+//Router container ---
 .app-layout {
   background-color: white;
   padding: 24px;

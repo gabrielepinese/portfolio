@@ -1,4 +1,5 @@
 @import "../../../../assets/color/colors.variables";
+@import "../../../animations/animations.scss";
 
 // Navbar Container
 .navbar-container {
@@ -42,8 +43,8 @@
 }
 
 .menu-content {
-  background: $redPeachSecondary;
-  color: $redPeach3;
+  background: $orangeSecondary;
+  color: $orange3;
   width: 100%;
   height: 100%;
   animation: slideInLeft 0.3s ease-out forwards;
@@ -84,7 +85,7 @@
     margin-left: 0;
 
     .desc-link {
-      animation: sali 0.5s ease-out forwards;
+      animation: showUp 0.5s ease-out forwards;
       animation-delay: 0.3s;
       opacity: 0;
     }
@@ -104,10 +105,10 @@
         content: "";
         position: absolute;
         left: 0;
-        bottom: 5px; // regola la distanza dalla scritta
+        bottom: 5px;
         height: 15px;
         width: 0;
-        background-color: $redPeach2;
+        background-color: $orange2;
         z-index: -1;
         transition: width 0.3s ease;
       }
@@ -116,49 +117,5 @@
         width: 100%;
       }
     }
-  }
-}
-
-// Keyframe Animations
-@keyframes slideInLeft {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideOutLeft {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-}
-
-/* Animazione per far apparire il pulsante 2 */
-@keyframes sali {
-  from {
-    opacity: 0;
-    transform: translateY(20px); /* Inizia più in basso */
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0); /* Arriva alla posizione finale */
-  }
-}
-
-@keyframes letterSpacing {
-  0% {
-    letter-spacing: 2px;
-  }
-  100% {
-    letter-spacing: 4px;
   }
 }
