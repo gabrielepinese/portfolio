@@ -1,57 +1,59 @@
 @import "../../../assets/color/colors.variables";
 @import "../../animations/animations.scss";
 
-.title-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  height: 100%;
-  align-items: center;
-  position: relative;
-
-  .bigTitle {
-    text-align: left;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: showUp 0.5s ease-out forwards;
-    animation-delay: 0.4s;
-  }
-  .body24 {
-    max-width: 700px;
-    text-align: left;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: showUp 0.5s ease-out forwards;
-    animation-delay: 0.8s;
-  }
-
-  .title-content {
+.home-content {
+  .title-container {
     display: grid;
-    gap: 28px;
-    margin: auto;
-    text-align: left;
-  }
+    grid-template-columns: repeat(2, 1fr);
+    height: 100%;
+    align-items: center;
+    position: relative;
 
-  .image-container {
-    position: absolute;
-    left: 250px;
-    top: 30px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' width='10' height='10' patternUnits='userSpaceOnUse'><rect width='100%' height='100%' fill='%232b2b31' fill-opacity='0'/><path fill='none' stroke='%23E38B29' stroke-linecap='square' stroke-width='1' d='M2.5 5h5M5 2.5v5'/></pattern></defs><rect width='1600%' height='1600%' fill='url(%23a)' transform='translate(-40 -40)'/></svg>");
-    background-repeat: repeat;
-    background-size: auto;
-    background-position: center;
-    width: 700px;
-    height: 170px;
-    z-index: 0;
+    .bigTitle {
+      text-align: left;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: showUp 0.5s ease-out forwards;
+      animation-delay: 0.4s;
+    }
+    .body24 {
+      max-width: 700px;
+      text-align: left;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: showUp 0.5s ease-out forwards;
+      animation-delay: 0.8s;
+    }
 
-    display: inline-block;
-    transform: scaleX(0);
-    transform-origin: center;
-    opacity: 0;
-    animation: expandWithBounce 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55)
-      forwards;
-    animation-delay: 1s;
+    .title-content {
+      display: grid;
+      gap: 28px;
+      margin: auto;
+      text-align: left;
+    }
+
+    .image-container {
+      position: absolute;
+      left: 250px;
+      top: 30px;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' width='10' height='10' patternUnits='userSpaceOnUse'><rect width='100%' height='100%' fill='%232b2b31' fill-opacity='0'/><path fill='none' stroke='%23E38B29' stroke-linecap='square' stroke-width='1' d='M2.5 5h5M5 2.5v5'/></pattern></defs><rect width='1600%' height='1600%' fill='url(%23a)' transform='translate(-40 -40)'/></svg>");
+      background-repeat: repeat;
+      background-size: auto;
+      background-position: center;
+      width: 700px;
+      height: 170px;
+      z-index: 0;
+
+      display: inline-block;
+      transform: scaleX(0);
+      transform-origin: center;
+      opacity: 0;
+      animation: expandWithBounce 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55)
+        forwards;
+      animation-delay: 1s;
+    }
   }
 }
 

@@ -6,13 +6,13 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () =>
       import('./pages/home/home.component').then((mod) => mod.HomeComponent),
-    data: { animation: 'HomePage' },
+    data: { color: 'homePage' },
   },
   {
     path: 'about',
     loadComponent: () =>
       import('./pages/about/about.component').then((mod) => mod.AboutComponent),
-    data: { animation: 'AboutPage' },
+    data: { color: 'aboutPage' },
   },
   {
     path: 'skills',
@@ -20,7 +20,7 @@ export const routes: Routes = [
       import('./pages/skills/skills.component').then(
         (mod) => mod.SkillsComponent
       ),
-    data: { animation: 'SkillsPage' },
+    data: { color: 'skillsPage' },
   },
   {
     path: 'contact',
@@ -28,6 +28,6 @@ export const routes: Routes = [
       import('./pages/contact/contact.component').then(
         (mod) => mod.ContactComponent
       ),
-    data: { animation: 'ContactPage' },
+    data: { color: 'contactPage' },
   },
 ];

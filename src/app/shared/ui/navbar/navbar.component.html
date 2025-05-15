@@ -20,6 +20,7 @@
 >
   <div
     class="menu-content"
+    [ngClass]="routeColor"
     (click)="$event.stopPropagation()"
     [class.closing]="menuClosing"
   >
@@ -31,7 +32,7 @@
           type="button"
           role="button"
         >
-          <span class="heading1">Home</span>
+          <span [ngClass]="routeColor" class="heading1">Home</span>
         </button>
         <span class="desc-link">Return to home page</span>
       </div>
@@ -42,7 +43,7 @@
           type="button"
           role="button"
         >
-          <span class="heading1">About me</span></button
+          <span [ngClass]="routeColor" class="heading1">About me</span></button
         ><span class="desc-link">Something about me...</span>
       </div>
       <div class="link-content">
@@ -52,7 +53,7 @@
           type="button"
           role="button"
         >
-          <span class="heading1">Contact</span></button
+          <span [ngClass]="routeColor" class="heading1">Contact</span></button
         ><span class="desc-link">Let's contact me</span>
       </div>
     </div>

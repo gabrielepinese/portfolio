@@ -4,9 +4,17 @@
   .#{$class}-container {
     width: 100%;
     height: 100%;
-    padding: 48px;
-    background: $orange2;
     display: grid;
+    box-sizing: border-box;
+
+    &.home {
+      padding: 48px;
+      background: $orange2;
+    }
+    &.about {
+      padding: 250px 48px;
+      background: $purple2;
+    }
   }
 }
 @mixin apply-style-to-content($class) {

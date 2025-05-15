@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -10,8 +11,25 @@ import { Router } from '@angular/router';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  constructor(private router: Router) {}
+  routeColor: string | undefined;
 
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const currentRoute = this.getChild(this.activatedRoute);
+        this.routeColor = currentRoute.snapshot.data['color'];
+      });
+  }
+
+  getChild(route: ActivatedRoute): ActivatedRoute {
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    return route;
+  }
   //Navigate function, switch to another page
   navigate(path: string) {
     this.toggleMenu();
