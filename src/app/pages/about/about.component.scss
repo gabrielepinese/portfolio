@@ -44,8 +44,10 @@
   // gap: 300px;
   font-family: "Quicksand", sans-serif;
   max-width: 1200px;
+  gap: 150px;
 
-  .about-study-section {
+  .about-study-section,
+  .about-drawing-section {
     display: grid;
     grid-template-columns: 50% auto;
   }
