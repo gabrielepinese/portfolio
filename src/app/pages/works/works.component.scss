@@ -1,5 +1,5 @@
-@import "../../../assets/color/colors.variables";
-@import "../../animations/animations.scss";
+@use "../../../assets/color/colors.variables" as *;
+@use "../../animations/animations.scss" as *;
 
 .works-container {
   width: 100%;

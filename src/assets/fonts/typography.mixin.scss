@@ -1,4 +1,4 @@
-@import "../responsive.mixin.scss";
+@use "../responsive.mixin.scss" as *;
 
 @mixin bigTitle {
   font-size: 64px;

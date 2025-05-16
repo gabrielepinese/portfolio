@@ -1,8 +1,9 @@
 //Imports
-@import "./assets/class.mixin.scss";
-@import "./assets/fonts/typography.mixin.scss";
-@import "./assets/styles/buttons.mixin.scss";
-@import "./app/animations/animations.scss";
+@use "./assets/class.mixin.scss" as *;
+@use "./assets/fonts/typography.mixin.scss" as *;
+@use "./assets/styles/buttons.mixin.scss" as *;
+@use "./app/animations/animations.scss" as *;
+@use "./assets/color/colors.variables.scss" as *;
 
 //Global styles ---------
 

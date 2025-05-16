@@ -1,4 +1,4 @@
-@import "../color/colors.variables.scss";
+@use "../color/colors.variables.scss" as *;
 
 @mixin neutral-btn {
   display: flex;

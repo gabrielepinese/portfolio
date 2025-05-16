@@ -1,4 +1,4 @@
-@import "color/colors.variables";
+@use "color/colors.variables" as *;
 
 @mixin apply-style-to-container($class) {
   .#{$class}-container {
