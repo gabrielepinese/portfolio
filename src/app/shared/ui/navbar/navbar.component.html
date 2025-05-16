@@ -56,6 +56,16 @@
       <div class="link-content">
         <button
           class="neutral-btn semibold"
+          (click)="navigate('skills')"
+          type="button"
+          role="button"
+        >
+          <span [ngClass]="routeColor" class="heading1">Skills</span></button
+        ><span class="desc-link">Find out what I can do</span>
+      </div>
+      <div class="link-content">
+        <button
+          class="neutral-btn semibold"
           (click)="navigate('contact')"
           type="button"
           role="button"

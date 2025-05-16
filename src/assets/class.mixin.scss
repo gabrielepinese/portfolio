@@ -7,13 +7,16 @@
     display: grid;
     justify-content: center;
     box-sizing: border-box;
-    padding: 48px;
+    padding: 48px 48px 200px 48px;
 
     &.home {
       background: $orange2;
     }
     &.about {
       background: $purple2;
+    }
+    &.skills {
+      background: $red2;
     }
     &.contact {
       background: $green2;

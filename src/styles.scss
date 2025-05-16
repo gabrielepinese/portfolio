@@ -17,7 +17,7 @@ body {
   font-variation-settings: "wdth" 100;
 }
 
-$class-list: "about", "contact";
+$class-list: "about", "skills", "contact";
 
 @each $class in $class-list {
   @include apply-style-to-container($class);
@@ -89,6 +89,10 @@ $class-list: "about", "contact";
 
 .purplePrimary {
   color: $purplePrimary;
+}
+
+.redPrimary {
+  color: $redPrimary;
 }
 
 .greenPrimary {
