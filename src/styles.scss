@@ -29,7 +29,6 @@ $class-list: "about", "contact";
 .bigTitle {
   @include bigTitle;
 }
-
 .heading1 {
   @include heading1;
 }
@@ -105,6 +104,9 @@ button {
 .neutral-btn {
   @include neutral-btn;
 }
+.secondary-btn {
+  @include secondary-btn;
+}
 
 //Other class
 
@@ -112,9 +114,10 @@ button {
   text-shadow: 4px 0 $orange2, -4px 0 $orange2, 0 4px $orange2, 0 -4px $orange2,
     3px 3px $orange2, -3px -3px $orange2, 3px -3px $orange2, -3px 3px $orange2;
 }
-.text-con-bordo {
-  text-shadow: 4px 0 $orange2, -4px 0 $orange2, 0 4px $orange2, 0 -4px $orange2,
-    3px 3px $orange2, -3px -3px $orange2, 3px -3px $orange2, -3px 3px $orange2;
+
+.text-con-bordo2 {
+  text-shadow: 4px 0 $green2, -4px 0 $green2, 0 4px $green2, 0 -4px $green2,
+    3px 3px $green2, -3px -3px $green2, 3px -3px $green2, -3px 3px $green2;
 }
 
 //Wrapper router ----

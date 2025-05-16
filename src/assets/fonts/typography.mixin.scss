@@ -4,11 +4,11 @@
   font-size: 64px;
   line-height: 64px;
   font-weight: 400;
-
-  // @include screen-down("lg") {
-  //   font-size: 40px;
-  //   line-height: 46px;
-  // }
+}
+@mixin bigTitle2 {
+  font-size: 60px;
+  line-height: 64px;
+  font-weight: 400;
 }
 
 // -------- HEADING
