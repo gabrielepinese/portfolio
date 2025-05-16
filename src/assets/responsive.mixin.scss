@@ -1,0 +1,29 @@
+$breakpoints: (
+  "xs": 0,
+  "sm": 374px,
+  "md": 767px,
+  "mid": 1079px,
+  "lg": 1279px,
+  "xl": 1511px,
+  "xxl": 1919px,
+) !default;
+
+@mixin screen-down($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn 'Error';
+  }
+}
+
+@mixin screen-up($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn 'Error';
+  }
+}

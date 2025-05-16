@@ -1,0 +1,68 @@
+//Contact content
+.title-container {
+  display: grid;
+  max-width: 1000px;
+  align-items: center;
+  position: relative;
+
+  .bigTitle {
+    text-align: left;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: showUp 0.5s ease-out forwards;
+    animation-delay: 0.4s;
+  }
+  .body24 {
+    text-align: left;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: showUp 0.5s ease-out forwards;
+    animation-delay: 0.8s;
+  }
+
+  .title-content {
+    display: grid;
+    gap: 28px;
+    margin: auto;
+    text-align: left;
+  }
+}
+
+.contact-desc-container {
+  font-family: "Merriweather", serif;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  z-index: 1;
+  // position: relative;
+
+  .heading1 {
+    z-index: 1;
+    width: 100%;
+    position: relative;
+    text-align: center;
+
+    .pattern {
+      z-index: -1;
+      position: absolute;
+      left: -30px;
+      top: -100px;
+      height: 400px;
+      width: 250px;
+      background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a0c49d' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+  }
+  .body20 {
+    z-index: 1;
+    margin: auto;
+    max-width: 500px;
+    line-height: 1.8;
+  }
+
+  .secondary-btn {
+    margin-top: 32px;
+  }
+}

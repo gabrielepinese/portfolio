@@ -1,0 +1,54 @@
+@import "../../../assets/color/colors.variables";
+@import "../../animations/animations.scss";
+
+.title-container {
+  display: grid;
+  max-width: 1000px;
+  align-items: center;
+  position: relative;
+
+  .bigTitle {
+    text-align: left;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: showUp 0.5s ease-out forwards;
+    animation-delay: 0.4s;
+  }
+  .body24 {
+    text-align: left;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: showUp 0.5s ease-out forwards;
+    animation-delay: 0.8s;
+  }
+
+  .title-content {
+    display: grid;
+    gap: 28px;
+    margin: auto;
+    text-align: left;
+  }
+}
+
+.about-container {
+  // display: grid;
+  // grid-template-rows: 100vh 100vh; // due sezioni verticali
+  width: 100%;
+  // min-height: 100vh;
+}
+
+.about-main-section {
+  display: grid;
+  // gap: 300px;
+  font-family: "Quicksand", sans-serif;
+  max-width: 1200px;
+  gap: 150px;
+
+  .about-study-section,
+  .about-drawing-section {
+    display: grid;
+    grid-template-columns: 50% auto;
+  }
+}

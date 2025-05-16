@@ -1,0 +1,68 @@
+<div class="navbar-container">
+  <div class="navbar-content">
+    <button
+      class="neutral-btn bricolage semibold up"
+      (click)="toggleMenu()"
+      type="button"
+      role="button"
+    >
+      {{ menuOpen ? "CLOSE" : "MENU" }}
+    </button>
+  </div>
+</div>
+
+<!--Secondary Overlay -->
+<div
+  class="route-transition"
+  [class.show]="startTransition"
+  [ngStyle]="{ backgroundColor: transitionColor }"
+></div>
+
+<!-- Menu Overlay -->
+<div
+  *ngIf="menuOpen"
+  class="menu-overlay"
+  [class.closing]="menuClosing"
+  (click)="toggleMenu()"
+>
+  <div
+    class="menu-content"
+    [ngClass]="routeColor"
+    (click)="$event.stopPropagation()"
+    [class.closing]="menuClosing"
+  >
+    <div class="link-container">
+      <div class="link-content">
+        <button
+          class="neutral-btn semibold"
+          (click)="navigate('home')"
+          type="button"
+          role="button"
+        >
+          <span [ngClass]="routeColor" class="heading1">Home</span>
+        </button>
+        <span class="desc-link">Return to home page</span>
+      </div>
+      <div class="link-content">
+        <button
+          class="neutral-btn semibold"
+          (click)="navigate('about')"
+          type="button"
+          role="button"
+        >
+          <span [ngClass]="routeColor" class="heading1">About me</span></button
+        ><span class="desc-link">Something about me...</span>
+      </div>
+      <div class="link-content">
+        <button
+          class="neutral-btn semibold"
+          (click)="navigate('contact')"
+          type="button"
+          role="button"
+        >
+          <span [ngClass]="routeColor" class="heading1">Contact</span></button
+        ><span class="desc-link">Let's contact me</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+@import "../../../../assets/color/colors.variables";
+@import "../../../animations/animations.scss";
+
+// Navbar Container
+.navbar-container {
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+  padding: 24px;
+
+  .navbar-content {
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 20px;
+    justify-content: space-between;
+    align-items: baseline;
+
+    .bricolage {
+      display: inline-block;
+      text-align: center;
+      transform-origin: center;
+      z-index: 3;
+      letter-spacing: 2px;
+
+      &:hover {
+        animation: letterSpacing 0.3s ease-out forwards;
+      }
+    }
+  }
+}
+
+// Menu Overlay
+.menu-overlay {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  bottom: 24px;
+  width: calc(100% - 48px);
+  height: calc(100% - 48px);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.menu-content {
+  width: 100%;
+  height: 100%;
+  animation: slideInLeft 0.3s ease-out forwards;
+  position: relative;
+  text-align: left;
+  padding-top: 200px;
+  display: grid;
+  gap: 10px;
+  color: $grey1;
+
+  // Menu Closing Animation
+  &.closing {
+    animation: slideOutLeft 0.3s ease-in forwards;
+  }
+
+  &.homePage {
+    background: $orangeSecondary;
+  }
+  &.aboutPage {
+    background: $purpleSecondary;
+  }
+  &.contactPage {
+    background: $greenSecondary;
+  }
+}
+
+// Close Button
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.link-container {
+  display: grid;
+  margin-left: 40px;
+  gap: 10px;
+  grid-template-rows: repeat(3, 100px);
+
+  .link-content {
+    display: grid;
+    grid-template-columns: 300px auto;
+    align-items: baseline;
+    margin-left: 0;
+
+    .desc-link {
+      animation: showUp 0.5s ease-out forwards;
+      animation-delay: 0.3s;
+      opacity: 0;
+    }
+  }
+
+  .neutral-btn {
+    justify-content: left;
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+
+    .heading1 {
+      position: relative;
+      display: inline-block;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 5px;
+        height: 15px;
+        width: 0;
+        background-color: $grey1;
+        z-index: -1;
+        transition: width 0.3s ease;
+      }
+
+      &:hover::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.route-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 0%;
+  margin-left: 24px;
+  height: 100vh;
+  z-index: 3;
+  transition: width 0.3s ease-in-out;
+}
+
+.route-transition.show {
+  width: calc(100% - 48px);
+}

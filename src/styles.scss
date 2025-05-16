@@ -1,0 +1,175 @@
+//Imports
+@import "./assets/class.mixin.scss";
+@import "./assets/fonts/typography.mixin.scss";
+@import "./assets/styles/buttons.mixin.scss";
+@import "./app/animations/animations.scss";
+
+//Global styles ---------
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: white;
+  font-family: "Merriweather", serif;
+  line-height: 1.6;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+$class-list: "about", "contact";
+
+@each $class in $class-list {
+  @include apply-style-to-container($class);
+  @include apply-style-to-content($class);
+}
+
+//FONTS ------
+
+.bigTitle {
+  @include bigTitle;
+}
+.heading1 {
+  @include heading1;
+}
+.heading2 {
+  @include heading2;
+}
+.heading3 {
+  @include heading3;
+}
+.body32 {
+  @include body32;
+}
+.body28 {
+  @include body28;
+}
+.body24 {
+  @include body24;
+}
+.body20 {
+  @include body20;
+}
+.body18 {
+  @include body18;
+}
+.body14 {
+  @include body14;
+}
+.breadcrumbs {
+  @include breadcrumbs;
+}
+.bold {
+  @include bold;
+}
+.semibold {
+  @include semibold;
+}
+
+.dosis-700 {
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+.dosis-600 {
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.bricolage {
+  font-family: "Bricolage Grotesque", sans-serif;
+}
+
+//COLORS ------
+
+.orangePrimary {
+  color: $orangePrimary;
+}
+
+.purplePrimary {
+  color: $purplePrimary;
+}
+
+.greenPrimary {
+  color: $greenPrimary;
+}
+
+//BUTTONS ------
+
+button {
+  cursor: pointer;
+}
+
+.neutral-btn {
+  @include neutral-btn;
+}
+.secondary-btn {
+  @include secondary-btn;
+}
+
+//Other class
+
+.text-con-bordo {
+  text-shadow: 4px 0 $orange2, -4px 0 $orange2, 0 4px $orange2, 0 -4px $orange2,
+    3px 3px $orange2, -3px -3px $orange2, 3px -3px $orange2, -3px 3px $orange2;
+}
+
+.text-con-bordo2 {
+  text-shadow: 4px 0 $green2, -4px 0 $green2, 0 4px $green2, 0 -4px $green2,
+    3px 3px $green2, -3px -3px $green2, 3px -3px $green2, -3px 3px $green2;
+}
+
+//Wrapper router ----
+.frame {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+//Frame Portfolio ----
+.frame-empty {
+  height: 24px;
+  flex-shrink: 0;
+  background: white;
+  z-index: 4;
+  width: calc(100% - 24px);
+  position: fixed;
+
+  &.bottom {
+    bottom: 0;
+  }
+  &.top {
+    top: 0;
+  }
+}
+
+//Router container ---
+.app-layout {
+  background-color: white;
+  padding: 24px;
+  flex: 1 1;
+}
+
+//Scroll line info
+.scroll-line {
+  padding-top: 56px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  letter-spacing: 2px;
+  display: grid;
+  justify-content: left;
+  align-items: center;
+  gap: 16px;
+  animation: showUp 0.5s ease-out forwards;
+  animation-delay: 1.2s;
+  opacity: 0;
+
+  img {
+    animation: bounce 2s ease infinite;
+    // animation-delay: 4s;
+    margin: auto;
+  }
+}
