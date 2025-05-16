@@ -42,7 +42,7 @@ export class NavbarComponent {
     const routeColors: { [key: string]: string } = {
       home: '#f1a661',
       about: '#aac4ff',
-      skills: '#d2665a',
+      works: '#d2665a',
       contact: '#c4d7b2',
     };
 

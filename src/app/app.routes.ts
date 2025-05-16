@@ -15,12 +15,10 @@ export const routes: Routes = [
     data: { color: 'aboutPage' },
   },
   {
-    path: 'skills',
+    path: 'works',
     loadComponent: () =>
-      import('./pages/skills/skills.component').then(
-        (mod) => mod.SkillsComponent
-      ),
-    data: { color: 'skillsPage' },
+      import('./pages/works/works.component').then((mod) => mod.WorksComponent),
+    data: { color: 'worksPage' },
   },
   {
     path: 'contact',

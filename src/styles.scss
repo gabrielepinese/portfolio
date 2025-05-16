@@ -17,7 +17,7 @@ body {
   font-variation-settings: "wdth" 100;
 }
 
-$class-list: "about", "skills", "contact";
+$class-list: "about", "contact";
 
 @each $class in $class-list {
   @include apply-style-to-container($class);

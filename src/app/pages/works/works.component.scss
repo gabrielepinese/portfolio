@@ -1,0 +1,50 @@
+@import "../../../assets/color/colors.variables";
+@import "../../animations/animations.scss";
+
+.works-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 48px;
+
+  background: $red2;
+
+  .works-content {
+    margin: auto;
+    width: 100%;
+    max-width: 1200px;
+
+    .title-container {
+      display: grid;
+      max-width: 1000px;
+      align-items: center;
+      position: relative;
+
+      .bigTitle {
+        text-align: left;
+        z-index: 1;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: showUp 0.5s ease-out forwards;
+        animation-delay: 0.4s;
+      }
+      .body24 {
+        text-align: left;
+        z-index: 1;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: showUp 0.5s ease-out forwards;
+        animation-delay: 0.8s;
+      }
+
+      .title-content {
+        display: grid;
+        gap: 28px;
+        margin: auto;
+        text-align: left;
+      }
+    }
+  }
+}

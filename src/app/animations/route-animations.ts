@@ -60,7 +60,7 @@ export const slideInAnimation = trigger('routeAnimations', [
   slideTransition('HomePage', '*', 'left'),
   slideTransition('*', 'HomePage', 'right'),
   slideTransition('AboutPage', '*', 'left'),
-  slideTransition('SkillsPage', 'ContactPage', 'left'),
-  slideTransition('SkillsPage', '*', 'right'),
+  slideTransition('WorksPage', 'ContactPage', 'left'),
+  slideTransition('WorksPage', '*', 'right'),
   slideTransition('ContactPage', '*', 'right'),
 ]);
