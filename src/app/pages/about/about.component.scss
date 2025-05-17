@@ -32,13 +32,6 @@
   }
 }
 
-.about-container {
-  // display: grid;
-  // grid-template-rows: 100vh 100vh; // due sezioni verticali
-  width: 100%;
-  // min-height: 100vh;
-}
-
 .about-main-section {
   display: grid;
   // gap: 300px;
@@ -50,5 +43,43 @@
   .about-drawing-section {
     display: grid;
     grid-template-columns: 50% auto;
+  }
+}
+
+.about-footer-container {
+  font-family: "Merriweather", serif;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  z-index: 1;
+  margin-top: 200px;
+  // position: relative;
+
+  .heading1 {
+    z-index: 1;
+    width: 100%;
+    position: relative;
+    text-align: center;
+
+    .pattern {
+      z-index: -1;
+      position: absolute;
+      right: -30px;
+      top: -100px;
+      height: 350px;
+      width: 230px;
+      background-image: url("data:image/svg+xml,%3Csvg%20width='6'%20height='6'%20viewBox='0%200%206%206'%20xmlns='http://www.w3.org/2000/svg'%3E%3Cg%20fill='%23b1b2ff'%20fill-opacity='1'%20fill-rule='evenodd'%3E%3Cpath%20d='M5%200h1L0%206V5zM6%205v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+  }
+  .body20 {
+    z-index: 1;
+    margin: auto;
+    max-width: 500px;
+    line-height: 1.8;
+  }
+
+  .secondary-btn {
+    margin-top: 32px;
   }
 }
