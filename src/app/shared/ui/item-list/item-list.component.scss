@@ -1,0 +1,86 @@
+@use "../../../../assets/color/colors.variables" as *;
+@use "../../../animations/animations.scss" as *;
+
+button {
+  border: none;
+  width: 100%;
+  background-color: transparent;
+  border-radius: 8px;
+  transition: background-color 0.4s ease;
+
+  .item-list-container {
+    padding: 24px;
+
+    .item-list-content {
+      display: grid;
+      grid-template-columns: 180px auto;
+      column-gap: 80px;
+
+      .period {
+        display: grid;
+        grid-template-columns: auto 25px auto;
+        align-items: center;
+        height: fit-content;
+        column-gap: 4px;
+        padding-top: 8px;
+
+        span {
+          text-align: center;
+        }
+
+        .period-line {
+          height: 4px;
+          width: 100%;
+          background-color: $redPrimary;
+          border-radius: 8px;
+        }
+      }
+
+      .job-content {
+        display: grid;
+        text-align: left;
+
+        .item-title-container {
+          display: grid;
+          grid-template-columns: fit-content(100%) auto;
+          align-items: center;
+          gap: 4px;
+
+          .icon {
+            width: 14px;
+            height: fit-content;
+            rotate: -45deg;
+            transition: transform 0.3s ease;
+          }
+        }
+      }
+
+      .chip-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding-top: 8px;
+
+        .chip {
+          border-radius: 24px;
+          padding: 4px 16px;
+          background-color: $red1;
+          color: #d72638;
+        }
+      }
+    }
+  }
+  &:hover {
+    background-color: $red3;
+
+    .body32 {
+      color: $redPrimary;
+    }
+
+    .icon {
+      transform: translate(10px, 1px);
+      filter: brightness(0) saturate(100%) invert(25%) sepia(78%)
+        saturate(3472%) hue-rotate(339deg) brightness(73%) contrast(96%);
+    }
+  }
+}

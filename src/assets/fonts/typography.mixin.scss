@@ -85,6 +85,12 @@
   font-weight: 400;
 }
 
+@mixin body16 {
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 400;
+}
+
 @mixin body14 {
   font-size: 14px;
   line-height: 26px;

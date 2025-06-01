@@ -1,50 +1,60 @@
 @use "../../../assets/color/colors.variables" as *;
 @use "../../animations/animations.scss" as *;
 
-.works-container {
-  width: 100%;
-  height: 100%;
+.section-title {
+  padding: 24px 0;
+  display: flex;
+  align-items: center;
+
+  .period-line {
+    margin-left: 16px;
+    height: 4px;
+    width: 100px;
+    background-color: $redPrimary;
+    border-radius: 8px;
+  }
+}
+
+.title-container {
   display: grid;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 48px;
+  max-width: 1000px;
+  align-items: center;
+  position: relative;
 
-  background: $red2;
+  .bigTitle {
+    text-align: left;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: showUp 0.5s ease-out forwards;
+    animation-delay: 0.4s;
+  }
+  .body24 {
+    text-align: left;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: showUp 0.5s ease-out forwards;
+    animation-delay: 0.8s;
+  }
 
-  .works-content {
+  .title-content {
+    display: grid;
+    gap: 28px;
     margin: auto;
-    width: 100%;
-    max-width: 1200px;
+    text-align: left;
+  }
+}
 
-    .title-container {
-      display: grid;
-      max-width: 1000px;
-      align-items: center;
-      position: relative;
+.works-main-section {
+  display: grid;
+  font-family: "Quicksand", sans-serif;
+  max-width: 1200px;
+  gap: 24px;
 
-      .bigTitle {
-        text-align: left;
-        z-index: 1;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: showUp 0.5s ease-out forwards;
-        animation-delay: 0.4s;
-      }
-      .body24 {
-        text-align: left;
-        z-index: 1;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: showUp 0.5s ease-out forwards;
-        animation-delay: 0.8s;
-      }
-
-      .title-content {
-        display: grid;
-        gap: 28px;
-        margin: auto;
-        text-align: left;
-      }
-    }
+  .works-study-section,
+  .works-drawing-section {
+    display: grid;
+    grid-template-columns: 50% auto;
   }
 }
