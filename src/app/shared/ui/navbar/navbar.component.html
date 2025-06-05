@@ -1,12 +1,12 @@
 <div class="navbar-container">
-  <div class="navbar-content">
+  <div class="navbar-content" [ngClass]="routeColor">
     <button
       class="neutral-btn bricolage semibold up"
       (click)="toggleMenu()"
       type="button"
       role="button"
     >
-      {{ menuOpen ? "CLOSE" : "MENU" }}
+      <span>MENU</span>
     </button>
   </div>
 </div>
@@ -31,6 +31,16 @@
     (click)="$event.stopPropagation()"
     [class.closing]="menuClosing"
   >
+    <div class="btn-overlay">
+      <button
+        class="neutral-btn bricolage semibold up"
+        (click)="toggleMenu()"
+        type="button"
+        role="button"
+      >
+        <span>CLOSE</span>
+      </button>
+    </div>
     <div class="link-container">
       <div class="link-content">
         <button

@@ -1,4 +1,5 @@
 @use "color/colors.variables" as *;
+@use "responsive.mixin.scss" as *;
 
 @mixin apply-style-to-container($class) {
   .#{$class}-container {
@@ -20,6 +21,10 @@
     }
     &.contact {
       background: $green2;
+    }
+
+    @include screen-down("lg") {
+      padding: 24px 24px 200px 24px;
     }
   }
 }

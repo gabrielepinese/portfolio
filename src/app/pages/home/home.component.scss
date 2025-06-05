@@ -1,5 +1,6 @@
 @use "../../../assets/color/colors.variables" as *;
 @use "../../animations/animations.scss" as *;
+@use "../../../assets/responsive.mixin.scss" as *;
 
 .home-container {
   width: 100%;
@@ -68,6 +69,13 @@
         animation: expandWithBounce 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55)
           forwards;
         animation-delay: 1s;
+
+        @include screen-down("lg") {
+          left: 110px;
+          top: -100px;
+          width: 160px;
+          height: 400px;
+        }
       }
     }
   }

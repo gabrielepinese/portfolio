@@ -1,10 +1,11 @@
 @use "../../../../assets/color/colors.variables" as *;
 @use "../../../animations/animations.scss" as *;
+@use "../../../../assets/responsive.mixin.scss" as *;
 
 // Navbar Container
 .navbar-container {
   position: fixed;
-  width: 100%;
+  width: calc(100% - 16px);
   z-index: 3;
   padding: 24px;
 
@@ -27,6 +28,23 @@
         animation: letterSpacing 0.3s ease-out forwards;
       }
     }
+
+    @include screen-down("lg") {
+      padding: 40px 24px;
+
+      &.homePage {
+        background: $orange2;
+      }
+      &.aboutPage {
+        background: $purple2;
+      }
+      &.worksPage {
+        background: $red2;
+      }
+      &.contactPage {
+        background: $green2;
+      }
+    }
   }
 }
 
@@ -39,7 +57,7 @@
   width: calc(100% - 48px);
   height: calc(100% - 48px);
   overflow: hidden;
-  z-index: 2;
+  z-index: 4;
 }
 
 .menu-content {
@@ -48,10 +66,29 @@
   animation: slideInLeft 0.3s ease-out forwards;
   position: relative;
   text-align: left;
-  padding-top: 200px;
+
   display: grid;
   gap: 10px;
   color: white;
+
+  .btn-overlay {
+    padding: 40px;
+    .bricolage {
+      display: inline-block;
+      text-align: center;
+      transform-origin: center;
+      z-index: 3;
+      letter-spacing: 2px;
+
+      &:hover {
+        animation: letterSpacing 0.3s ease-out forwards;
+      }
+    }
+
+    @include screen-down("lg") {
+      padding: 40px 24px;
+    }
+  }
 
   // Menu Closing Animation
   &.closing {
@@ -101,6 +138,11 @@
       animation-delay: 0.3s;
       opacity: 0;
     }
+
+    @include screen-down("lg") {
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-rows: repeat(2, fit-content(100%));
+    }
   }
 
   .neutral-btn {
@@ -129,6 +171,10 @@
         width: 100%;
       }
     }
+  }
+
+  @include screen-down("lg") {
+    margin-left: 24px;
   }
 }
 

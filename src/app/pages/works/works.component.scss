@@ -1,19 +1,6 @@
 @use "../../../assets/color/colors.variables" as *;
 @use "../../animations/animations.scss" as *;
-
-.section-title {
-  padding: 24px 0;
-  display: flex;
-  align-items: center;
-
-  .period-line {
-    margin-left: 16px;
-    height: 4px;
-    width: 100px;
-    background-color: $redPrimary;
-    border-radius: 8px;
-  }
-}
+@use "../../../assets/responsive.mixin.scss" as *;
 
 .title-container {
   display: grid;
@@ -52,9 +39,29 @@
   max-width: 1200px;
   gap: 24px;
 
-  .works-study-section,
-  .works-drawing-section {
-    display: grid;
-    grid-template-columns: 50% auto;
+  .section-title {
+    padding: 24px 0;
+    display: flex;
+    align-items: center;
+
+    .period-line {
+      margin-left: 16px;
+      height: 4px;
+      width: 100px;
+      background-color: $redPrimary;
+      border-radius: 8px;
+
+      @include screen-down("lg") {
+        width: 50px;
+      }
+    }
+
+    @include screen-down("lg") {
+      padding: 24px;
+    }
+  }
+
+  @include screen-down("lg") {
+    gap: 0;
   }
 }

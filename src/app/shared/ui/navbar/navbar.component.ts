@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
 @Component({
-    selector: 'app-navbar',
-    imports: [CommonModule],
-    templateUrl: './navbar.component.html',
-    styleUrl: './navbar.component.scss'
+  selector: 'app-navbar',
+  imports: [CommonModule],
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
   routeColor: string | undefined;
@@ -19,7 +19,14 @@ export class NavbarComponent {
   showRouteTransition = false;
   startTransition = false;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    const currentRoute = this.getChild(this.activatedRoute);
+    this.routeColor = currentRoute.snapshot.data['color'];
+  }
 
   ngOnInit(): void {
     this.router.events
@@ -83,7 +90,9 @@ export class NavbarComponent {
         this.menuOpen = false;
         this.menuClosing = false;
       }, 300); // deve combaciare con la durata dell’animazione (0.3s)
+      this.document.body.style.overflow = '';
     } else {
+      this.document.body.style.overflow = 'hidden';
       this.menuOpen = true;
     }
   }

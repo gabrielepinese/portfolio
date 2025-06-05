@@ -4,6 +4,7 @@
 @use "./assets/styles/buttons.mixin.scss" as *;
 @use "./app/animations/animations.scss" as *;
 @use "./assets/color/colors.variables.scss" as *;
+@use "./assets/responsive.mixin.scss" as *;
 
 //Global styles ---------
 
@@ -165,6 +166,11 @@ button {
   background-color: white;
   padding: 24px;
   flex: 1 1;
+
+  // @include screen-down("lg") {
+  //   position: absolute;
+  //   top: 0;
+  // }
 }
 
 //Scroll line info

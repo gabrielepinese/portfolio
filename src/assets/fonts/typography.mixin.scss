@@ -4,6 +4,12 @@
   font-size: 64px;
   line-height: 64px;
   font-weight: 400;
+
+  @include screen-down("lg") {
+    font-size: 56px;
+    line-height: 64px;
+    font-weight: 400;
+  }
 }
 @mixin bigTitle2 {
   font-size: 60px;
