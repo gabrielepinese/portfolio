@@ -5,7 +5,7 @@
 // Navbar Container
 .navbar-container {
   position: fixed;
-  width: calc(100% - 16px);
+  width: calc(100% - 48px);
   z-index: 3;
   padding: 24px;
 
@@ -54,7 +54,7 @@
   top: 24px;
   left: 24px;
   bottom: 24px;
-  width: calc(100% - 48px);
+  width: calc(100% - 64px);
   height: calc(100% - 48px);
   overflow: hidden;
   z-index: 4;
@@ -181,16 +181,23 @@
 .route-transition {
   position: fixed;
   top: 0;
-  left: 0;
+  left: 24px; /* Inizia da sinistra */
   bottom: 0;
   right: 0;
   width: 0%;
-  margin-left: 24px;
   height: 100vh;
-  z-index: 3;
+  z-index: 5;
   transition: width 0.3s ease-in-out;
 }
 
 .route-transition.show {
-  width: calc(100% - 48px);
+  width: calc(100% - 64px);
+  left: 24px;
+  right: 0;
+}
+
+.route-transition.close-animation {
+  width: 48px;
+  left: 0; /* Sposta l'origine a destra */
+  right: 48px;
 }
