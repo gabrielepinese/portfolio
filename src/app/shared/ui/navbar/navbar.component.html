@@ -19,12 +19,8 @@
 ></div>
 
 <!-- Menu Overlay -->
-<div
-  *ngIf="menuOpen"
-  class="menu-overlay"
-  [class.closing]="menuClosing"
-  (click)="toggleMenu()"
->
+@if(menuOpen){
+<div class="menu-overlay" [class.closing]="menuClosing" (click)="toggleMenu()">
   <div
     class="menu-content"
     [ngClass]="routeColor"
@@ -86,3 +82,4 @@
     </div>
   </div>
 </div>
+}
