@@ -178,6 +178,8 @@
   }
 }
 
+//Transition on click
+
 .route-transition {
   position: fixed;
   top: 0;
@@ -200,4 +202,14 @@
   width: 48px;
   left: 0; /* Sposta l'origine a destra */
   right: 48px;
+}
+
+/* Animazione di ingresso */
+.enter-animation {
+  animation: slideInLeft 0.8s ease-in-out;
+}
+
+/* Animazione di uscita */
+.leave-animation {
+  animation: slideOutLeft 0.3s ease-in-out;
 }

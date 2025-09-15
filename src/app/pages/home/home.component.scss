@@ -3,7 +3,7 @@
 @use "../../../assets/responsive.mixin.scss" as *;
 
 .home-container {
-  width: 100%;
+  width: calc(100% - 20px);
   height: 100%;
   display: grid;
   justify-content: center;
