@@ -3,6 +3,7 @@
 @use "responsive.mixin.scss" as *;
 
 button {
+  cursor: pointer !important;
   border: none;
   width: 100%;
   background-color: transparent;

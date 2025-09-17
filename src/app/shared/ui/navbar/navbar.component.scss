@@ -10,6 +10,8 @@
   padding: 24px;
 
   .navbar-content {
+    max-width: 1920px;
+    margin: 0 auto auto auto;
     padding: 40px;
     display: grid;
     grid-template-columns: repeat(2, auto);
@@ -36,7 +38,7 @@
         background: $orange2;
       }
       &.aboutPage {
-        background: $purple2;
+        background: $purple3;
       }
       &.worksPage {
         background: $red2;
@@ -122,6 +124,8 @@
 }
 
 .link-container {
+  max-width: 1920px;
+  margin: 0 auto auto auto;
   display: grid;
   margin-left: 40px;
   gap: 10px;
