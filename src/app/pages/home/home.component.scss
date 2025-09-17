@@ -1,6 +1,6 @@
-@use "../../../assets/color/colors.variables" as *;
-@use "../../animations/animations.scss" as *;
-@use "../../../assets/responsive.mixin.scss" as *;
+@use "colors.variables" as *;
+@use "animations.scss" as *;
+@use "responsive.mixin.scss" as *;
 
 .home-container {
   width: calc(100% - 20px);

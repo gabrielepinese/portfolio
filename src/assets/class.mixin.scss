@@ -1,4 +1,4 @@
-@use "color/colors.variables" as *;
+@use "colors.variables" as *;
 @use "responsive.mixin.scss" as *;
 
 @mixin apply-style-to-container($class) {
