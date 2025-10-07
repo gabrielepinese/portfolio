@@ -23,7 +23,7 @@
       background: $green2;
     }
 
-    @include screen-down("lg") {
+    @include screen-down("md") {
       padding: 24px 24px 200px 24px;
     }
   }

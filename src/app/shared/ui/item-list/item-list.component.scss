@@ -31,7 +31,7 @@ button {
 
         span {
           text-align: center;
-          @include screen-down("lg") {
+          @include screen-down("md") {
             text-align: left;
           }
         }
@@ -43,7 +43,7 @@ button {
           border-radius: 8px;
         }
 
-        @include screen-down("lg") {
+        @include screen-down("md") {
           column-gap: 8px;
         }
       }
@@ -81,7 +81,7 @@ button {
         }
       }
 
-      @include screen-down("lg") {
+      @include screen-down("md") {
         grid-template-columns: repeat(1, 1fr);
       }
     }

@@ -71,13 +71,28 @@
         animation-delay: 1s;
 
         @include screen-down("lg") {
+          left: 160px;
+          top: -36px;
+          width: 400px;
+          height: 264px;
+        }
+
+        @include screen-down("md") {
           left: 110px;
           top: -100px;
           width: 160px;
           height: 400px;
         }
       }
+
+      @include screen-down("lg") {
+        grid-template-columns: repeat(1, 1fr);
+      }
     }
+  }
+
+  @include screen-down("md") {
+    width: 100%;
   }
 }
 

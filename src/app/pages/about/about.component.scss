@@ -1,5 +1,6 @@
 @use "colors.variables" as *;
 @use "animations.scss" as *;
+@use "responsive.mixin.scss" as *;
 
 .title-container {
   font-family: "Merriweather", serif;
@@ -51,11 +52,31 @@
 
       .heading3 {
         line-height: 54px;
+
+        @include screen-down("mid") {
+          line-height: 40px;
+        }
       }
       .body20 {
         line-height: 40px;
+
+        @include screen-down("lg") {
+          line-height: 32px;
+        }
       }
     }
+
+    @include screen-down("lg") {
+      grid-template-columns: 55% auto;
+    }
+    @include screen-down("md") {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 40px;
+    }
+  }
+
+  @include screen-down("md") {
+    gap: 40px;
   }
 
   .about-drawing-section {
@@ -70,6 +91,24 @@
     border-radius: 16px;
     height: 500px;
     width: 400px;
+
+    @include screen-down("lg") {
+      height: 400px;
+      width: 300px;
+      margin: auto;
+    }
+
+    @include screen-down("mid") {
+      height: 400px;
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    @include screen-down("md") {
+      height: 300px;
+      width: 200px;
+      margin: auto;
+    }
   }
 }
 
@@ -88,6 +127,17 @@
 
   .quote-owner {
     text-align: right;
+  }
+
+  @include screen-down("md") {
+    margin: 80px auto;
+    border-top: 8px solid $purpleStrong;
+    border-bottom: 8px solid $purpleStrong;
+    border-right: 0;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 }
 
@@ -147,6 +197,12 @@
   gap: 15px;
   margin-top: 40px;
 
+  @include screen-down("md") {
+    grid-template-columns: 1fr; // 4 colonne base
+    grid-template-rows: fit-content(100%);
+    grid-auto-rows: fit-content(100%); // altezza base
+  }
+
   .skill-card {
     display: grid;
     background: $purple2;
@@ -186,6 +242,26 @@
     &.type4 {
       grid-column: span 3;
       grid-row: span 3;
+    }
+
+    @include screen-down("lg") {
+      &.type1,
+      &.type2,
+      &.type3,
+      &.type4 {
+        grid-column: span 2;
+        height: fit-content;
+      }
+    }
+
+    @include screen-down("md") {
+      &.type1,
+      &.type2,
+      &.type3,
+      &.type4 {
+        grid-column: span 1;
+        height: fit-content;
+      }
     }
   }
 }
