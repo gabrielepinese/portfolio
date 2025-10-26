@@ -265,3 +265,27 @@
     }
   }
 }
+
+.skills-list {
+  display: grid;
+  gap: 20px;
+
+  .skill-section {
+    border-bottom: 2px solid $purplePrimary;
+    padding-bottom: 16px;
+
+    .title {
+      font-size: 36px;
+      font-weight: bold;
+      color: $purpleStrong;
+    }
+
+    .body24 {
+      line-height: 36px;
+    }
+
+    &:last-child {
+      border: none;
+    }
+  }
+}

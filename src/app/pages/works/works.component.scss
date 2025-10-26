@@ -62,8 +62,4 @@
       padding: 24px;
     }
   }
-
-  @include screen-down("md") {
-    gap: 0;
-  }
 }
