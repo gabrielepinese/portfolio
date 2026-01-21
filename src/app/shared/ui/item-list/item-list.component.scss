@@ -1,8 +1,9 @@
-@use "../../../../assets/color/colors.variables" as *;
-@use "../../../animations/animations.scss" as *;
-@use "../../../../assets/responsive.mixin.scss" as *;
+@use "colors.variables" as *;
+@use "animations.scss" as *;
+@use "responsive.mixin.scss" as *;
 
 button {
+  cursor: pointer !important;
   border: none;
   width: 100%;
   background-color: transparent;
@@ -30,7 +31,7 @@ button {
 
         span {
           text-align: center;
-          @include screen-down("lg") {
+          @include screen-down("md") {
             text-align: left;
           }
         }
@@ -42,7 +43,7 @@ button {
           border-radius: 8px;
         }
 
-        @include screen-down("lg") {
+        @include screen-down("md") {
           column-gap: 8px;
         }
       }
@@ -80,7 +81,7 @@ button {
         }
       }
 
-      @include screen-down("lg") {
+      @include screen-down("md") {
         grid-template-columns: repeat(1, 1fr);
       }
     }

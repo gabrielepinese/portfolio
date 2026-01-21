@@ -130,8 +130,8 @@ button {
 }
 
 .text-con-bordo3 {
-  text-shadow: 4px 0 $purple2, -4px 0 $purple2, 0 4px $purple2, 0 -4px $purple2,
-    3px 3px $purple2, -3px -3px $purple2, 3px -3px $purple2, -3px 3px $purple2;
+  text-shadow: 4px 0 $purple3, -4px 0 $purple3, 0 4px $purple3, 0 -4px $purple3,
+    3px 3px $purple3, -3px -3px $purple3, 3px -3px $purple3, -3px 3px $purple3;
 }
 
 //Wrapper router ----
@@ -167,7 +167,7 @@ button {
   padding: 24px;
   flex: 1 1;
 
-  // @include screen-down("lg") {
+  // @include screen-down("md") {
   //   position: absolute;
   //   top: 0;
   // }

@@ -1,4 +1,4 @@
-@use "../responsive.mixin.scss" as *;
+@use "responsive.mixin.scss" as *;
 
 @mixin bigTitle {
   font-size: 64px;
@@ -6,8 +6,8 @@
   font-weight: 400;
 
   @include screen-down("lg") {
-    font-size: 56px;
-    line-height: 64px;
+    font-size: 48px;
+    line-height: 50px;
     font-weight: 400;
   }
 }
@@ -46,9 +46,9 @@
   line-height: 50px;
   font-weight: 400;
 
-  @include screen-down("lg") {
-    font-size: 32px;
-    line-height: 40px;
+  @include screen-down("mid") {
+    font-size: 28px;
+    font-weight: 400;
   }
 }
 

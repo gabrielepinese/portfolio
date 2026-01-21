@@ -1,4 +1,4 @@
-@use "color/colors.variables" as *;
+@use "colors.variables" as *;
 @use "responsive.mixin.scss" as *;
 
 @mixin apply-style-to-container($class) {
@@ -14,7 +14,7 @@
       background: $orange2;
     }
     &.about {
-      background: $purple2;
+      background: $purple3;
     }
     &.works {
       background: $red2;
@@ -23,7 +23,7 @@
       background: $green2;
     }
 
-    @include screen-down("lg") {
+    @include screen-down("md") {
       padding: 24px 24px 200px 24px;
     }
   }

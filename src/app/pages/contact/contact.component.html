@@ -37,6 +37,7 @@
       >
       <button
         class="secondary-btn contact-btn"
+        [ngClass]="{ 'mx-auto': isMedium$ | async }"
         type="button"
         role="button"
         (click)="sendMail()"
