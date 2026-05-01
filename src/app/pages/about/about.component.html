@@ -41,71 +41,7 @@
   <div class="about-main-section">
     <!-- Profile -->
     <div class="about-presentation reveal">
-      <div class="terminal-card">
-        <div class="terminal-header">
-          <div class="terminal-dots">
-            <span class="dot close"></span>
-            <span class="dot minimize"></span>
-            <span class="dot maximize"></span>
-          </div>
-          <span class="terminal-filename">profile.ts</span>
-        </div>
-        <div class="terminal-body">
-          <div class="code-line">
-            <span class="ln"> 1 </span> <span class="kw">const </span>
-            <span class="var">developer</span> <span class="op">= &#123;</span>
-          </div>
-          <div class="code-line">
-            <span class="ln"> 2 </span> <span class="prop">name</span
-            ><span class="op">:</span> <span class="str">"Gabriele Pinese"</span
-            ><span class="op">,</span>
-          </div>
-          <div class="code-line">
-            <span class="ln"> 3 </span> <span class="prop">role</span
-            ><span class="op">:</span>
-            <span class="str">"Frontend Developer"</span
-            ><span class="op">,</span>
-          </div>
-          <div class="code-line">
-            <span class="ln"> 4 </span> <span class="prop">stack</span
-            ><span class="op">: [</span>
-          </div>
-          <div class="code-line">
-            <span class="ln"> 5 </span> <span class="str">"Angular"</span
-            ><span class="op">,</span>
-          </div>
-          <div class="code-line">
-            <span class="ln"> 6 </span> <span class="str">"TypeScript"</span
-            ><span class="op">,</span>
-          </div>
-          <div class="code-line">
-            <span class="ln"> 7 </span> <span class="str">"SCSS / Design"</span
-            ><span class="op">,</span>
-          </div>
-          <div class="code-line">
-            <span class="ln"> 8 </span> <span class="op">],</span>
-          </div>
-          <div class="code-line">
-            <span class="ln"> 9 </span> <span class="prop">passion</span
-            ><span class="op">:</span> <span class="str">"Beautiful UIs"</span
-            ><span class="op">,</span>
-          </div>
-          <div class="code-line">
-            <span class="ln">10 </span> <span class="prop">location</span
-            ><span class="op">:</span> <span class="str">"Milan, Italy"</span
-            ><span class="op">,</span>
-          </div>
-          <div class="code-line">
-            <span class="ln">11 </span> <span class="prop">status</span
-            ><span class="op">:</span> <span class="str">"Available ✦"</span
-            ><span class="op">,</span>
-          </div>
-          <div class="code-line">
-            <span class="ln">12 </span> <span class="op">&#125;;</span
-            ><span class="cursor">▌</span>
-          </div>
-        </div>
-      </div>
+      <app-terminal-card></app-terminal-card>
 
       <div class="pres-container">
         <div class="heading3 bold" role="heading" aria-level="4">
@@ -123,8 +59,78 @@
       </div>
     </div>
 
+    <!-- Stack -->
+    <div class="about-stack-section reveal">
+      <div class="stack-grid">
+        <div class="stack-icon" style="--i: 0">
+          <div class="icon-wrap">
+            <i class="devicon-angular-plain colored"></i>
+          </div>
+          <span>Angular</span>
+        </div>
+        <div class="stack-icon" style="--i: 1">
+          <div class="icon-wrap">
+            <i class="devicon-typescript-plain colored"></i>
+          </div>
+          <span>TypeScript</span>
+        </div>
+        <div class="stack-icon" style="--i: 2">
+          <div class="icon-wrap">
+            <i class="devicon-react-original colored"></i>
+          </div>
+          <span>React</span>
+        </div>
+        <div class="stack-icon" style="--i: 3">
+          <div class="icon-wrap">
+            <i class="devicon-html5-plain colored"></i>
+          </div>
+          <span>HTML5</span>
+        </div>
+        <div class="stack-icon" style="--i: 4">
+          <div class="icon-wrap">
+            <i class="devicon-css3-plain colored"></i>
+          </div>
+          <span>CSS3</span>
+        </div>
+        <div class="stack-icon" style="--i: 5">
+          <div class="icon-wrap">
+            <i class="devicon-sass-original colored"></i>
+          </div>
+          <span>SCSS</span>
+        </div>
+        <div class="stack-icon" style="--i: 6">
+          <div class="icon-wrap">
+            <i class="devicon-tailwindcss-plain colored"></i>
+          </div>
+          <span>Tailwind</span>
+        </div>
+        <div class="stack-icon" style="--i: 7">
+          <div class="icon-wrap">
+            <i class="devicon-figma-plain colored"></i>
+          </div>
+          <span>Figma</span>
+        </div>
+        <div class="stack-icon" style="--i: 8">
+          <div class="icon-wrap"><i class="devicon-git-plain colored"></i></div>
+          <span>Git</span>
+        </div>
+        <div class="stack-icon" style="--i: 9">
+          <div class="icon-wrap">
+            <i class="devicon-vscode-plain colored"></i>
+          </div>
+          <span>VS Code</span>
+        </div>
+        <div class="stack-icon" style="--i: 10">
+          <div class="icon-wrap">
+            <i class="devicon-csharp-plain colored"></i>
+          </div>
+          <span>C#</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills -->
     <div>
-      <!-- Skills -->
       <div class="skills-intro reveal">
         <div class="heading1 bold text-center">My Focus Areas</div>
         <div class="text-center body20">
@@ -235,7 +241,7 @@
       }
     </div>
 
-    <!-- Drawing section -->
+    <!-- Drawing -->
     <div class="about-drawing-section reveal" role="heading" aria-level="4">
       <span class="body24">
         Drawing has always been my <strong>favorite way</strong> to express
