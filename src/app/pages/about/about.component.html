@@ -1,13 +1,29 @@
 <div class="about-container about">
+  <!-- HERO -->
   <div class="about-content">
+    <div class="floating-keywords" aria-hidden="true">
+      @for (kw of codeKeywords; track kw.text) {
+        <span
+          class="code-keyword"
+          [style.left]="kw.x"
+          [style.top]="kw.y"
+          [style.animation-delay]="kw.delay"
+          [style.animation-duration]="kw.duration"
+          [style.font-size]="kw.size"
+          [style.opacity]="kw.opacity"
+          >{{ kw.text }}</span
+        >
+      }
+    </div>
+
     <div class="title-container">
       <div class="title-content">
         <div class="bigTitle bold" role="heading" aria-level="1">
           About me<span class="purplePrimary">.</span>
         </div>
         <div class="body24" role="heading" aria-level="2">
-          What excites me most about <strong>Frontend Development </strong>is
-          the chance to bring ideas to life to turn abstract concepts into
+          What excites me most about <strong>Frontend Development</strong> is
+          the chance to bring ideas to life — to turn abstract concepts into
           intuitive, beautiful, and high-performance interfaces. Each project is
           an opportunity to <strong>refine details</strong>, explore new
           solutions, and create something that <strong>feels smooth</strong> and
@@ -21,9 +37,76 @@
     </div>
   </div>
 
+  <!-- MAIN -->
   <div class="about-main-section">
-    <div class="about-presentation">
-      <div class="img-about-container">Profile img</div>
+    <!-- Profile -->
+    <div class="about-presentation reveal">
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot close"></span>
+            <span class="dot minimize"></span>
+            <span class="dot maximize"></span>
+          </div>
+          <span class="terminal-filename">profile.ts</span>
+        </div>
+        <div class="terminal-body">
+          <div class="code-line">
+            <span class="ln"> 1 </span> <span class="kw">const </span>
+            <span class="var">developer</span> <span class="op">= &#123;</span>
+          </div>
+          <div class="code-line">
+            <span class="ln"> 2 </span> <span class="prop">name</span
+            ><span class="op">:</span> <span class="str">"Gabriele Pinese"</span
+            ><span class="op">,</span>
+          </div>
+          <div class="code-line">
+            <span class="ln"> 3 </span> <span class="prop">role</span
+            ><span class="op">:</span>
+            <span class="str">"Frontend Developer"</span
+            ><span class="op">,</span>
+          </div>
+          <div class="code-line">
+            <span class="ln"> 4 </span> <span class="prop">stack</span
+            ><span class="op">: [</span>
+          </div>
+          <div class="code-line">
+            <span class="ln"> 5 </span> <span class="str">"Angular"</span
+            ><span class="op">,</span>
+          </div>
+          <div class="code-line">
+            <span class="ln"> 6 </span> <span class="str">"TypeScript"</span
+            ><span class="op">,</span>
+          </div>
+          <div class="code-line">
+            <span class="ln"> 7 </span> <span class="str">"SCSS / Design"</span
+            ><span class="op">,</span>
+          </div>
+          <div class="code-line">
+            <span class="ln"> 8 </span> <span class="op">],</span>
+          </div>
+          <div class="code-line">
+            <span class="ln"> 9 </span> <span class="prop">passion</span
+            ><span class="op">:</span> <span class="str">"Beautiful UIs"</span
+            ><span class="op">,</span>
+          </div>
+          <div class="code-line">
+            <span class="ln">10 </span> <span class="prop">location</span
+            ><span class="op">:</span> <span class="str">"Milan, Italy"</span
+            ><span class="op">,</span>
+          </div>
+          <div class="code-line">
+            <span class="ln">11 </span> <span class="prop">status</span
+            ><span class="op">:</span> <span class="str">"Available ✦"</span
+            ><span class="op">,</span>
+          </div>
+          <div class="code-line">
+            <span class="ln">12 </span> <span class="op">&#125;;</span
+            ><span class="cursor">▌</span>
+          </div>
+        </div>
+      </div>
+
       <div class="pres-container">
         <div class="heading3 bold" role="heading" aria-level="4">
           My journey into technology began with a simple curiosity that grew
@@ -39,9 +122,10 @@
         </div>
       </div>
     </div>
+
     <div>
-      <!-- Skills -------------------------------- -->
-      <div class="skills-intro">
+      <!-- Skills -->
+      <div class="skills-intro reveal">
         <div class="heading1 bold text-center">My Focus Areas</div>
         <div class="text-center body20">
           I specialize in creating scalable and user-friendly solutions,
@@ -54,7 +138,7 @@
 
       @if (isMedium$ | async) {
         <div class="skills-list">
-          <div class="skill-section">
+          <div class="skill-section reveal" style="--delay: 0s">
             <div class="title">01 Angular</div>
             <div class="body24">
               Building <strong>scalable</strong> and
@@ -63,7 +147,7 @@
               <strong>robust front-end solutions</strong>.
             </div>
           </div>
-          <div class="skill-section">
+          <div class="skill-section reveal" style="--delay: 0.15s">
             <div class="title">02 Design</div>
             <div class="body18">
               Creating <strong>clean</strong>, <strong>modern</strong>, and
@@ -72,7 +156,7 @@
               <strong>usability</strong>.
             </div>
           </div>
-          <div class="skill-section">
+          <div class="skill-section reveal" style="--delay: 0.3s">
             <div class="title">03 User Flow</div>
             <div class="body20">
               Designing
@@ -81,7 +165,7 @@
               <strong>smooth user experiences</strong>.
             </div>
           </div>
-          <div class="skill-section">
+          <div class="skill-section reveal" style="--delay: 0.45s">
             <div class="title">04 Performance / Clean Code</div>
             <div class="body24">
               I strongly believe that <strong>great applications</strong> are
@@ -101,8 +185,7 @@
         </div>
       } @else {
         <div class="skills-mosaic">
-          <div class="skill-card type3">
-            <!-- Skills 01 -------------------------------- -->
+          <div class="skill-card type3 reveal" style="--delay: 0s">
             <div class="skill-title bold body28 title">01 Angular</div>
             <div class="body24">
               Building <strong>scalable</strong> and
@@ -111,8 +194,7 @@
               <strong>robust front-end solutions</strong>.
             </div>
           </div>
-          <!-- Skills 02 -------------------------------- -->
-          <div class="skill-card type1">
+          <div class="skill-card type1 reveal" style="--delay: 0.1s">
             <div class="skill-title bold body28 title">02 Design</div>
             <div class="body18">
               Creating <strong>clean</strong>, <strong>modern</strong>, and
@@ -121,8 +203,7 @@
               <strong>usability</strong>.
             </div>
           </div>
-          <!-- Skills 03 -------------------------------- -->
-          <div class="skill-card type2">
+          <div class="skill-card type2 reveal" style="--delay: 0.2s">
             <div class="skill-title bold body28 title">03 User Flow</div>
             <div class="body20">
               Designing
@@ -131,8 +212,7 @@
               <strong>smooth user experiences</strong>.
             </div>
           </div>
-          <!-- Skills 04 -------------------------------- -->
-          <div class="skill-card type4">
+          <div class="skill-card type4 reveal" style="--delay: 0.3s">
             <div class="skill-title bold body28 title">
               04 Performance / Clean Code
             </div>
@@ -154,8 +234,9 @@
         </div>
       }
     </div>
-    <!-- About me drawing -------------------------------- -->
-    <div class="about-drawing-section" role="heading" aria-level="4">
+
+    <!-- Drawing section -->
+    <div class="about-drawing-section reveal" role="heading" aria-level="4">
       <span class="body24">
         Drawing has always been my <strong>favorite way</strong> to express
         ideas, long before I ever wrote a line of code. That passion for visual
@@ -170,29 +251,34 @@
     </div>
   </div>
 
-  <div class="quote-container body24">
+  <div class="quote-container body24 reveal">
     <div class="quote">
-      “Those who can imagine anything, can create the impossible.”
+      "Those who can imagine anything, can create the impossible."
     </div>
     <div class="quote-owner">Alan Turing</div>
   </div>
 
   <div class="about-footer-container">
-    <div class="heading1 bold" role="heading" aria-level="3">
+    <div class="heading1 bold reveal" role="heading" aria-level="3">
       <div class="pattern"></div>
       <span class="text-con-bordo3">
         Do you like me?<span class="purplePrimary">.</span></span
       >
     </div>
-    <div class="body20" role="heading" aria-level="4">
+    <div
+      class="body20 reveal"
+      style="--delay: 0.2s"
+      role="heading"
+      aria-level="4"
+    >
       <span class="text-con-bordo3"
-        >Maybe you like me, maybe you don’t… but hey, if you’ve scrolled this
-        far, something must’ve caught your eye.<br /><br />
+        >Maybe you like me, maybe you don't… but hey, if you've scrolled this
+        far, something must've caught your eye.<br /><br />
         If you're curious to learn more about what I do ( spoiler: it involves
         code, components, and a strong dislike for spaghetti code ), feel free
         to
-        <strong>grab my CV</strong>. I promise : No clichés like “great team
-        player”, just real stuff.</span
+        <strong>grab my CV</strong>. I promise : No clichés like "great team
+        player", just real stuff.</span
       >
       <button
         class="secondary-btn about-btn"
