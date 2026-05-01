@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, Inject, DOCUMENT } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { CommonModule } from "@angular/common";
+import { Component, Inject, DOCUMENT } from "@angular/core";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { filter } from "rxjs";
 
 @Component({
-  selector: 'app-navbar',
+  selector: "app-navbar",
   imports: [CommonModule],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss',
+  templateUrl: "./navbar.component.html",
+  styleUrl: "./navbar.component.scss",
 })
 export class NavbarComponent {
   routeColor: string | undefined;
@@ -15,17 +15,17 @@ export class NavbarComponent {
   menuOpen = false;
   menuClosing = false;
 
-  transitionColor = '';
+  transitionColor = "";
   showRouteTransition = false;
   startTransition = false;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
   ) {
     const currentRoute = this.getChild(this.activatedRoute);
-    this.routeColor = currentRoute.snapshot.data['color'];
+    this.routeColor = currentRoute.snapshot.data["color"];
   }
 
   ngOnInit(): void {
@@ -33,7 +33,7 @@ export class NavbarComponent {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         const currentRoute = this.getChild(this.activatedRoute);
-        this.routeColor = currentRoute.snapshot.data['color'];
+        this.routeColor = currentRoute.snapshot.data["color"];
       });
   }
 
@@ -46,17 +46,17 @@ export class NavbarComponent {
 
   getRouteColor(path: string): string {
     const routeColors: { [key: string]: string } = {
-      home: '#f1a661',
-      about: '#aac4ff',
-      works: '#d2665a',
-      contact: '#c4d7b2',
+      home: "#f1a661",
+      about: "#aac4ff",
+      works: "#d2665a",
+      contact: "#c4d7b2",
     };
 
-    return routeColors[path] || '#000';
+    return routeColors[path] || "#000";
   }
 
   navigate(path: string) {
-    const currentPath = this.router.url.replace(/^\/+/, '');
+    const currentPath = this.router.url.replace(/^\/+/, "");
 
     if (currentPath === path) {
       this.toggleMenu();
@@ -71,13 +71,13 @@ export class NavbarComponent {
       this.menuOpen = false;
       this.menuClosing = false;
     }, 1000);
-    this.document.body.style.overflow = '';
+    this.document.body.style.overflow = "";
 
     // Attendi che la tenda si apra
     setTimeout(() => {
       // Naviga alla nuova pagina
       this.router.navigateByUrl(path).then(() => {
-        const frame = this.document.querySelector('.frame');
+        const frame = this.document.querySelector(".frame");
         if (frame) {
           frame.scrollTop = 0;
         }
@@ -100,9 +100,9 @@ export class NavbarComponent {
         this.menuOpen = false;
         this.menuClosing = false;
       }, 1000);
-      this.document.body.style.overflow = '';
+      this.document.body.style.overflow = "";
     } else {
-      this.document.body.style.overflow = 'hidden';
+      this.document.body.style.overflow = "hidden";
       this.menuOpen = true;
     }
   }

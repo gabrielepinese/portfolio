@@ -23,15 +23,15 @@
       <div class="period-line"></div>
     </div>
     @for (company of companyList; track $index) {
-    <app-item-list
-      [link]="company.link"
-      [from]="company.from"
-      [to]="company.to"
-      [company]="company.companyName"
-      [title]="company.title"
-      [desc]="company.description"
-      [chips]="company.chips"
-    ></app-item-list>
+      <app-item-list
+        [link]="company.link"
+        [from]="company.from"
+        [to]="company.to"
+        [company]="company.companyName"
+        [title]="company.title"
+        [desc]="company.description"
+        [chips]="company.chips"
+      ></app-item-list>
     }
   </div>
 </div>
