@@ -107,8 +107,8 @@
 
   .about-presentation {
     display: grid;
-    grid-template-columns: 40% auto;
-    gap: 24px;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 40px;
 
     .pres-container {
       display: inherit;
@@ -132,13 +132,12 @@
       }
     }
 
-    @include screen-down("lg") {
-      grid-template-columns: 55% auto;
+    @include screen-up("mid") {
+      grid-template-columns: 45% auto;
     }
 
-    @include screen-down("md") {
-      grid-template-columns: repeat(1, 1fr);
-      gap: 40px;
+    @include screen-up("md") {
+      gap: 24px;
     }
   }
 
@@ -353,119 +352,66 @@
   }
 }
 
-// ---- Skills intro ----
-.skills-intro {
+// ---- Skills section ----
+.skills-section {
   display: grid;
-  gap: 52px;
-  margin-bottom: 80px;
+  gap: 64px;
+}
+
+.skills-header {
+  display: grid;
+  gap: 20px;
+  max-width: 640px;
 
   .body20 {
-    line-height: 40px;
+    line-height: 1.8;
+    opacity: 0.7;
   }
 }
 
-// ---- Skills mosaic ----
-.skills-mosaic {
+.skills-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 150px;
-  gap: 15px;
-  margin-top: 40px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 
   @include screen-down("md") {
     grid-template-columns: 1fr;
-    grid-template-rows: fit-content(100%);
-    grid-auto-rows: fit-content(100%);
-  }
-
-  .skill-card {
-    display: grid;
-    background: $purple2;
-    border-radius: 12px;
-    padding: 20px;
-    transition:
-      transform 0.3s,
-      background 0.3s,
-      box-shadow 0.3s;
-    overflow-wrap: break-word;
-
-    .title {
-      color: $purpleStrong;
-    }
-
-    &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba($purpleStrong, 0.12);
-    }
-
-    .icon {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
-
-    &.type1 {
-      grid-column: span 1;
-      grid-row: span 2;
-    }
-
-    &.type2 {
-      grid-column: span 1;
-      grid-row: span 3;
-    }
-
-    &.type3 {
-      grid-column: span 3;
-      grid-row: span 2;
-    }
-
-    &.type4 {
-      grid-column: span 3;
-      grid-row: span 3;
-    }
-
-    @include screen-down("lg") {
-      &.type1,
-      &.type2,
-      &.type3,
-      &.type4 {
-        grid-column: span 2;
-        height: fit-content;
-      }
-    }
-
-    @include screen-down("md") {
-      &.type1,
-      &.type2,
-      &.type3,
-      &.type4 {
-        grid-column: span 1;
-        height: fit-content;
-      }
-    }
   }
 }
 
-// ---- Skills list (tablet) ----
-.skills-list {
+.skill-card {
+  background: $purple2;
+  border-radius: 20px;
+  padding: 36px 32px;
   display: grid;
-  gap: 20px;
+  gap: 10px;
+  align-content: start;
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s ease;
 
-  .skill-section {
-    border-bottom: 2px solid $purplePrimary;
-    padding-bottom: 16px;
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba($purpleStrong, 0.14);
+  }
 
-    .title {
-      font-size: 36px;
-      font-weight: bold;
-      color: $purpleStrong;
-    }
+  .skill-num {
+    font-family: "Courier New", monospace;
+    font-size: 52px;
+    font-weight: 700;
+    color: rgba($purplePrimary, 0.22);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
 
-    .body24 {
-      line-height: 36px;
-    }
+  .skill-name {
+    font-size: 22px;
+    color: $purpleStrong;
+    font-weight: 700;
+  }
 
-    &:last-child {
-      border: none;
-    }
+  .body18 {
+    line-height: 1.75;
+    opacity: 0.75;
   }
 }

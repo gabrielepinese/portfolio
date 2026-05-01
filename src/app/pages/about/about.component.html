@@ -130,115 +130,58 @@
     </div>
 
     <!-- Skills -->
-    <div>
-      <div class="skills-intro reveal">
-        <div class="heading1 bold text-center">My Focus Areas</div>
-        <div class="text-center body20">
-          I specialize in creating scalable and user-friendly solutions,
-          focusing on clean design, efficient code, and seamless user
-          experiences. My work emphasizes both functionality and aesthetic
-          appeal, ensuring projects are maintainable, performant, and
-          future-ready.
+    <div class="skills-section">
+      <div class="skills-header reveal">
+        <div class="heading1 bold">
+          My Focus Areas<span class="purplePrimary">.</span>
+        </div>
+        <div class="body20">
+          Scalable solutions, clean design, efficient code — built to perform
+          and crafted to feel right.
         </div>
       </div>
 
-      @if (isMedium$ | async) {
-        <div class="skills-list">
-          <div class="skill-section reveal" style="--delay: 0s">
-            <div class="title">01 Angular</div>
-            <div class="body24">
-              Building <strong>scalable</strong> and
-              <strong>maintainable</strong> applications with Angular,
-              leveraging its <strong>powerful ecosystem</strong> to deliver
-              <strong>robust front-end solutions</strong>.
-            </div>
-          </div>
-          <div class="skill-section reveal" style="--delay: 0.15s">
-            <div class="title">02 Design</div>
-            <div class="body18">
-              Creating <strong>clean</strong>, <strong>modern</strong>, and
-              <strong>user-friendly interfaces</strong> with attention to
-              detail, ensuring both <strong>aesthetic appeal</strong> and
-              <strong>usability</strong>.
-            </div>
-          </div>
-          <div class="skill-section reveal" style="--delay: 0.3s">
-            <div class="title">03 User Flow</div>
-            <div class="body20">
-              Designing
-              <strong>interfaces that adapt seamlessly across devices</strong>,
-              with a strong focus on <strong>intuitive navigation</strong> and
-              <strong>smooth user experiences</strong>.
-            </div>
-          </div>
-          <div class="skill-section reveal" style="--delay: 0.45s">
-            <div class="title">04 Performance / Clean Code</div>
-            <div class="body24">
-              I strongly believe that <strong>great applications</strong> are
-              not only about looks, but also about what runs under the hood. I
-              write <strong>clean</strong>, <strong>structured</strong>, and
-              <strong>reusable code</strong> that is easy to maintain and scale
-              over time. <strong>Performance</strong> is always a priority: from
-              <strong>optimizing load times</strong> to reducing unnecessary
-              complexity, I focus on delivering
-              <strong>smooth, efficient, and reliable user experiences</strong>.
-              By combining <strong>best practices</strong>, attention to detail,
-              and modern development standards, I ensure that every project
-              remains both <strong>performant</strong> and
-              <strong>future-proof</strong>.
-            </div>
+      <div class="skills-grid">
+        <div class="skill-card reveal" style="--delay: 0s">
+          <span class="skill-num">01</span>
+          <div class="skill-name bold">Angular</div>
+          <div class="body18">
+            Building <strong>scalable</strong> and
+            <strong>maintainable</strong> applications with Angular, leveraging
+            its powerful ecosystem to deliver
+            <strong>robust front-end solutions</strong>.
           </div>
         </div>
-      } @else {
-        <div class="skills-mosaic">
-          <div class="skill-card type3 reveal" style="--delay: 0s">
-            <div class="skill-title bold body28 title">01 Angular</div>
-            <div class="body24">
-              Building <strong>scalable</strong> and
-              <strong>maintainable</strong> applications with Angular,
-              leveraging its <strong>powerful ecosystem</strong> to deliver
-              <strong>robust front-end solutions</strong>.
-            </div>
-          </div>
-          <div class="skill-card type1 reveal" style="--delay: 0.1s">
-            <div class="skill-title bold body28 title">02 Design</div>
-            <div class="body18">
-              Creating <strong>clean</strong>, <strong>modern</strong>, and
-              <strong>user-friendly interfaces</strong> with attention to
-              detail, ensuring both <strong>aesthetic appeal</strong> and
-              <strong>usability</strong>.
-            </div>
-          </div>
-          <div class="skill-card type2 reveal" style="--delay: 0.2s">
-            <div class="skill-title bold body28 title">03 User Flow</div>
-            <div class="body20">
-              Designing
-              <strong>interfaces that adapt seamlessly across devices</strong>,
-              with a strong focus on <strong>intuitive navigation</strong> and
-              <strong>smooth user experiences</strong>.
-            </div>
-          </div>
-          <div class="skill-card type4 reveal" style="--delay: 0.3s">
-            <div class="skill-title bold body28 title">
-              04 Performance / Clean Code
-            </div>
-            <div class="body24">
-              I strongly believe that <strong>great applications</strong> are
-              not only about looks, but also about what runs under the hood. I
-              write <strong>clean</strong>, <strong>structured</strong>, and
-              <strong>reusable code</strong> that is easy to maintain and scale
-              over time. <strong>Performance</strong> is always a priority: from
-              <strong>optimizing load times</strong> to reducing unnecessary
-              complexity, I focus on delivering
-              <strong>smooth, efficient, and reliable user experiences</strong>.
-              By combining <strong>best practices</strong>, attention to detail,
-              and modern development standards, I ensure that every project
-              remains both <strong>performant</strong> and
-              <strong>future-proof</strong>.
-            </div>
+        <div class="skill-card reveal" style="--delay: 0.1s">
+          <span class="skill-num">02</span>
+          <div class="skill-name bold">Design</div>
+          <div class="body18">
+            Creating <strong>clean</strong>, <strong>modern</strong>, and
+            <strong>user-friendly interfaces</strong> with attention to detail,
+            ensuring both <strong>aesthetic appeal</strong> and usability.
           </div>
         </div>
-      }
+        <div class="skill-card reveal" style="--delay: 0.2s">
+          <span class="skill-num">03</span>
+          <div class="skill-name bold">User Flow</div>
+          <div class="body18">
+            Designing
+            <strong>interfaces that adapt seamlessly across devices</strong>,
+            with focus on <strong>intuitive navigation</strong> and smooth user
+            experiences.
+          </div>
+        </div>
+        <div class="skill-card reveal" style="--delay: 0.3s">
+          <span class="skill-num">04</span>
+          <div class="skill-name bold">Performance</div>
+          <div class="body18">
+            Writing <strong>clean</strong>, <strong>structured</strong>, and
+            <strong>reusable code</strong> — optimizing load times, reducing
+            complexity, delivering
+            <strong>fast and reliable</strong> experiences.
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Drawing -->
