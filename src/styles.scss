@@ -162,6 +162,10 @@ button {
     right: 0;
     height: 25px;
     width: 100%;
+
+    @include screen-down("md") {
+      height: 16px;
+    }
   }
   &.bottom {
     bottom: -1px;
@@ -169,6 +173,10 @@ button {
     right: 0;
     height: 25px;
     width: 100%;
+
+    @include screen-down("md") {
+      height: 16px;
+    }
   }
   &.left {
     top: 0;
@@ -176,6 +184,10 @@ button {
     left: 0;
     width: 24px;
     height: 100%;
+
+    @include screen-down("md") {
+      height: 16px;
+    }
   }
   &.right {
     top: 0;
@@ -183,13 +195,25 @@ button {
     right: 0;
     width: 24px;
     height: 100%;
+
+    @include screen-down("md") {
+      height: 16px;
+    }
   }
 }
 
 .app-layout {
   background-color: white;
-  padding: 24px 0 24px 24px;
+  padding: 24px 0 16px 24px;
   flex: 1 1;
+
+  @include screen-down("lg") {
+    padding: 24px;
+  }
+
+  @include screen-down("md") {
+    padding: 16px;
+  }
 }
 
 .home {
