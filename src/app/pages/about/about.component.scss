@@ -102,7 +102,7 @@
     "Helvetica Neue",
     sans-serif;
   display: grid;
-  max-width: 1200px;
+  max-width: 1216px;
   gap: 160px;
 
   .about-presentation {
@@ -150,13 +150,19 @@
     padding-left: 32px;
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       top: 0;
       bottom: 0;
       width: 3px;
-      background: linear-gradient(180deg, transparent, $purplePrimary 20%, $purplePrimary 80%, transparent);
+      background: linear-gradient(
+        180deg,
+        transparent,
+        $purplePrimary 20%,
+        $purplePrimary 80%,
+        transparent
+      );
       border-radius: 2px;
       transform: scaleY(0);
       transform-origin: top;
@@ -320,14 +326,14 @@
   position: relative;
 
   &::before {
-    content: '\201C';
+    content: "\201C";
     position: absolute;
     top: -32px;
     left: 12px;
     font-size: 88px;
     line-height: 1;
     color: $purplePrimary;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: Georgia, "Times New Roman", serif;
     pointer-events: none;
     opacity: 0;
     transform: translateY(14px);
@@ -466,16 +472,30 @@
 }
 
 @keyframes quoteMarkFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes quoteBorderGlow {
-  0%, 100% { box-shadow: 0 0 0 rgba($purpleStrong, 0); }
-  50% { box-shadow: 0 0 24px rgba($purpleStrong, 0.18); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba($purpleStrong, 0);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba($purpleStrong, 0.18);
+  }
 }
 
 @keyframes patternDrift {
-  0% { background-position: 0 0; }
-  100% { background-position: 60px 60px; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 60px 60px;
+  }
 }

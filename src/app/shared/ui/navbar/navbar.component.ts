@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Inject, DOCUMENT } from "@angular/core";
+import { Component, Inject, OnInit, DOCUMENT } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { filter } from "rxjs";
 
@@ -9,14 +9,13 @@ import { filter } from "rxjs";
   templateUrl: "./navbar.component.html",
   styleUrl: "./navbar.component.scss",
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   routeColor: string | undefined;
 
   menuOpen = false;
   menuClosing = false;
 
   transitionColor = "";
-  showRouteTransition = false;
   startTransition = false;
 
   constructor(
@@ -64,7 +63,6 @@ export class NavbarComponent {
     }
 
     this.transitionColor = this.getRouteColor(path);
-    this.showRouteTransition = true;
     this.startTransition = true;
 
     setTimeout(() => {
@@ -73,24 +71,15 @@ export class NavbarComponent {
     }, 1000);
     this.document.body.style.overflow = "";
 
-    // Attendi che la tenda si apra
     setTimeout(() => {
-      // Naviga alla nuova pagina
       this.router.navigateByUrl(path).then(() => {
         const frame = this.document.querySelector(".frame");
         if (frame) {
           frame.scrollTop = 0;
         }
-
-        // Avvia l'animazione di chiusura della tenda
         this.startTransition = false;
-
-        // Attendi la chiusura della tenda prima di nascondere l'elemento
-        setTimeout(() => {
-          this.showRouteTransition = false;
-        }, 300); // Durata della transizione CSS
       });
-    }, 800); // Durata dell'animazione di apertura in CSS
+    }, 800);
   }
 
   toggleMenu() {
