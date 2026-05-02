@@ -2,6 +2,63 @@
 @use "animations.scss" as *;
 @use "responsive.mixin.scss" as *;
 
+//Top Left global container
+.top-left-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-height: 58px;
+}
+
+.logo-wrap {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+
+  .cookie-logo {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+  }
+
+  .cookie-shadow,
+  .cookie-outline {
+    fill: #000;
+  }
+}
+
+.homePage .logo-wrap {
+  .cookie-shadow,
+  .cookie-outline {
+    fill: $orangePrimary;
+  }
+}
+.aboutPage .logo-wrap {
+  .cookie-shadow,
+  .cookie-outline {
+    fill: $purplePrimary;
+  }
+}
+.worksPage .logo-wrap {
+  .cookie-shadow,
+  .cookie-outline {
+    fill: $redPrimary;
+  }
+}
+.contactPage .logo-wrap {
+  .cookie-shadow,
+  .cookie-outline {
+    fill: $greenPrimary;
+  }
+}
+
+.menu-btn-container {
+  height: 100%;
+  display: flex;
+  border-left: 1px solid black;
+  padding-left: 16px;
+}
+
 // Navbar Container
 .navbar-container {
   position: fixed;
@@ -18,64 +75,8 @@
     margin: 0 auto auto auto;
     padding: 40px;
     display: grid;
-    grid-template-columns: repeat(2, auto);
     gap: 20px;
     align-items: center;
-
-    .top-left-container {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .logo-wrap {
-      width: fit-content;
-      display: flex;
-      align-items: center;
-
-      .cookie-logo {
-        width: 58px;
-        height: 58px;
-        flex-shrink: 0;
-      }
-
-      .cookie-shadow,
-      .cookie-outline {
-        fill: #000;
-      }
-    }
-
-    &.homePage .logo-wrap {
-      .cookie-shadow,
-      .cookie-outline {
-        fill: $orangePrimary;
-      }
-    }
-    &.aboutPage .logo-wrap {
-      .cookie-shadow,
-      .cookie-outline {
-        fill: $purplePrimary;
-      }
-    }
-    &.worksPage .logo-wrap {
-      .cookie-shadow,
-      .cookie-outline {
-        fill: $redPrimary;
-      }
-    }
-    &.contactPage .logo-wrap {
-      .cookie-shadow,
-      .cookie-outline {
-        fill: $greenPrimary;
-      }
-    }
-
-    .menu-btn-container {
-      height: 100%;
-      display: flex;
-      border-left: 1px solid black;
-      padding-left: 16px;
-    }
 
     .bricolage {
       display: inline-block;
@@ -137,13 +138,16 @@
     height: 100%;
     text-align: left;
 
-    display: grid;
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
     color: white;
   }
 
-  .btn-overlay {
+  .menu-top-content {
     padding: 40px;
+    display: flex;
+    align-items: center;
+
     .bricolage {
       display: inline-block;
       text-align: center;
@@ -158,6 +162,19 @@
 
     @include screen-down("md") {
       padding: 40px 24px;
+
+      &.homePage {
+        background: $orange2;
+      }
+      &.aboutPage {
+        background: $purple3;
+      }
+      &.worksPage {
+        background: $red2;
+      }
+      &.contactPage {
+        background: $green2;
+      }
     }
   }
 
@@ -194,11 +211,12 @@
 
 .link-container {
   max-width: 1920px;
-  margin: 0 auto auto auto;
-  display: grid;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin-left: 40px;
   gap: 10px;
-  grid-template-rows: repeat(3, 100px);
 
   .link-content {
     display: grid;
