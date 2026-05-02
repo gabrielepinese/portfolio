@@ -22,36 +22,6 @@
   overflow: hidden;
 }
 
-.floating-keywords {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-
-  .code-keyword {
-    position: absolute;
-    font-family: "Courier New", "Lucida Console", monospace;
-    color: $purpleStrong;
-    font-weight: 500;
-    animation: float-kw ease-in-out infinite;
-    white-space: nowrap;
-    user-select: none;
-  }
-}
-
-@keyframes float-kw {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  35% {
-    transform: translateY(-16px);
-  }
-  65% {
-    transform: translateY(-8px);
-  }
-}
-
 .title-container {
   font-family: "Merriweather", serif;
   display: grid;

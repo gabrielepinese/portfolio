@@ -1,22 +1,7 @@
 <div class="about-container about">
   <!-- HERO -->
   <div class="about-content">
-    <div class="floating-keywords" aria-hidden="true">
-      @for (kw of codeKeywords; track kw.text) {
-        <span
-          class="code-keyword"
-          [style.left]="kw.x"
-          [style.top]="kw.y"
-          [style.animation-delay]="kw.delay"
-          [style.animation-duration]="kw.duration"
-          [style.font-size]="kw.size"
-          [style.opacity]="kw.opacity"
-          >{{ kw.text }}</span
-        >
-      }
-    </div>
-
-    <div class="title-container">
+<div class="title-container">
       <div class="title-content">
         <div class="bigTitle bold" role="heading" aria-level="1">
           About me<span class="purplePrimary">.</span>
