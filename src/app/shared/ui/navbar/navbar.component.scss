@@ -20,8 +20,62 @@
     display: grid;
     grid-template-columns: repeat(2, auto);
     gap: 20px;
-    justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
+
+    .top-left-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-wrap {
+      width: fit-content;
+      display: flex;
+      align-items: center;
+
+      .cookie-logo {
+        width: 58px;
+        height: 58px;
+        flex-shrink: 0;
+      }
+
+      .cookie-shadow,
+      .cookie-outline {
+        fill: #000;
+      }
+    }
+
+    &.homePage .logo-wrap {
+      .cookie-shadow,
+      .cookie-outline {
+        fill: $orangePrimary;
+      }
+    }
+    &.aboutPage .logo-wrap {
+      .cookie-shadow,
+      .cookie-outline {
+        fill: $purplePrimary;
+      }
+    }
+    &.worksPage .logo-wrap {
+      .cookie-shadow,
+      .cookie-outline {
+        fill: $redPrimary;
+      }
+    }
+    &.contactPage .logo-wrap {
+      .cookie-shadow,
+      .cookie-outline {
+        fill: $greenPrimary;
+      }
+    }
+
+    .menu-btn-container {
+      height: 100%;
+      display: flex;
+      border-left: 1px solid black;
+      padding-left: 16px;
+    }
 
     .bricolage {
       display: inline-block;
