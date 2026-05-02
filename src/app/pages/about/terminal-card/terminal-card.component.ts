@@ -20,6 +20,6 @@ export class TerminalCardComponent {
     { prop: "role", value: '"Frontend Developer"' },
     { prop: "passion", value: '"Beautiful UIs"' },
     { prop: "location", value: '"Milan, Italy"' },
-    { prop: "status", value: '"Available ✦"' },
+    { prop: "status", value: '"Employed full-time"' },
   ];
 }

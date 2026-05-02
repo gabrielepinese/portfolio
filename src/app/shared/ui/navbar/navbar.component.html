@@ -34,7 +34,9 @@
 
 <div class="navbar-container">
   <div class="navbar-content" [ngClass]="routeColor()">
-    <ng-container *ngTemplateOutlet="topBar; context: { label: 'MENU' }"></ng-container>
+    <ng-container
+      *ngTemplateOutlet="topBar; context: { label: 'MENU' }"
+    ></ng-container>
   </div>
 </div>
 
@@ -58,29 +60,47 @@
     >
       <div class="menu-content">
         <div class="menu-top-content">
-          <ng-container *ngTemplateOutlet="topBar; context: { label: 'CLOSE' }"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="topBar; context: { label: 'CLOSE' }"
+          ></ng-container>
         </div>
         <div class="link-container">
           <div class="link-content">
-            <button class="neutral-btn semibold" (click)="navigate('home')" type="button">
+            <button
+              class="neutral-btn semibold"
+              (click)="navigate('home')"
+              type="button"
+            >
               <span [ngClass]="routeColor()" class="heading1">Home</span>
             </button>
             <span class="desc-link">Return to home page</span>
           </div>
           <div class="link-content">
-            <button class="neutral-btn semibold" (click)="navigate('about')" type="button">
+            <button
+              class="neutral-btn semibold"
+              (click)="navigate('about')"
+              type="button"
+            >
               <span [ngClass]="routeColor()" class="heading1">About me</span>
             </button>
             <span class="desc-link">Something about me...</span>
           </div>
           <div class="link-content">
-            <button class="neutral-btn semibold" (click)="navigate('works')" type="button">
+            <button
+              class="neutral-btn semibold"
+              (click)="navigate('works')"
+              type="button"
+            >
               <span [ngClass]="routeColor()" class="heading1">Works</span>
             </button>
             <span class="desc-link">Find out what I can do</span>
           </div>
           <div class="link-content">
-            <button class="neutral-btn semibold" (click)="navigate('contact')" type="button">
+            <button
+              class="neutral-btn semibold"
+              (click)="navigate('contact')"
+              type="button"
+            >
               <span [ngClass]="routeColor()" class="heading1">Contact</span>
             </button>
             <span class="desc-link">Let's contact me</span>
