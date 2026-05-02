@@ -1,32 +1,56 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   inject,
   AfterViewInit,
   OnDestroy,
   PLATFORM_ID,
 } from "@angular/core";
-import { CommonModule, isPlatformBrowser } from "@angular/common";
+import { NgClass, isPlatformBrowser } from "@angular/common";
 import { BreakpointObserver } from "@angular/cdk/layout";
+import { toSignal } from "@angular/core/rxjs-interop";
 import { map } from "rxjs";
-import { LayoutModule } from "@angular/cdk/layout";
 import { TerminalCardComponent } from "./terminal-card/terminal-card.component";
+
+interface StackItem {
+  icon: string;
+  label: string;
+}
 
 @Component({
   selector: "app-about",
-  imports: [CommonModule, LayoutModule, TerminalCardComponent],
+  imports: [NgClass, TerminalCardComponent],
   templateUrl: "./about.component.html",
   styleUrl: "./about.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutComponent implements AfterViewInit, OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
   private platformId = inject(PLATFORM_ID);
   private observer?: IntersectionObserver;
 
-  isMedium$ = this.breakpointObserver
-    .observe(["(min-width: 768px) and (max-width: 1279px)"])
-    .pipe(map((result) => result.matches));
+  readonly isMedium = toSignal(
+    this.breakpointObserver
+      .observe(["(min-width: 768px) and (max-width: 1279px)"])
+      .pipe(map((r) => r.matches)),
+    { initialValue: false },
+  );
 
-ngAfterViewInit() {
+  readonly STACK: StackItem[] = [
+    { icon: "devicon-angular-plain colored", label: "Angular" },
+    { icon: "devicon-typescript-plain colored", label: "TypeScript" },
+    { icon: "devicon-react-original colored", label: "React" },
+    { icon: "devicon-html5-plain colored", label: "HTML5" },
+    { icon: "devicon-css3-plain colored", label: "CSS3" },
+    { icon: "devicon-sass-original colored", label: "SCSS" },
+    { icon: "devicon-tailwindcss-plain colored", label: "Tailwind" },
+    { icon: "devicon-figma-plain colored", label: "Figma" },
+    { icon: "devicon-git-plain colored", label: "Git" },
+    { icon: "devicon-vscode-plain colored", label: "VS Code" },
+    { icon: "devicon-csharp-plain colored", label: "C#" },
+  ];
+
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.initScrollReveal();
     }
@@ -64,6 +88,7 @@ ngAfterViewInit() {
   }
 
   downloadCV() {
+    if (!isPlatformBrowser(this.platformId)) return;
     const link = document.createElement("a");
     link.href = "assets/pdf/CV -Gabriele-Pinese.pdf";
     link.download = "CV -Gabriele-Pinese.pdf";

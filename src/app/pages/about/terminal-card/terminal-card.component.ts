@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 interface ProfileEntry {
   prop: string;
@@ -10,6 +10,7 @@ interface ProfileEntry {
   imports: [],
   templateUrl: "./terminal-card.component.html",
   styleUrl: "./terminal-card.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TerminalCardComponent {
   readonly filename = "profile.ts";

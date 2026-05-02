@@ -1,10 +1,11 @@
-import { Component, input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, input } from "@angular/core";
 
 @Component({
   selector: "app-item-list",
   imports: [],
   templateUrl: "./item-list.component.html",
   styleUrl: "./item-list.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemListComponent {
   link = input.required<string>();
@@ -16,6 +17,6 @@ export class ItemListComponent {
   chips = input.required<string[]>();
 
   goto(url: string) {
-    window.open(url);
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 }

@@ -7,6 +7,7 @@
         xmlns="http://www.w3.org/2000/svg"
         width="44"
         height="44"
+        aria-hidden="true"
       >
         <path
           class="cookie-shadow"
@@ -32,79 +33,55 @@
 </ng-template>
 
 <div class="navbar-container">
-  <div class="navbar-content" [ngClass]="routeColor">
-    <ng-container
-      *ngTemplateOutlet="topBar; context: { label: 'MENU' }"
-    ></ng-container>
+  <div class="navbar-content" [ngClass]="routeColor()">
+    <ng-container *ngTemplateOutlet="topBar; context: { label: 'MENU' }"></ng-container>
   </div>
 </div>
 
 <div
   class="route-transition"
-  [class.show]="startTransition"
-  [ngStyle]="{ backgroundColor: transitionColor }"
+  [class.show]="startTransition()"
+  [ngStyle]="{ backgroundColor: transitionColor() }"
 ></div>
 
-<div class="loader-dots" [class.show]="showDots">
+<div class="loader-dots" [class.show]="showDots()">
   <span class="dot"></span>
   <span class="dot"></span>
 </div>
 
-@if (menuOpen) {
-  <div
-    class="menu-overlay"
-    (click)="toggleMenu()"
-  >
+@if (menuOpen()) {
+  <div class="menu-overlay" (click)="toggleMenu()">
     <div
       class="menu-container"
-      [ngClass]="routeColor"
+      [ngClass]="routeColor()"
       (click)="$event.stopPropagation()"
     >
       <div class="menu-content">
-        <!-- [ngClass]="routeColor" -->
         <div class="menu-top-content">
-          <ng-container
-            *ngTemplateOutlet="topBar; context: { label: 'CLOSE' }"
-          ></ng-container>
+          <ng-container *ngTemplateOutlet="topBar; context: { label: 'CLOSE' }"></ng-container>
         </div>
         <div class="link-container">
           <div class="link-content">
-            <button
-              class="neutral-btn semibold"
-              (click)="navigate('home')"
-              type="button"
-            >
-              <span [ngClass]="routeColor" class="heading1">Home</span>
+            <button class="neutral-btn semibold" (click)="navigate('home')" type="button">
+              <span [ngClass]="routeColor()" class="heading1">Home</span>
             </button>
             <span class="desc-link">Return to home page</span>
           </div>
           <div class="link-content">
-            <button
-              class="neutral-btn semibold"
-              (click)="navigate('about')"
-              type="button"
-            >
-              <span [ngClass]="routeColor" class="heading1">About me</span>
+            <button class="neutral-btn semibold" (click)="navigate('about')" type="button">
+              <span [ngClass]="routeColor()" class="heading1">About me</span>
             </button>
             <span class="desc-link">Something about me...</span>
           </div>
           <div class="link-content">
-            <button
-              class="neutral-btn semibold"
-              (click)="navigate('works')"
-              type="button"
-            >
-              <span [ngClass]="routeColor" class="heading1">Works</span>
+            <button class="neutral-btn semibold" (click)="navigate('works')" type="button">
+              <span [ngClass]="routeColor()" class="heading1">Works</span>
             </button>
             <span class="desc-link">Find out what I can do</span>
           </div>
           <div class="link-content">
-            <button
-              class="neutral-btn semibold"
-              (click)="navigate('contact')"
-              type="button"
-            >
-              <span [ngClass]="routeColor" class="heading1">Contact</span>
+            <button class="neutral-btn semibold" (click)="navigate('contact')" type="button">
+              <span [ngClass]="routeColor()" class="heading1">Contact</span>
             </button>
             <span class="desc-link">Let's contact me</span>
           </div>

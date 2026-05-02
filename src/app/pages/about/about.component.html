@@ -1,12 +1,12 @@
 <div class="about-container about">
-  <!-- HERO -->
+  <!-- Hero -->
   <div class="about-content">
-<div class="title-container">
+    <div class="title-container">
       <div class="title-content">
-        <div class="bigTitle bold" role="heading" aria-level="1">
+        <div class="bigTitle bold">
           About me<span class="purplePrimary">.</span>
         </div>
-        <div class="body24" role="heading" aria-level="2">
+        <div class="body24">
           What excites me most about <strong>Frontend Development</strong> is
           the chance to bring ideas to life — to turn abstract concepts into
           intuitive, beautiful, and high-performance interfaces. Each project is
@@ -17,25 +17,25 @@
       </div>
     </div>
 
-    <div class="scroll-line" role="heading" aria-level="5">
-      <span>SCROLL</span><img src="svg/south.svg" alt="south.svg" />
+    <div class="scroll-line">
+      <span>SCROLL</span><img src="svg/south.svg" alt="" aria-hidden="true" />
     </div>
   </div>
 
-  <!-- MAIN -->
+  <!-- Main -->
   <div class="about-main-section">
     <!-- Profile -->
     <div class="about-presentation reveal">
       <app-terminal-card></app-terminal-card>
 
       <div class="pres-container">
-        <div class="heading3 bold" role="heading" aria-level="4">
+        <div class="heading3 bold">
           My journey into technology began with a simple curiosity that grew
           into a deep passion for coding and design<span class="purplePrimary"
             >.</span
           >
         </div>
-        <div class="body20" role="heading" aria-level="5">
+        <div class="body20">
           During my years at the <strong>University of Milan</strong>, I not
           only strengthened my <strong>technical knowledge</strong> but also
           discovered the value of <strong>collaboration</strong> and
@@ -47,70 +47,14 @@
     <!-- Stack -->
     <div class="about-stack-section reveal">
       <div class="stack-grid">
-        <div class="stack-icon" style="--i: 0">
-          <div class="icon-wrap">
-            <i class="devicon-angular-plain colored"></i>
+        @for (item of STACK; track $index) {
+          <div class="stack-icon" [style.--i]="$index">
+            <div class="icon-wrap">
+              <i [class]="item.icon"></i>
+            </div>
+            <span>{{ item.label }}</span>
           </div>
-          <span>Angular</span>
-        </div>
-        <div class="stack-icon" style="--i: 1">
-          <div class="icon-wrap">
-            <i class="devicon-typescript-plain colored"></i>
-          </div>
-          <span>TypeScript</span>
-        </div>
-        <div class="stack-icon" style="--i: 2">
-          <div class="icon-wrap">
-            <i class="devicon-react-original colored"></i>
-          </div>
-          <span>React</span>
-        </div>
-        <div class="stack-icon" style="--i: 3">
-          <div class="icon-wrap">
-            <i class="devicon-html5-plain colored"></i>
-          </div>
-          <span>HTML5</span>
-        </div>
-        <div class="stack-icon" style="--i: 4">
-          <div class="icon-wrap">
-            <i class="devicon-css3-plain colored"></i>
-          </div>
-          <span>CSS3</span>
-        </div>
-        <div class="stack-icon" style="--i: 5">
-          <div class="icon-wrap">
-            <i class="devicon-sass-original colored"></i>
-          </div>
-          <span>SCSS</span>
-        </div>
-        <div class="stack-icon" style="--i: 6">
-          <div class="icon-wrap">
-            <i class="devicon-tailwindcss-plain colored"></i>
-          </div>
-          <span>Tailwind</span>
-        </div>
-        <div class="stack-icon" style="--i: 7">
-          <div class="icon-wrap">
-            <i class="devicon-figma-plain colored"></i>
-          </div>
-          <span>Figma</span>
-        </div>
-        <div class="stack-icon" style="--i: 8">
-          <div class="icon-wrap"><i class="devicon-git-plain colored"></i></div>
-          <span>Git</span>
-        </div>
-        <div class="stack-icon" style="--i: 9">
-          <div class="icon-wrap">
-            <i class="devicon-vscode-plain colored"></i>
-          </div>
-          <span>VS Code</span>
-        </div>
-        <div class="stack-icon" style="--i: 10">
-          <div class="icon-wrap">
-            <i class="devicon-csharp-plain colored"></i>
-          </div>
-          <span>C#</span>
-        </div>
+        }
       </div>
     </div>
 
@@ -170,7 +114,7 @@
     </div>
 
     <!-- Drawing -->
-    <div class="about-drawing-section reveal" role="heading" aria-level="4">
+    <div class="about-drawing-section reveal">
       <span class="body24">
         Drawing has always been my <strong>favorite way</strong> to express
         ideas, long before I ever wrote a line of code. That passion for visual
@@ -185,19 +129,15 @@
     </div>
   </div>
 
+  <!-- Footer CTA -->
   <div class="about-footer-container">
-    <div class="heading1 bold reveal" role="heading" aria-level="3">
+    <div class="heading1 bold reveal">
       <div class="pattern"></div>
       <span class="text-con-bordo3">
         Do you like me?<span class="purplePrimary">.</span></span
       >
     </div>
-    <div
-      class="body20 reveal"
-      style="--delay: 0.2s"
-      role="heading"
-      aria-level="4"
-    >
+    <div class="body20 reveal" style="--delay: 0.2s">
       <span class="text-con-bordo3"
         >Maybe you like me, maybe you don't… but hey, if you've scrolled this
         far, something must've caught your eye.<br /><br />
@@ -209,9 +149,8 @@
       >
       <button
         class="secondary-btn about-btn"
-        [ngClass]="{ 'mx-auto': isMedium$ | async }"
+        [ngClass]="{ 'mx-auto': isMedium() }"
         type="button"
-        role="button"
         (click)="downloadCV()"
       >
         Download my CV

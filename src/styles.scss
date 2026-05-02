@@ -1,4 +1,3 @@
-//Imports
 @use "./assets/class.mixin.scss" as *;
 @use "./assets/fonts/typography.mixin.scss" as *;
 @use "./assets/styles/buttons.mixin.scss" as *;
@@ -6,8 +5,7 @@
 @use "./assets/color/colors.variables.scss" as *;
 @use "./assets/responsive.mixin.scss" as *;
 
-//Global styles ---------
-
+// Global
 html,
 body {
   height: 100%;
@@ -26,99 +24,41 @@ $class-list: "about", "works", "contact";
   @include apply-style-to-content($class);
 }
 
-//FONTS ------
-
-.bigTitle {
-  @include bigTitle;
-}
-.heading1 {
-  @include heading1;
-}
-.heading2 {
-  @include heading2;
-}
-.heading3 {
-  @include heading3;
-}
-.body32 {
-  @include body32;
-}
-.body28 {
-  @include body28;
-}
-.body24 {
-  @include body24;
-}
-.body20 {
-  @include body20;
-}
-.body18 {
-  @include body18;
-}
-.body16 {
-  @include body16;
-}
-.body14 {
-  @include body14;
-}
-.breadcrumbs {
-  @include breadcrumbs;
-}
-.bold {
-  @include bold;
-}
-.semibold {
-  @include semibold;
-}
-
-.dosis-700 {
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
-}
-.dosis-600 {
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-}
+// Typography
+.bigTitle { @include bigTitle; }
+.heading1 { @include heading1; }
+.heading2 { @include heading2; }
+.heading3 { @include heading3; }
+.body32 { @include body32; }
+.body28 { @include body28; }
+.body24 { @include body24; }
+.body20 { @include body20; }
+.body18 { @include body18; }
+.body16 { @include body16; }
+.body14 { @include body14; }
+.breadcrumbs { @include breadcrumbs; }
+.bold { @include bold; }
+.semibold { @include semibold; }
 
 .bricolage {
   font-family: "Bricolage Grotesque", sans-serif;
 }
 
-//COLORS ------
+// Colors
+.orangePrimary { color: $orangePrimary; }
+.purplePrimary { color: $purplePrimary; }
+.redPrimary { color: $redPrimary; }
+.greenPrimary { color: $greenPrimary; }
 
-.orangePrimary {
-  color: $orangePrimary;
-}
+// Buttons
+button { cursor: pointer; }
+.neutral-btn { @include neutral-btn; }
+.secondary-btn { @include secondary-btn; }
 
-.purplePrimary {
-  color: $purplePrimary;
-}
+// Utilities
+.mx-auto { margin-left: auto; margin-right: auto; }
 
-.redPrimary {
-  color: $redPrimary;
-}
-
-.greenPrimary {
-  color: $greenPrimary;
-}
-
-//BUTTONS ------
-
-button {
-  cursor: pointer;
-}
-
-.neutral-btn {
-  @include neutral-btn;
-}
-.secondary-btn {
-  @include secondary-btn;
-}
-
-//Other class
-
+// Text shadow variants
 .text-con-bordo {
   text-shadow: 4px 0 $orange2, -4px 0 $orange2, 0 4px $orange2, 0 -4px $orange2,
     3px 3px $orange2, -3px -3px $orange2, 3px -3px $orange2, -3px 3px $orange2;
@@ -134,7 +74,7 @@ button {
     3px 3px $purple3, -3px -3px $purple3, 3px -3px $purple3, -3px 3px $purple3;
 }
 
-//Wrapper router ----
+// Layout
 .frame {
   width: 100%;
   height: 100%;
@@ -144,7 +84,6 @@ button {
   flex-direction: column;
 }
 
-//Frame Portfolio ----
 .frame-empty {
   height: 24px;
   flex-shrink: 0;
@@ -153,27 +92,16 @@ button {
   width: calc(100% - 24px);
   position: fixed;
 
-  &.bottom {
-    bottom: 0;
-  }
-  &.top {
-    top: 0;
-  }
+  &.bottom { bottom: 0; }
+  &.top { top: 0; }
 }
 
-//Router container ---
 .app-layout {
   background-color: white;
   padding: 24px;
   flex: 1 1;
-
-  // @include screen-down("md") {
-  //   position: absolute;
-  //   top: 0;
-  // }
 }
 
-//Scroll line info
 .scroll-line {
   padding-top: 56px;
   font-family: "Bricolage Grotesque", sans-serif;
@@ -188,7 +116,6 @@ button {
 
   img {
     animation: bounce 2s ease infinite;
-    // animation-delay: 4s;
     margin: auto;
   }
 }
