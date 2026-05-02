@@ -125,6 +125,10 @@
         background: $green2;
       }
     }
+
+    @include screen-down("md") {
+      padding: 24px;
+    }
   }
 }
 
