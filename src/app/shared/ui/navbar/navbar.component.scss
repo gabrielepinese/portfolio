@@ -101,10 +101,6 @@
   z-index: 3;
   padding: 24px;
 
-  @include screen-down("md") {
-    width: 100%;
-  }
-
   .navbar-content {
     max-width: 1920px;
     margin: 0 auto auto auto;
