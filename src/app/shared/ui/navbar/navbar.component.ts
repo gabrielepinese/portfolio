@@ -16,6 +16,8 @@ export class NavbarComponent implements OnInit {
 
   transitionColor = "";
   startTransition = false;
+  showDots = false;
+  private dotsTimer?: ReturnType<typeof setTimeout>;
 
   constructor(
     private router: Router,
@@ -64,6 +66,11 @@ export class NavbarComponent implements OnInit {
     this.transitionColor = this.getRouteColor(path);
     this.startTransition = true;
 
+    clearTimeout(this.dotsTimer);
+    this.dotsTimer = setTimeout(() => {
+      this.showDots = true;
+    }, 500);
+
     setTimeout(() => {
       this.menuOpen = false;
     }, 1000);
@@ -76,6 +83,8 @@ export class NavbarComponent implements OnInit {
           frame.scrollTop = 0;
         }
         this.startTransition = false;
+        this.showDots = false;
+        clearTimeout(this.dotsTimer);
       });
     }, 800);
   }

@@ -45,6 +45,11 @@
   [ngStyle]="{ backgroundColor: transitionColor }"
 ></div>
 
+<div class="loader-dots" [class.show]="showDots">
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
+
 @if (menuOpen) {
   <div
     class="menu-overlay"
