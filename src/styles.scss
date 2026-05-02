@@ -188,24 +188,49 @@ button {
 
 .app-layout {
   background-color: white;
-  padding: 24px;
+  padding: 24px 0 24px 24px;
   flex: 1 1;
 }
 
-.scroll-line {
+.home {
+  --scroll-accent: #f1a661;
+}
+.about {
+  --scroll-accent: #b1b2ff;
+}
+.works {
+  --scroll-accent: #d2665a;
+}
+.contact {
+  --scroll-accent: #a0c49d;
+}
+
+.scroll-indicator {
+  padding-left: 12px;
   padding-top: 56px;
-  font-family: "Bricolage Grotesque", sans-serif;
-  letter-spacing: 2px;
-  display: grid;
-  justify-content: left;
-  align-items: center;
-  gap: 16px;
+  padding-bottom: 32px;
+  display: flex;
+  justify-content: flex-start;
   animation: showUp 0.5s ease-out forwards;
   animation-delay: 1.2s;
   opacity: 0;
+}
 
-  img {
-    animation: bounce 2s ease infinite;
-    margin: auto;
-  }
+.scroll-track {
+  position: relative;
+  width: 1px;
+  height: 108px;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 1px;
+}
+
+.scroll-dot {
+  position: absolute;
+  left: -1.5px;
+  top: -4px;
+  width: 4px;
+  height: 32px;
+  background: var(--scroll-accent, #000);
+  border-radius: 2px;
+  animation: scrollTravel 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

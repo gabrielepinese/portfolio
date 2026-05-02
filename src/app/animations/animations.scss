@@ -71,3 +71,20 @@
     letter-spacing: 4px;
   }
 }
+
+@keyframes scrollTravel {
+  0% {
+    top: -4px;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    top: 80px;
+    opacity: 0;
+  }
+}
