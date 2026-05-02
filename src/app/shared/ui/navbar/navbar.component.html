@@ -48,14 +48,12 @@
 @if (menuOpen) {
   <div
     class="menu-overlay"
-    [class.closing]="menuClosing"
     (click)="toggleMenu()"
   >
     <div
       class="menu-container"
       [ngClass]="routeColor"
       (click)="$event.stopPropagation()"
-      [class.closing]="menuClosing"
     >
       <div class="menu-content">
         <!-- [ngClass]="routeColor" -->

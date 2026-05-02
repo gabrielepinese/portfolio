@@ -13,7 +13,6 @@ export class NavbarComponent implements OnInit {
   routeColor: string | undefined;
 
   menuOpen = false;
-  menuClosing = false;
 
   transitionColor = "";
   startTransition = false;
@@ -67,7 +66,6 @@ export class NavbarComponent implements OnInit {
 
     setTimeout(() => {
       this.menuOpen = false;
-      this.menuClosing = false;
     }, 1000);
     this.document.body.style.overflow = "";
 
@@ -83,12 +81,8 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleMenu() {
-    if (this.menuOpen && !this.menuClosing) {
-      this.menuClosing = true;
-      setTimeout(() => {
-        this.menuOpen = false;
-        this.menuClosing = false;
-      }, 1000);
+    if (this.menuOpen) {
+      this.menuOpen = false;
       this.document.body.style.overflow = "";
     } else {
       this.document.body.style.overflow = "hidden";
