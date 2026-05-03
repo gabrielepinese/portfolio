@@ -127,6 +127,10 @@
     }
   }
 
+  @include screen-down("lg") {
+    width: calc(100% - 65px);
+  }
+
   @include screen-down("md") {
     padding: 16px;
     width: calc(100% - 32px);
@@ -220,6 +224,7 @@
   margin: auto;
   gap: 28px;
   width: 100%;
+  padding: 0 24px;
 
   .link-content {
     display: grid;
