@@ -125,6 +125,10 @@
         background: $green2;
       }
     }
+
+    @include screen-down("md") {
+      padding: 12px;
+    }
   }
 
   @include screen-down("lg") {
@@ -186,6 +190,8 @@
     }
 
     @include screen-down("md") {
+      padding: 12px;
+
       &.homePage {
         background: $orange2;
       }
@@ -297,11 +303,7 @@
   }
 
   &.show {
-    width: calc(100% - 64px);
-
-    @include screen-down("lg") {
-      width: calc(100% - 48px);
-    }
+    width: calc(100% - 48px);
 
     @include screen-down("md") {
       width: calc(100% - 32px);
