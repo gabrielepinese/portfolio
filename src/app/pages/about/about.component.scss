@@ -341,39 +341,99 @@
 // ---- Footer CTA ----
 .about-footer-container {
   display: grid;
-  justify-content: center;
-  align-items: center;
-  gap: 48px;
+  justify-items: center;
+  gap: 36px;
   z-index: 1;
   margin-top: 200px;
+  text-align: center;
 
-  .heading1 {
-    z-index: 1;
-    width: 100%;
-    position: relative;
-    text-align: center;
-
-    .pattern {
-      z-index: -1;
-      position: absolute;
-      right: -30px;
-      top: -100px;
-      height: 350px;
-      width: 230px;
-      background-image: url("data:image/svg+xml,%3Csvg%20width='6'%20height='6'%20viewBox='0%200%206%206'%20xmlns='http://www.w3.org/2000/svg'%3E%3Cg%20fill='%23b1b2ff'%20fill-opacity='1'%20fill-rule='evenodd'%3E%3Cpath%20d='M5%200h1L0%206V5zM6%205v1H5z'/%3E%3C/g%3E%3C/svg%3E");
-      animation: patternDrift 18s linear infinite;
-    }
+  .cta-divider {
+    width: 48px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      $purplePrimary,
+      transparent
+    );
+    margin-bottom: 24px;
   }
 
-  .body20 {
-    z-index: 1;
-    margin: auto;
-    max-width: 500px;
+  .heading1 {
+    color: $purpleStrong;
+  }
+
+  .cta-body {
+    max-width: 480px;
     line-height: 1.8;
   }
 
-  .secondary-btn {
-    margin-top: 32px;
+  .secondary-btn.about-btn {
+    background: transparent;
+    border: 3px solid $purpleStrong;
+    border-radius: 8px;
+    padding: 16px 36px;
+    overflow: hidden;
+    position: relative;
+    transition:
+      color 0.35s ease,
+      box-shadow 0.35s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: $purpleSecondary;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 0;
+    }
+
+    .btn-float-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+      transform: translate(var(--float-x, 0px), var(--float-y, 0px));
+      transition: transform 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .btn-inner {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      max-height: 1.2em;
+      line-height: 1.2;
+
+      .btn-text {
+        flex-shrink: 0;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    }
+
+    .btn-arrow {
+      display: inline-block;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    &:hover {
+      color: $purpleStrong;
+      box-shadow: inset 0 0 0 1px rgba(white, 0.28);
+
+      &::before {
+        clip-path: inset(0% 0 0 0);
+      }
+
+      .btn-text {
+        transform: translateY(-100%);
+      }
+
+      .btn-arrow {
+        transform: translateX(5px);
+      }
+    }
   }
 }
 

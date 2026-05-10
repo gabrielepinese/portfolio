@@ -28,6 +28,7 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
   private platformId = inject(PLATFORM_ID);
   private observer?: IntersectionObserver;
+  private btnParallaxCleanup?: () => void;
 
   readonly isMedium = toSignal(
     this.breakpointObserver
@@ -53,6 +54,7 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.initScrollReveal();
+      this.initBtnParallax();
     }
   }
 
@@ -83,8 +85,35 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  private initBtnParallax() {
+    const btn = document.querySelector<HTMLElement>(".about-btn");
+    if (!btn) return;
+
+    const onMove = (e: MouseEvent) => {
+      const rect = btn.getBoundingClientRect();
+      const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+      const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+      btn.style.setProperty("--float-x", `${dx * 5}px`);
+      btn.style.setProperty("--float-y", `${dy * 5}px`);
+    };
+
+    const onLeave = () => {
+      btn.style.setProperty("--float-x", "0px");
+      btn.style.setProperty("--float-y", "0px");
+    };
+
+    btn.addEventListener("mousemove", onMove);
+    btn.addEventListener("mouseleave", onLeave);
+
+    this.btnParallaxCleanup = () => {
+      btn.removeEventListener("mousemove", onMove);
+      btn.removeEventListener("mouseleave", onLeave);
+    };
+  }
+
   ngOnDestroy() {
     this.observer?.disconnect();
+    this.btnParallaxCleanup?.();
   }
 
   downloadCV() {

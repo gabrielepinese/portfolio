@@ -133,31 +133,32 @@
 
   <!-- Footer CTA -->
   <div class="about-footer-container">
-    <div class="heading1 bold reveal">
-      <!--<div class="pattern"></div>-->
-      <span class="text-con-bordo3">
-        Do you like me?<span class="purplePrimary">.</span></span
-      >
+    <div class="cta-divider reveal"></div>
+
+    <div class="heading1 bold reveal" style="--delay: 0.1s">
+      Do you like me<span class="purplePrimary">?</span>
     </div>
-    <div class="body20 reveal" style="--delay: 0.2s">
-      <span class="text-con-bordo3"
-        >Maybe you like me, maybe you don't… but hey, if you've scrolled this
-        far, something must've caught your eye.<br /><br />
-        If you're curious to learn more about what I do ( spoiler: it involves
-        code, components, and a strong dislike for spaghetti code ), feel free
-        to
-        <strong>grab my CV</strong>. I promise : No clichés like "great team
-        player", just real stuff.</span
-      >
-      <button
-        class="secondary-btn about-btn"
-        [ngClass]="{ 'mx-auto': isMedium() }"
-        type="button"
-        (click)="downloadCV()"
-      >
-        Download my CV
-        <div class="btn-decoration"></div>
-      </button>
+
+    <div class="body20 cta-body reveal" style="--delay: 0.25s">
+      Maybe you like me, maybe you don't — but if you've scrolled this far,
+      something must've caught your eye.<br /><br />
+      Code, components, and a strong dislike for spaghetti code.
+      <strong>Grab my CV.</strong> No clichés. Just real stuff.
     </div>
+
+    <button
+      class="secondary-btn about-btn reveal"
+      [ngClass]="{ 'mx-auto': isMedium() }"
+      style="--delay: 0.4s"
+      type="button"
+      (click)="downloadCV()"
+    >
+      <span class="btn-float-wrap">
+        <span class="btn-inner">
+          <span class="btn-text">Download my CV</span>
+          <span class="btn-text" aria-hidden="true">Download my CV</span>
+        </span>
+      </span>
+    </button>
   </div>
 </div>
