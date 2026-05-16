@@ -5,6 +5,12 @@
   }
 }
 
+@keyframes expandLine {
+  to {
+    width: 72px;
+  }
+}
+
 @keyframes expandWithBounce {
   to {
     transform: scaleX(1);

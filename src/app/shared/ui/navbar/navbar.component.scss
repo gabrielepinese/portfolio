@@ -277,6 +277,66 @@
   }
 }
 
+.social-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+
+  @include screen-down("xxl") {
+    padding: 16px 24px;
+  }
+
+  @include screen-down("md") {
+    padding: 16px;
+  }
+
+  .social-divider {
+    display: block;
+    height: 3px;
+    width: 0;
+    border-radius: 99px;
+    background-color: currentColor;
+    animation: expandLine 0.3s ease-out forwards;
+    animation-delay: 0.1s;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 20px;
+  }
+
+  .social-link {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: showUp 0.4s ease-out forwards;
+    color: currentColor;
+    display: block;
+    transition: opacity 0.2s ease;
+
+    &:nth-child(1) {
+      animation-delay: 0.3s;
+    }
+    &:nth-child(2) {
+      animation-delay: 0.45s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
+    &:hover {
+      opacity: 0.6;
+    }
+
+    svg {
+      display: block;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
 .route-transition {
   position: fixed;
   top: 0;
