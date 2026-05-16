@@ -27,6 +27,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/images",
+                "output": "assets/images"
               }
             ],
             "styles": ["src/styles.scss"],
@@ -95,6 +100,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/images",
+                "output": "assets/images"
               }
             ],
             "styles": ["src/styles.scss"],

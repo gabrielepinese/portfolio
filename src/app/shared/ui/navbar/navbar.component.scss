@@ -54,25 +54,25 @@
 .menu-container.homePage .logo-wrap {
   .cookie-shadow,
   .cookie-outline {
-    fill: $orange2;
+    fill: $orangePrimary;
   }
 }
 .menu-container.aboutPage .logo-wrap {
   .cookie-shadow,
   .cookie-outline {
-    fill: $purple3;
+    fill: $purpleStrong;
   }
 }
 .menu-container.worksPage .logo-wrap {
   .cookie-shadow,
   .cookie-outline {
-    fill: $red2;
+    fill: #000;
   }
 }
 .menu-container.contactPage .logo-wrap {
   .cookie-shadow,
   .cookie-outline {
-    fill: $green2;
+    fill: $greenAccent;
   }
 }
 
@@ -177,7 +177,6 @@
     text-align: left;
     display: flex;
     flex-direction: column;
-    color: white;
   }
 
   .menu-top-content {
@@ -191,33 +190,24 @@
 
     @include screen-down("md") {
       padding: 12px;
-
-      &.homePage {
-        background: $orange2;
-      }
-      &.aboutPage {
-        background: $purple3;
-      }
-      &.worksPage {
-        background: $red2;
-      }
-      &.contactPage {
-        background: $green2;
-      }
     }
   }
 
   &.homePage {
     background: $orangeSecondary;
+    color: $orangePrimary;
   }
   &.aboutPage {
     background: $purpleSecondary;
+    color: $purpleStrong;
   }
   &.worksPage {
     background: $redSecondary;
+    color: #000;
   }
   &.contactPage {
     background: $greenSecondary;
+    color: $greenAccent;
   }
 }
 
