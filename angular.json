@@ -32,6 +32,11 @@
                 "glob": "**/*",
                 "input": "src/assets/images",
                 "output": "assets/images"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/icon",
+                "output": "assets/icon"
               }
             ],
             "styles": ["src/styles.scss"],
@@ -105,6 +110,11 @@
                 "glob": "**/*",
                 "input": "src/assets/images",
                 "output": "assets/images"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/icon",
+                "output": "assets/icon"
               }
             ],
             "styles": ["src/styles.scss"],

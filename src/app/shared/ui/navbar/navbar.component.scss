@@ -211,6 +211,13 @@
   }
 }
 
+.menu-container.homePage .social-link:hover,
+.menu-container.aboutPage .social-link:hover,
+.menu-container.worksPage .social-link:hover,
+.menu-container.contactPage .social-link:hover {
+  color: $grey1;
+}
+
 .link-container {
   max-width: 1216px;
   flex: 1;
@@ -281,15 +288,15 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 16px;
-  padding: 16px 0;
+  gap: 20px;
+  padding: 0 16px;
 
   @include screen-down("xxl") {
-    padding: 16px 24px;
+    padding: 0 16px;
   }
 
   @include screen-down("md") {
-    padding: 16px;
+    padding: 0 16px;
   }
 
   .social-divider {
@@ -304,7 +311,7 @@
 
   .social-icons {
     display: flex;
-    gap: 20px;
+    gap: 24px;
   }
 
   .social-link {
@@ -313,7 +320,7 @@
     animation: showUp 0.4s ease-out forwards;
     color: currentColor;
     display: block;
-    transition: opacity 0.2s ease;
+    transition: color 0.2s ease;
 
     &:nth-child(1) {
       animation-delay: 0.3s;
@@ -325,14 +332,32 @@
       animation-delay: 0.6s;
     }
 
-    &:hover {
-      opacity: 0.6;
-    }
-
-    svg {
+    .icon {
       display: block;
       width: 24px;
       height: 24px;
+      background-color: currentColor;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+    }
+
+    .icon-linkedin {
+      -webkit-mask-image: url("/assets/icon/linkedin.svg");
+      mask-image: url("/assets/icon/linkedin.svg");
+    }
+
+    .icon-instagram {
+      -webkit-mask-image: url("/assets/icon/instagram.svg");
+      mask-image: url("/assets/icon/instagram.svg");
+    }
+
+    .icon-facebook {
+      -webkit-mask-image: url("/assets/icon/facebook.svg");
+      mask-image: url("/assets/icon/facebook.svg");
     }
   }
 }
