@@ -5,7 +5,13 @@ import {
   PLATFORM_ID,
   signal,
 } from "@angular/core";
-import { DOCUMENT, NgClass, NgStyle, NgTemplateOutlet, isPlatformBrowser } from "@angular/common";
+import {
+  DOCUMENT,
+  NgClass,
+  NgStyle,
+  NgTemplateOutlet,
+  isPlatformBrowser,
+} from "@angular/common";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { filter } from "rxjs";
@@ -39,7 +45,9 @@ export class NavbarComponent {
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {
-    this.routeColor.set(this.getChild(this.activatedRoute).snapshot.data["color"]);
+    this.routeColor.set(
+      this.getChild(this.activatedRoute).snapshot.data["color"],
+    );
 
     this.router.events
       .pipe(
@@ -47,7 +55,9 @@ export class NavbarComponent {
         takeUntilDestroyed(),
       )
       .subscribe(() => {
-        this.routeColor.set(this.getChild(this.activatedRoute).snapshot.data["color"]);
+        this.routeColor.set(
+          this.getChild(this.activatedRoute).snapshot.data["color"],
+        );
       });
   }
 

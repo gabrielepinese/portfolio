@@ -454,50 +454,113 @@
   }
 }
 
-.skills-grid {
+// ---- Focus panels (2-row layout) ----
+.focus-panels {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 80px;
 
   @include screen-down("md") {
-    grid-template-columns: 1fr;
+    gap: 64px;
   }
 }
 
-.skill-card {
-  background: $purple2;
-  border-radius: 20px;
-  padding: 36px 32px;
+.focus-row {
   display: grid;
-  gap: 10px;
-  align-content: start;
-  transition:
-    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.3s ease;
+  grid-template-columns: 2fr 1fr;
+  gap: 56px;
+  align-items: center;
 
-  &:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 48px rgba($purpleStrong, 0.14);
+  @include screen-down("md") {
+    grid-template-columns: 1fr;
+    gap: 40px;
+
+    .focus-row__visual {
+      order: -1;
+    }
   }
 
+  &--reverse {
+    grid-template-columns: 1fr 2fr;
+
+    @include screen-up("md") {
+      .focus-row__visual {
+        order: -1;
+      }
+    }
+    @include screen-down("md") {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  &__text {
+    display: grid;
+  }
+
+  &__visual {
+    border-radius: 20px;
+    overflow: hidden;
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .svg-float-a {
+      animation: svgFloatUp 6s ease-in-out infinite;
+      animation-play-state: paused;
+    }
+
+    .svg-float-b {
+      animation: svgFloatDown 8s ease-in-out infinite;
+      animation-play-state: paused;
+    }
+  }
+}
+
+.focus-item {
+  line-height: 1.75;
+  opacity: 0.75;
+
   .skill-num {
+    display: block;
     font-family: "Courier New", monospace;
-    font-size: 52px;
+    font-size: 44px;
     font-weight: 700;
     color: $purplePrimary;
     line-height: 1;
-    margin-bottom: 4px;
+    margin-bottom: 12px;
+    opacity: 1;
   }
+}
 
-  .skill-name {
-    font-size: 22px;
-    color: $purpleStrong;
-    font-weight: 700;
+@keyframes svgFloatUp {
+  0%,
+  100% {
+    transform: translateY(0);
   }
+  50% {
+    transform: translateY(-10px);
+  }
+}
 
-  .body18 {
-    line-height: 1.75;
-    opacity: 0.75;
+@keyframes svgFloatDown {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+.reveal.visible {
+  .svg-float-a {
+    animation-play-state: running;
+  }
+  .svg-float-b {
+    animation-play-state: running;
   }
 }
 
