@@ -53,7 +53,7 @@
           <div class="stack-icon" [style.--i]="$index">
             <div class="icon-wrap">
               @if (item.imgSrc) {
-                <img [src]="item.imgSrc" [alt]="item.label" class="stack-img" />
+                <img [src]="item.imgSrc" [alt]="item.label" class="stack-img" loading="lazy" />
               } @else {
                 <i [class]="item.icon"></i>
               }
@@ -86,7 +86,7 @@
           </div>
 
           <div class="focus-row__visual">
-            <img src="assets/images/about-angular-design.svg" alt="" aria-hidden="true" />
+            <img src="assets/images/about-angular-design.svg" alt="" aria-hidden="true" loading="lazy" />
           </div>
         </div>
 
@@ -114,7 +114,7 @@
           </div>
 
           <div class="focus-row__visual">
-            <img src="assets/images/about-architecture.svg" alt="" aria-hidden="true" />
+            <img src="assets/images/about-architecture.svg" alt="" aria-hidden="true" loading="lazy" />
           </div>
         </div>
       </div>
