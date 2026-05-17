@@ -1,4 +1,5 @@
 @use "responsive.mixin.scss" as *;
+@use "colors.variables" as *;
 
 //Contact content
 .title-container {
@@ -33,45 +34,110 @@
 }
 
 .contact-desc-container {
-  font-family: "Merriweather", serif;
+  font-family: "Bricolage Grotesque", sans-serif;
   display: grid;
-  justify-content: center;
-  align-items: center;
+  grid-template-columns: 1fr;
   gap: 48px;
   z-index: 1;
-  // position: relative;
+  padding-top: 48px;
+  border-top: 1px solid rgba($greenAccent, 0.15);
+  width: 100%;
+  max-width: 1216px;
+
+  .contact-desc-left {
+    display: grid;
+    gap: 20px;
+  }
+
+  .contact-label {
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $greenAccent;
+  }
 
   .heading1 {
     z-index: 1;
-    width: 100%;
-    position: relative;
-    text-align: center;
-
-    .pattern {
-      z-index: -1;
-      position: absolute;
-      left: -30px;
-      top: -100px;
-      height: 400px;
-      width: 250px;
-      background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a0c49d' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
-
-      @include screen-down("md") {
-        width: 180px;
-        height: 340px;
-        left: -10px;
-        top: -100px;
-      }
-    }
+    line-height: 1.15;
   }
+
+  .contact-desc-right {
+    display: grid;
+    gap: 32px;
+    align-content: start;
+  }
+
   .body20 {
     z-index: 1;
-    margin: auto;
-    max-width: 500px;
     line-height: 1.8;
   }
 
-  .secondary-btn {
-    margin-top: 32px;
+  .secondary-btn.contact-btn {
+    background: transparent;
+    border: 2px solid $greenAccent;
+    border-radius: 8px;
+    padding: 16px 36px;
+    overflow: hidden;
+    position: relative;
+    color: $greenAccent;
+    font-weight: bold;
+    width: fit-content;
+    transition:
+      color 0.35s ease,
+      box-shadow 0.35s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: $greenSecondary;
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 0;
+    }
+
+    .btn-float-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-inner {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      max-height: 1.2em;
+      line-height: 1.2;
+
+      .btn-text {
+        flex-shrink: 0;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    }
+
+    .btn-arrow {
+      display: inline-block;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    &:hover {
+      color: $greenAccent;
+      box-shadow: inset 0 0 0 1px rgba($greenAccent, 0.15);
+
+      &::before {
+        clip-path: inset(0% 0 0 0);
+      }
+
+      .btn-text {
+        transform: translateY(-100%);
+      }
+
+      .btn-arrow {
+        transform: translateX(5px);
+      }
+    }
   }
 }

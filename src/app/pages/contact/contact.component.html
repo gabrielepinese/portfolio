@@ -20,31 +20,39 @@
   </div>
 
   <div class="contact-desc-container">
-    <div class="heading1 bold">
-      <div class="pattern"></div>
-      <span class="text-con-bordo2">
-        Let's build something together<span class="greenPrimary">.</span></span
-      >
+    <div class="contact-desc-left">
+      <span class="contact-label">Employed full-time</span>
+      <div class="heading1 bold">
+        <span class="text-con-bordo2">
+          Let's build something together<span class="greenPrimary">.</span>
+        </span>
+      </div>
     </div>
-    <div class="body20">
-      <span class="text-con-bordo2"
-        >I'm a front-end developer with a strong focus on architectural quality
-        and technical complexity. <br /><br />I'm drawn to well-structured,
-        ambitious projects where there's room to think deeply about performance,
-        scalability, and long-term maintainability. I choose my collaborations
-        carefully: I look for projects with a clear direction, solid purpose,
-        and a thoughtful approach to what's being built both technically and
-        conceptually.<br /><br />If you're working on something structured and
-        challenging, we might be a good fit.</span
-      >
+    <div class="contact-desc-right">
+      <div class="body20">
+        <span class="text-con-bordo2"
+          >I'm a front-end developer with a strong focus on architectural
+          quality and technical complexity.<br /><br />I'm drawn to
+          well-structured, ambitious projects where there's room to think deeply
+          about performance, scalability, and long-term maintainability. I
+          choose my collaborations carefully: I look for projects with a clear
+          direction, solid purpose, and a thoughtful approach to what's being
+          built both technically and conceptually.<br /><br />If you're working
+          on something structured and challenging, we might be a good fit.</span
+        >
+      </div>
       <button
         class="secondary-btn contact-btn"
         [ngClass]="{ 'mx-auto': isMedium() }"
         type="button"
         (click)="sendMail()"
       >
-        Get in touch
-        <div class="btn-decoration"></div>
+        <span class="btn-float-wrap">
+          <span class="btn-inner">
+            <span class="btn-text">Get in touch</span>
+            <span class="btn-text" aria-hidden="true">Get in touch</span>
+          </span>
+        </span>
       </button>
     </div>
   </div>
