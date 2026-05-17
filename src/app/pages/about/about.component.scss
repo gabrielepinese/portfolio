@@ -16,6 +16,12 @@
   }
 }
 
+// ---- Container override: prevent horizontal overflow on mobile ----
+.about-container {
+  grid-template-columns: minmax(0, 1fr);
+  overflow-x: hidden;
+}
+
 // ---- Hero ----
 .about-content {
   position: relative;
@@ -72,7 +78,9 @@
     "Helvetica Neue",
     sans-serif;
   display: grid;
+  width: 100%;
   max-width: 1216px;
+  margin: 0 auto;
   gap: 160px;
 
   .about-presentation {
@@ -396,7 +404,9 @@
       position: absolute;
       inset: 0;
       background: $purpleSecondary;
+      -webkit-clip-path: inset(100% 0 0 0);
       clip-path: inset(100% 0 0 0);
+      -webkit-transition: -webkit-clip-path 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       transition: clip-path 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 0;
     }
@@ -434,6 +444,7 @@
       box-shadow: inset 0 0 0 1px rgba(white, 0.28);
 
       &::before {
+        -webkit-clip-path: inset(0% 0 0 0);
         clip-path: inset(0% 0 0 0);
       }
 
