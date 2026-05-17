@@ -1,0 +1,32 @@
+<div class="terminal-card">
+  <div class="terminal-header">
+    <div class="terminal-dots">
+      <span class="dot close"></span>
+      <span class="dot minimize"></span>
+      <span class="dot maximize"></span>
+    </div>
+    <span class="terminal-filename">{{ filename }}</span>
+  </div>
+  <div class="terminal-body">
+    <div class="code-line">
+      <span class="ln"> 1 </span>
+      <span class="kw">const </span><span class="var">developer</span>
+      <span class="op">= &#123;</span>
+    </div>
+
+    @for (entry of entries; track entry.prop; let i = $index) {
+      <div class="code-line">
+        <span class="ln"> {{ i + 2 }} </span>&nbsp;&nbsp;<span class="prop">{{
+          entry.prop
+        }}</span
+        ><span class="op">:</span> <span class="str">{{ entry.value }}</span
+        ><span class="op">,</span>
+      </div>
+    }
+
+    <div class="code-line">
+      <span class="ln"> {{ entries.length + 2 }} </span>
+      <span class="op">&#125;;</span><span class="cursor">▌</span>
+    </div>
+  </div>
+</div>

@@ -27,6 +27,16 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/images",
+                "output": "assets/images"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/icon",
+                "output": "assets/icon"
               }
             ],
             "styles": ["src/styles.scss"],
@@ -56,8 +66,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "10kB",
+                  "maximumError": "15kB"
                 }
               ],
               "outputHashing": "all"
@@ -95,6 +105,16 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/images",
+                "output": "assets/images"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/icon",
+                "output": "assets/icon"
               }
             ],
             "styles": ["src/styles.scss"],
@@ -129,5 +149,8 @@
     "@schematics/angular:resolver": {
       "typeSeparator": "."
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

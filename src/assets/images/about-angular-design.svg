@@ -1,0 +1,71 @@
+<svg viewBox="0 0 480 340" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <style>
+    .svg-float-a { animation: svgFloatUp 6s ease-in-out infinite; }
+    .svg-float-b { animation: svgFloatDown 8s ease-in-out infinite; }
+    @keyframes svgFloatUp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes svgFloatDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+  </style>
+  <rect width="480" height="340" rx="20" fill="#eef1ff" />
+  <!-- Code editor — floats up -->
+  <g class="svg-float-a">
+    <rect x="28" y="28" width="268" height="196" rx="14" fill="#2c3040" />
+    <circle cx="50" cy="50" r="5" fill="#b1b2ff" opacity="0.5" />
+    <circle cx="64" cy="50" r="5" fill="#aac4ff" opacity="0.4" />
+    <circle cx="78" cy="50" r="5" fill="#d2daff" opacity="0.3" />
+    <line x1="28" y1="64" x2="296" y2="64" stroke="white" stroke-width="0.5" opacity="0.06" />
+    <rect x="44" y="78" width="44" height="7" rx="3.5" fill="#aac4ff" opacity="0.65" />
+    <rect x="96" y="78" width="96" height="7" rx="3.5" fill="#b1b2ff" opacity="0.45" />
+    <rect x="44" y="94" width="80" height="7" rx="3.5" fill="#b1b2ff" opacity="0.75" />
+    <rect x="132" y="94" width="36" height="7" rx="3.5" fill="#d2daff" opacity="0.4" />
+    <rect x="40" y="90" width="240" height="80" rx="6" fill="none" stroke="#b1b2ff" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4" />
+    <rect x="56" y="110" width="52" height="6" rx="3" fill="#aac4ff" opacity="0.4" />
+    <rect x="116" y="110" width="88" height="6" rx="3" fill="#d2daff" opacity="0.5" />
+    <rect x="56" y="124" width="60" height="6" rx="3" fill="#aac4ff" opacity="0.35" />
+    <rect x="124" y="124" width="72" height="6" rx="3" fill="#d2daff" opacity="0.4" />
+    <rect x="56" y="138" width="44" height="6" rx="3" fill="#aac4ff" opacity="0.3" />
+    <rect x="108" y="138" width="100" height="6" rx="3" fill="#d2daff" opacity="0.3" />
+    <rect x="44" y="156" width="48" height="7" rx="3.5" fill="#b1b2ff" opacity="0.6" />
+    <rect x="100" y="156" width="80" height="7" rx="3.5" fill="#d2daff" opacity="0.45" />
+    <rect x="44" y="172" width="36" height="7" rx="3.5" fill="#b1b2ff" opacity="0.55" />
+    <rect x="88" y="172" width="60" height="7" rx="3.5" fill="#aac4ff" opacity="0.4" />
+    <rect x="44" y="188" width="28" height="7" rx="3.5" fill="#b1b2ff" opacity="0.5" />
+  </g>
+  <!-- Design system panel — floats down -->
+  <g class="svg-float-b">
+    <rect x="312" y="28" width="140" height="196" rx="14" fill="#d2daff" opacity="0.5" />
+    <rect x="328" y="44" width="88" height="8" rx="4" fill="#2c3040" opacity="0.2" />
+    <line x1="312" y1="60" x2="452" y2="60" stroke="#b1b2ff" stroke-width="0.8" opacity="0.35" />
+    <circle cx="340" cy="84" r="13" fill="#b1b2ff" />
+    <circle cx="340" cy="116" r="13" fill="#aac4ff" />
+    <circle cx="340" cy="148" r="13" fill="#2c3040" opacity="0.65" />
+    <rect x="362" y="78" width="52" height="6" rx="3" fill="#2c3040" opacity="0.18" />
+    <rect x="362" y="88" width="36" height="5" rx="2.5" fill="#2c3040" opacity="0.11" />
+    <rect x="362" y="110" width="52" height="6" rx="3" fill="#2c3040" opacity="0.18" />
+    <rect x="362" y="120" width="36" height="5" rx="2.5" fill="#2c3040" opacity="0.11" />
+    <rect x="362" y="142" width="52" height="6" rx="3" fill="#2c3040" opacity="0.18" />
+    <rect x="362" y="152" width="36" height="5" rx="2.5" fill="#2c3040" opacity="0.11" />
+    <line x1="320" y1="168" x2="444" y2="168" stroke="#b1b2ff" stroke-width="0.8" opacity="0.3" />
+    <rect x="328" y="178" width="92" height="12" rx="4" fill="#2c3040" opacity="0.15" />
+    <rect x="328" y="196" width="76" height="9" rx="3" fill="#2c3040" opacity="0.1" />
+    <rect x="328" y="210" width="60" height="7" rx="3" fill="#2c3040" opacity="0.08" />
+  </g>
+  <!-- Component tree strip — static -->
+  <rect x="28" y="244" width="424" height="68" rx="14" fill="#d2daff" opacity="0.35" />
+  <rect x="196" y="256" width="88" height="28" rx="7" fill="#2c3040" />
+  <rect x="208" y="264" width="52" height="6" rx="3" fill="#b1b2ff" opacity="0.7" />
+  <rect x="208" y="274" width="36" height="4" rx="2" fill="#b1b2ff" opacity="0.35" />
+  <line x1="240" y1="284" x2="240" y2="294" stroke="#b1b2ff" stroke-width="1.5" opacity="0.5" />
+  <line x1="100" y1="294" x2="380" y2="294" stroke="#b1b2ff" stroke-width="1.5" opacity="0.4" />
+  <circle cx="100" cy="294" r="5" fill="#b1b2ff" opacity="0.55" />
+  <circle cx="180" cy="294" r="5" fill="#b1b2ff" opacity="0.55" />
+  <circle cx="240" cy="294" r="5" fill="#b1b2ff" opacity="0.55" />
+  <circle cx="300" cy="294" r="5" fill="#b1b2ff" opacity="0.55" />
+  <circle cx="380" cy="294" r="5" fill="#b1b2ff" opacity="0.55" />
+  <line x1="100" y1="294" x2="100" y2="304" stroke="#b1b2ff" stroke-width="1.5" opacity="0.35" />
+  <line x1="180" y1="294" x2="180" y2="304" stroke="#b1b2ff" stroke-width="1.5" opacity="0.35" />
+  <line x1="300" y1="294" x2="300" y2="304" stroke="#b1b2ff" stroke-width="1.5" opacity="0.35" />
+  <line x1="380" y1="294" x2="380" y2="304" stroke="#b1b2ff" stroke-width="1.5" opacity="0.35" />
+  <!-- corner accents -->
+  <circle cx="460" cy="328" r="5" fill="#b1b2ff" opacity="0.2" />
+  <circle cx="20" cy="20" r="5" fill="#b1b2ff" opacity="0.2" />
+</svg>

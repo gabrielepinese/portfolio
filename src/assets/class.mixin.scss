@@ -8,7 +8,7 @@
     display: grid;
     justify-content: center;
     box-sizing: border-box;
-    padding: 48px 48px 200px 48px;
+    padding-bottom: 200px;
 
     &.home {
       background: $orange2;
@@ -23,8 +23,12 @@
       background: $green2;
     }
 
-    @include screen-down("md") {
+    @include screen-down("lg") {
       padding: 24px 24px 200px 24px;
+    }
+
+    @include screen-down("md") {
+      padding: 16px 16px 200px 16px;
     }
   }
 }
@@ -33,6 +37,6 @@
     height: calc(100vh - 300px);
     margin: 200px auto;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1216px;
   }
 }

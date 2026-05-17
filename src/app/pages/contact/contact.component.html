@@ -2,48 +2,57 @@
   <div class="contact-content">
     <div class="title-container">
       <div class="title-content">
-        <div class="bigTitle bold" role="heading" aria-level="1">
+        <div class="bigTitle bold">
           Contact me<span class="greenPrimary">.</span>
         </div>
-        <div class="body24" role="heading" aria-level="2">
+        <div class="body24">
           Got a project, an idea, or just curious? Reach out — I'm always happy
           to connect, collaborate, and bring new digital experiences to life.
         </div>
       </div>
     </div>
 
-    <div class="scroll-line" role="heading" aria-level="5">
-      <span>SCROLL</span><img src="svg/south.svg" alt="south.svg" />
+    <div class="scroll-indicator" aria-hidden="true">
+      <div class="scroll-track">
+        <div class="scroll-dot"></div>
+      </div>
     </div>
   </div>
 
   <div class="contact-desc-container">
-    <div class="heading1 bold" role="heading" aria-level="3">
-      <div class="pattern"></div>
-      <span class="text-con-bordo2">
-        Let's build something together<span class="greenPrimary">.</span></span
-      >
+    <div class="contact-desc-left">
+      <span class="contact-label">Employed full-time</span>
+      <div class="heading1 bold">
+        <span class="text-con-bordo2">
+          Let's build something together<span class="greenPrimary">.</span>
+        </span>
+      </div>
     </div>
-    <div class="body20" role="heading" aria-level="4">
-      <span class="text-con-bordo2"
-        >I'm a front-end developer with a strong focus on architectural quality
-        and technical complexity. <br /><br />I'm drawn to well-structured,
-        ambitious projects where there's room to think deeply about performance,
-        scalability, and long-term maintainability. I choose my collaborations
-        carefully: I look for projects with a clear direction, solid purpose,
-        and a thoughtful approach to what’s being built both technically and
-        conceptually.<br /><br />If you're working on something structured and
-        challenging, we might be a good fit.</span
-      >
+    <div class="contact-desc-right">
+      <div class="body20">
+        <span class="text-con-bordo2"
+          >I'm a front-end developer with a strong focus on architectural
+          quality and technical complexity.<br /><br />I'm drawn to
+          well-structured, ambitious projects where there's room to think deeply
+          about performance, scalability, and long-term maintainability. I
+          choose my collaborations carefully: I look for projects with a clear
+          direction, solid purpose, and a thoughtful approach to what's being
+          built both technically and conceptually.<br /><br />If you're working
+          on something structured and challenging, we might be a good fit.</span
+        >
+      </div>
       <button
         class="secondary-btn contact-btn"
-        [ngClass]="{ 'mx-auto': isMedium$ | async }"
+        [ngClass]="{ 'mx-auto': isMedium() }"
         type="button"
-        role="button"
         (click)="sendMail()"
       >
-        Get in touch
-        <div class="btn-decoration"></div>
+        <span class="btn-float-wrap">
+          <span class="btn-inner">
+            <span class="btn-text">Get in touch</span>
+            <span class="btn-text" aria-hidden="true">Get in touch</span>
+          </span>
+        </span>
       </button>
     </div>
   </div>

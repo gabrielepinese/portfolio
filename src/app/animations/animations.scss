@@ -5,6 +5,12 @@
   }
 }
 
+@keyframes expandLine {
+  to {
+    width: 68px;
+  }
+}
+
 @keyframes expandWithBounce {
   to {
     transform: scaleX(1);
@@ -69,5 +75,22 @@
   }
   100% {
     letter-spacing: 4px;
+  }
+}
+
+@keyframes scrollTravel {
+  0% {
+    top: -4px;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    top: 80px;
+    opacity: 0;
   }
 }

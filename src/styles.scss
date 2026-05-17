@@ -1,4 +1,3 @@
-//Imports
 @use "./assets/class.mixin.scss" as *;
 @use "./assets/fonts/typography.mixin.scss" as *;
 @use "./assets/styles/buttons.mixin.scss" as *;
@@ -6,8 +5,7 @@
 @use "./assets/color/colors.variables.scss" as *;
 @use "./assets/responsive.mixin.scss" as *;
 
-//Global styles ---------
-
+// Global
 html,
 body {
   height: 100%;
@@ -26,8 +24,7 @@ $class-list: "about", "works", "contact";
   @include apply-style-to-content($class);
 }
 
-//FONTS ------
-
+// Typography
 .bigTitle {
   @include bigTitle;
 }
@@ -71,45 +68,28 @@ $class-list: "about", "works", "contact";
   @include semibold;
 }
 
-.dosis-700 {
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
-}
-.dosis-600 {
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-}
-
 .bricolage {
   font-family: "Bricolage Grotesque", sans-serif;
 }
 
-//COLORS ------
-
+// Colors
 .orangePrimary {
   color: $orangePrimary;
 }
-
 .purplePrimary {
   color: $purplePrimary;
 }
-
 .redPrimary {
   color: $redPrimary;
 }
-
 .greenPrimary {
-  color: $greenPrimary;
+  color: $greenAccent;
 }
 
-//BUTTONS ------
-
+// Buttons
 button {
   cursor: pointer;
 }
-
 .neutral-btn {
   @include neutral-btn;
 }
@@ -117,24 +97,50 @@ button {
   @include secondary-btn;
 }
 
-//Other class
+// Utilities
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
 
+// Text shadow variants
 .text-con-bordo {
-  text-shadow: 4px 0 $orange2, -4px 0 $orange2, 0 4px $orange2, 0 -4px $orange2,
-    3px 3px $orange2, -3px -3px $orange2, 3px -3px $orange2, -3px 3px $orange2;
+  text-shadow:
+    4px 0 $orange2,
+    -4px 0 $orange2,
+    0 4px $orange2,
+    0 -4px $orange2,
+    3px 3px $orange2,
+    -3px -3px $orange2,
+    3px -3px $orange2,
+    -3px 3px $orange2;
 }
 
 .text-con-bordo2 {
-  text-shadow: 4px 0 $green2, -4px 0 $green2, 0 4px $green2, 0 -4px $green2,
-    3px 3px $green2, -3px -3px $green2, 3px -3px $green2, -3px 3px $green2;
+  text-shadow:
+    4px 0 $green2,
+    -4px 0 $green2,
+    0 4px $green2,
+    0 -4px $green2,
+    3px 3px $green2,
+    -3px -3px $green2,
+    3px -3px $green2,
+    -3px 3px $green2;
 }
 
 .text-con-bordo3 {
-  text-shadow: 4px 0 $purple3, -4px 0 $purple3, 0 4px $purple3, 0 -4px $purple3,
-    3px 3px $purple3, -3px -3px $purple3, 3px -3px $purple3, -3px 3px $purple3;
+  text-shadow:
+    4px 0 $purple3,
+    -4px 0 $purple3,
+    0 4px $purple3,
+    0 -4px $purple3,
+    3px 3px $purple3,
+    -3px -3px $purple3,
+    3px -3px $purple3,
+    -3px 3px $purple3;
 }
 
-//Wrapper router ----
+// Layout
 .frame {
   width: 100%;
   height: 100%;
@@ -144,51 +150,111 @@ button {
   flex-direction: column;
 }
 
-//Frame Portfolio ----
 .frame-empty {
-  height: 24px;
-  flex-shrink: 0;
   background: white;
-  z-index: 5;
-  width: calc(100% - 24px);
   position: fixed;
+  z-index: 20;
+  pointer-events: none;
 
-  &.bottom {
-    bottom: 0;
-  }
   &.top {
     top: 0;
+    left: 0;
+    right: 0;
+    height: 25px;
+    width: 100%;
+
+    @include screen-down("md") {
+      height: 16px;
+    }
+  }
+  &.bottom {
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 25px;
+    width: 100%;
+
+    @include screen-down("md") {
+      height: 16px;
+    }
+  }
+  &.left {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 24px;
+    height: 100%;
+
+    @include screen-down("md") {
+      height: 16px;
+    }
+  }
+  &.right {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 24px;
+    height: 100%;
+
+    @include screen-down("md") {
+      height: 16px;
+    }
   }
 }
 
-//Router container ---
 .app-layout {
   background-color: white;
-  padding: 24px;
+  padding: 24px 0 16px 24px;
   flex: 1 1;
 
-  // @include screen-down("md") {
-  //   position: absolute;
-  //   top: 0;
-  // }
+  @include screen-down("lg") {
+    padding: 24px;
+  }
+
+  @include screen-down("md") {
+    padding: 16px;
+  }
 }
 
-//Scroll line info
-.scroll-line {
+.home {
+  --scroll-accent: #f1a661;
+}
+.about {
+  --scroll-accent: #b1b2ff;
+}
+.works {
+  --scroll-accent: #d2665a;
+}
+.contact {
+  --scroll-accent: #a0c49d;
+}
+
+.scroll-indicator {
+  padding-left: 12px;
   padding-top: 56px;
-  font-family: "Bricolage Grotesque", sans-serif;
-  letter-spacing: 2px;
-  display: grid;
-  justify-content: left;
-  align-items: center;
-  gap: 16px;
+  padding-bottom: 32px;
+  display: flex;
+  justify-content: flex-start;
   animation: showUp 0.5s ease-out forwards;
   animation-delay: 1.2s;
   opacity: 0;
+}
 
-  img {
-    animation: bounce 2s ease infinite;
-    // animation-delay: 4s;
-    margin: auto;
-  }
+.scroll-track {
+  position: relative;
+  width: 1px;
+  height: 108px;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 1px;
+}
+
+.scroll-dot {
+  position: absolute;
+  left: -1.5px;
+  top: -4px;
+  width: 4px;
+  height: 32px;
+  background: var(--scroll-accent, #000);
+  border-radius: 2px;
+  animation: scrollTravel 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

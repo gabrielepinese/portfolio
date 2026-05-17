@@ -1,23 +1,69 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { map } from 'rxjs';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnDestroy, PLATFORM_ID } from "@angular/core";
+import { DOCUMENT, NgClass, isPlatformBrowser } from "@angular/common";
+import { BreakpointObserver } from "@angular/cdk/layout";
+import { toSignal } from "@angular/core/rxjs-interop";
+import { map } from "rxjs";
 
 @Component({
-  selector: 'app-contact',
-  imports: [CommonModule],
-  templateUrl: './contact.component.html',
-  styleUrl: './contact.component.scss',
+  selector: "app-contact",
+  imports: [NgClass],
+  templateUrl: "./contact.component.html",
+  styleUrl: "./contact.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactComponent {
+export class ContactComponent implements AfterViewInit, OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
+  private document = inject(DOCUMENT);
+  private platformId = inject(PLATFORM_ID);
+  private btnParallaxCleanup?: () => void;
 
-  isMedium$ = this.breakpointObserver
-    .observe(['(min-width: 768px) and (max-width: 1279px)'])
-    .pipe(map((result) => result.matches));
+  readonly isMedium = toSignal(
+    this.breakpointObserver
+      .observe(["(min-width: 768px) and (max-width: 1279px)"])
+      .pipe(map((r) => r.matches)),
+    { initialValue: false },
+  );
+
+  ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.initBtnParallax();
+    }
+  }
+
+  private initBtnParallax() {
+    const btn = document.querySelector<HTMLElement>(".contact-btn");
+    if (!btn) return;
+
+    const onMove = (e: MouseEvent) => {
+      const rect = btn.getBoundingClientRect();
+      const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+      const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+      btn.style.setProperty("--float-x", `${dx * 5}px`);
+      btn.style.setProperty("--float-y", `${dy * 5}px`);
+    };
+
+    const onLeave = () => {
+      btn.style.setProperty("--float-x", "0px");
+      btn.style.setProperty("--float-y", "0px");
+    };
+
+    btn.addEventListener("mousemove", onMove);
+    btn.addEventListener("mouseleave", onLeave);
+
+    this.btnParallaxCleanup = () => {
+      btn.removeEventListener("mousemove", onMove);
+      btn.removeEventListener("mouseleave", onLeave);
+    };
+  }
+
+  ngOnDestroy() {
+    this.btnParallaxCleanup?.();
+  }
 
   sendMail() {
-    window.location.href =
-      'mailto:gabrielepinese97@gmail.com?subject=Portfolio%20Request&body=';
+    if (isPlatformBrowser(this.platformId)) {
+      this.document.location.href =
+        "mailto:gabrielepinese97@gmail.com?subject=Portfolio%20Request&body=";
+    }
   }
 }

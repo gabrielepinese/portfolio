@@ -12,26 +12,28 @@
       </div>
     </div>
 
-    <div class="scroll-line" role="heading" aria-level="5">
-      <span>SCROLL</span><img src="svg/south.svg" alt="south.svg" />
+    <div class="scroll-indicator" aria-hidden="true">
+      <div class="scroll-track">
+        <div class="scroll-dot"></div>
+      </div>
     </div>
   </div>
 
   <div class="works-main-section">
-    <div class="section-title body32 bold">
-      <span>Experiences</span>
-      <div class="period-line"></div>
+    <div class="section-title">
+      <span class="section-label">Experiences</span>
+      <div class="section-line"></div>
     </div>
     @for (company of companyList; track $index) {
-    <app-item-list
-      [link]="company.link"
-      [from]="company.from"
-      [to]="company.to"
-      [company]="company.companyName"
-      [title]="company.title"
-      [desc]="company.description"
-      [chips]="company.chips"
-    ></app-item-list>
+      <app-item-list
+        [link]="company.link"
+        [from]="company.from"
+        [to]="company.to"
+        [company]="company.companyName"
+        [title]="company.title"
+        [desc]="company.description"
+        [chips]="company.chips"
+      ></app-item-list>
     }
   </div>
 </div>

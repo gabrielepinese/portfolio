@@ -1,31 +1,31 @@
-import { Routes } from '@angular/router';
+import { Routes } from "@angular/router";
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: "", redirectTo: "home", pathMatch: "full" },
   {
-    path: 'home',
+    path: "home",
     loadComponent: () =>
-      import('./pages/home/home.component').then((mod) => mod.HomeComponent),
-    data: { color: 'homePage' },
+      import("./pages/home/home.component").then((mod) => mod.HomeComponent),
+    data: { color: "homePage" },
   },
   {
-    path: 'about',
+    path: "about",
     loadComponent: () =>
-      import('./pages/about/about.component').then((mod) => mod.AboutComponent),
-    data: { color: 'aboutPage' },
+      import("./pages/about/about.component").then((mod) => mod.AboutComponent),
+    data: { color: "aboutPage" },
   },
   {
-    path: 'works',
+    path: "works",
     loadComponent: () =>
-      import('./pages/works/works.component').then((mod) => mod.WorksComponent),
-    data: { color: 'worksPage' },
+      import("./pages/works/works.component").then((mod) => mod.WorksComponent),
+    data: { color: "worksPage" },
   },
   {
-    path: 'contact',
+    path: "contact",
     loadComponent: () =>
-      import('./pages/contact/contact.component').then(
-        (mod) => mod.ContactComponent
+      import("./pages/contact/contact.component").then(
+        (mod) => mod.ContactComponent,
       ),
-    data: { color: 'contactPage' },
+    data: { color: "contactPage" },
   },
 ];
