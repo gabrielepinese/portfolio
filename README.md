@@ -1,27 +1,67 @@
-# AngularPortfolio
+# Gabriele Pinese — Portfolio
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.3.
+Personal portfolio built with Angular 21. Features SSR, lazy-loaded routes, scroll-reveal animations, and a custom navigation system with page transitions.
 
-## Development server
+## Stack
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Angular 21** — standalone components, signals, OnPush
+- **TypeScript 5.9** 
+- **SCSS** — custom design system (typography scale, color variables, responsive mixins)
+- **Angular CDK** — BreakpointObserver
+- **Angular SSR** — prerendering + Express server
 
-## Code scaffolding
+## Pages
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+| Route | Description |
+|-------|-------------|
+| `/home` | Landing page |
+| `/about` | Profile, tech stack, skills, CV download |
+| `/works` | Work experience list |
+| `/contact` | Contact CTA |
 
-## Build
+## Performance
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- All page routes lazy-loaded via `loadComponent`
+- `PreloadAllModules` strategy for background prefetch
+- Devicons CSS injected dynamically only on `/about`
+- Images use `loading="lazy"`
 
-## Running unit tests
+## Accessibility
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Skip navigation link
+- `<main>` landmark with `id="main-content"`
+- Navbar: `aria-expanded`, `aria-current="page"`, `role="dialog"` on menu overlay
+- Decorative elements: `aria-hidden="true"`
 
-## Running end-to-end tests
+## Dev
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+npm install
+npm start           # dev server → http://localhost:4200
+npm run build       # production build → dist/
+npm run serve:ssr:AngularPortfolio   # SSR server
+```
 
-## Further help
+## Project Structure
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```
+src/
+├── app/
+│   ├── pages/
+│   │   ├── home/
+│   │   ├── about/
+│   │   ├── works/
+│   │   └── contact/
+│   ├── shared/
+│   │   └── ui/
+│   │       ├── navbar/
+│   │       └── item-list/
+│   ├── app.component.ts
+│   ├── app.config.ts
+│   └── app.routes.ts
+└── assets/
+    ├── color/
+    ├── fonts/
+    ├── images/
+    └── styles/
+```
