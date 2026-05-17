@@ -6,7 +6,7 @@ import {
   OnDestroy,
   PLATFORM_ID,
 } from "@angular/core";
-import { NgClass, isPlatformBrowser } from "@angular/common";
+import { DOCUMENT, NgClass, isPlatformBrowser } from "@angular/common";
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { map } from "rxjs";
@@ -28,6 +28,7 @@ interface StackItem {
 export class AboutComponent implements AfterViewInit, OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
   private platformId = inject(PLATFORM_ID);
+  private document = inject(DOCUMENT);
   private observer?: IntersectionObserver;
   private btnParallaxCleanup?: () => void;
 
@@ -54,9 +55,18 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
+      this.loadDevicons();
       this.initScrollReveal();
       this.initBtnParallax();
     }
+  }
+
+  private loadDevicons() {
+    if (this.document.querySelector('link[href*="devicons"]')) return;
+    const link = this.document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css';
+    this.document.head.appendChild(link);
   }
 
   private initScrollReveal() {

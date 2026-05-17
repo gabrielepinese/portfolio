@@ -29,6 +29,7 @@ export class NavbarComponent {
   readonly transitionColor = signal("");
   readonly startTransition = signal(false);
   readonly showDots = signal(false);
+  readonly currentRoute = signal<string>('');
 
   private dotsTimer?: ReturnType<typeof setTimeout>;
 
@@ -48,6 +49,7 @@ export class NavbarComponent {
     this.routeColor.set(
       this.getChild(this.activatedRoute).snapshot.data["color"],
     );
+    this.currentRoute.set(this.router.url.replace(/^\/+/, '') || 'home');
 
     this.router.events
       .pipe(
@@ -58,6 +60,7 @@ export class NavbarComponent {
         this.routeColor.set(
           this.getChild(this.activatedRoute).snapshot.data["color"],
         );
+        this.currentRoute.set(this.router.url.replace(/^\/+/, '') || 'home');
       });
   }
 

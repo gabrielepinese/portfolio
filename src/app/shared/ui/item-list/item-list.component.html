@@ -1,4 +1,4 @@
-<button role="button" type="button" (click)="goto(link())">
+<button type="button" (click)="goto(link())" [attr.aria-label]="company() + ' — ' + title() + '. Opens in new tab'">
   <div class="item-list-container">
     <div class="item-list-content">
       <div class="period bold">
