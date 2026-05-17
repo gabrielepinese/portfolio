@@ -13,7 +13,8 @@ import { map } from "rxjs";
 import { TerminalCardComponent } from "./terminal-card/terminal-card.component";
 
 interface StackItem {
-  icon: string;
+  icon?: string;
+  imgSrc?: string;
   label: string;
 }
 
@@ -47,7 +48,7 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
     { icon: "devicon-tailwindcss-plain colored", label: "Tailwind" },
     { icon: "devicon-figma-plain colored", label: "Figma" },
     { icon: "devicon-git-plain colored", label: "Git" },
-    { icon: "devicon-vscode-plain colored", label: "VS Code" },
+    { imgSrc: "assets/icon/zed.webp", label: "Zed" },
     { icon: "devicon-csharp-plain colored", label: "C#" },
   ];
 
