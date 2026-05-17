@@ -1,6 +1,12 @@
 @use "colors.variables" as *;
 @use "responsive.mixin.scss" as *;
 
+:host {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+}
+
 .terminal-card {
   height: 100%;
   background: $purpleStrong;
@@ -118,6 +124,7 @@
 @media (max-width: 768px) {
   .terminal-body {
     padding: 16px;
+    overflow-x: auto;
 
     .code-line {
       font-size: 12px;
