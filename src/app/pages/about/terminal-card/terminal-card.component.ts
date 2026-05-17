@@ -18,7 +18,7 @@ export class TerminalCardComponent {
   readonly entries: ProfileEntry[] = [
     { prop: "name", value: '"Gabriele Pinese"' },
     { prop: "role", value: '"Frontend Developer"' },
-    { prop: "passion", value: '"Beautiful UIs"' },
+    { prop: "passion", value: '"Building Robust Systems"' },
     { prop: "location", value: '"Milan, Italy"' },
     { prop: "status", value: '"Employed full-time"' },
   ];
