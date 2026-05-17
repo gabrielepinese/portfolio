@@ -1,11 +1,11 @@
 {
-  "name": "angular-portfolio",
+  "name": "portfolio",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:gh": "ng build --base-href /portfolioAngular/",
+    "build:gh": "ng build --base-href /portfolio/",
     "deploy": "npm run build:gh && gh-pages -d dist/angular-portfolio/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
