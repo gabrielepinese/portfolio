@@ -19,66 +19,31 @@
   cursor: pointer;
 
   .cookie-logo {
+    display: block;
     width: 56px;
     height: 56px;
     flex-shrink: 0;
-  }
-
-  .cookie-shadow,
-  .cookie-outline {
-    fill: #000;
-  }
-}
-
-.navbar-content.homePage .logo-wrap {
-  .cookie-shadow,
-  .cookie-outline {
-    fill: $orangePrimary;
-  }
-}
-.navbar-content.aboutPage .logo-wrap {
-  .cookie-shadow,
-  .cookie-outline {
-    fill: $purplePrimary;
-  }
-}
-.navbar-content.worksPage .logo-wrap {
-  .cookie-shadow,
-  .cookie-outline {
-    fill: $redPrimary;
-  }
-}
-.navbar-content.contactPage .logo-wrap {
-  .cookie-shadow,
-  .cookie-outline {
-    fill: $greenPrimary;
+    background-color: #000;
+    -webkit-mask-image: url('../../../../assets/icon/cookie.svg');
+    mask-image: url('../../../../assets/icon/cookie.svg');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
   }
 }
 
-.menu-container.homePage .logo-wrap {
-  .cookie-shadow,
-  .cookie-outline {
-    fill: $orangePrimary;
-  }
-}
-.menu-container.aboutPage .logo-wrap {
-  .cookie-shadow,
-  .cookie-outline {
-    fill: $purpleStrong;
-  }
-}
-.menu-container.worksPage .logo-wrap {
-  .cookie-shadow,
-  .cookie-outline {
-    fill: #000;
-  }
-}
-.menu-container.contactPage .logo-wrap {
-  .cookie-shadow,
-  .cookie-outline {
-    fill: $greenAccent;
-  }
-}
+.navbar-content.homePage .logo-wrap .cookie-logo { background-color: $orangePrimary; }
+.navbar-content.aboutPage .logo-wrap .cookie-logo { background-color: $purplePrimary; }
+.navbar-content.worksPage .logo-wrap .cookie-logo { background-color: $redPrimary; }
+.navbar-content.contactPage .logo-wrap .cookie-logo { background-color: $greenPrimary; }
+
+.menu-container.homePage .logo-wrap .cookie-logo { background-color: $orangePrimary; }
+.menu-container.aboutPage .logo-wrap .cookie-logo { background-color: $purpleStrong; }
+.menu-container.worksPage .logo-wrap .cookie-logo { background-color: #000; }
+.menu-container.contactPage .logo-wrap .cookie-logo { background-color: $greenAccent; }
 
 .menu-btn-container {
   height: fit-content;
@@ -93,9 +58,10 @@
   transform-origin: center;
   z-index: 3;
   letter-spacing: 2px;
+  transition: letter-spacing 0.3s ease-out;
 
   &:hover {
-    animation: letterSpacing 0.3s ease-out forwards;
+    letter-spacing: 4px;
   }
 }
 
@@ -109,9 +75,9 @@
     max-width: 1920px;
     margin: 0 auto auto auto;
     padding: 40px;
-    display: grid;
-    gap: 20px;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
 
     @include screen-down("xxl") {
       padding: 24px;
@@ -431,4 +397,60 @@
       animation-delay: -0.45s;
     }
   }
+}
+
+.chat-btn {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #000;
+
+  .chat-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+
+    .icon-bg { fill: transparent; }
+    .icon-fg { fill: currentColor; }
+  }
+
+  .chat-label {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 2px;
+    transition: letter-spacing 0.3s ease-out;
+    cursor: pointer;
+
+    &:hover {
+      letter-spacing: 4px;
+    }
+
+    @include screen-down("md") {
+      display: none;
+    }
+  }
+}
+
+.navbar-content.homePage .chat-btn {
+  color: $orangePrimary;
+  .icon-bg { fill: $orangeSecondary; }
+  .icon-fg { fill: $orangePrimary; }
+}
+.navbar-content.aboutPage .chat-btn {
+  color: $purpleStrong;
+  .icon-bg { fill: $purpleSecondary; }
+  .icon-fg { fill: $purpleStrong; }
+}
+.navbar-content.worksPage .chat-btn {
+  color: $redPrimary;
+  .icon-bg { fill: $redSecondary; }
+  .icon-fg { fill: $redPrimary; }
+}
+.navbar-content.contactPage .chat-btn {
+  color: $greenAccent;
+  .icon-bg { fill: $greenSecondary; }
+  .icon-fg { fill: $greenAccent; }
 }
