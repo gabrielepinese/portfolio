@@ -2,95 +2,166 @@
 @use "animations.scss" as *;
 @use "responsive.mixin.scss" as *;
 
-.home-container {
-  width: calc(100% - 20px);
-  height: 100%;
+// .home-container and .home-content base styles come from class.mixin
+
+.title-container {
   display: grid;
-  justify-content: center;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  position: relative;
   box-sizing: border-box;
-  padding: 48px;
-  background: $orange2;
 
-  .home-content {
+  .bigTitle {
+    text-align: left;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: showUp 0.5s ease-out forwards;
+    animation-delay: 0.4s;
+  }
+
+  .body24 {
+    max-width: 700px;
+    text-align: left;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: showUp 0.5s ease-out forwards;
+    animation-delay: 0.8s;
+  }
+
+  .title-content {
+    display: grid;
+    gap: 28px;
     margin: auto;
-    width: 100%;
-    max-width: 1216px;
+    text-align: left;
+  }
 
-    .title-container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      height: 100%;
-      align-items: center;
-      position: relative;
-      box-sizing: border-box;
+  .image-container {
+    position: absolute;
+    left: 250px;
+    top: 30px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' width='10' height='10' patternUnits='userSpaceOnUse'><rect width='100%' height='100%' fill='%232b2b31' fill-opacity='0'/><path fill='none' stroke='%23E38B29' stroke-linecap='square' stroke-width='1' d='M2.5 5h5M5 2.5v5'/></pattern></defs><rect width='1600%' height='1600%' fill='url(%23a)' transform='translate(-40 -40)'/></svg>");
+    background-repeat: repeat;
+    background-size: auto;
+    background-position: center;
+    width: 700px;
+    height: 170px;
+    z-index: 0;
+    display: inline-block;
+    transform: scaleX(0);
+    transform-origin: center;
+    opacity: 0;
+    animation: expandWithBounce 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55)
+      forwards;
+    animation-delay: 1s;
 
-      .bigTitle {
-        text-align: left;
-        z-index: 1;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: showUp 0.5s ease-out forwards;
-        animation-delay: 0.4s;
-      }
+    @include screen-down("lg") {
+      left: 160px;
+      top: -36px;
+      width: 400px;
+      height: 264px;
+    }
 
-      .body24 {
-        max-width: 700px;
-        text-align: left;
-        z-index: 1;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: showUp 0.5s ease-out forwards;
-        animation-delay: 0.8s;
-      }
-
-      .title-content {
-        display: grid;
-        gap: 28px;
-        margin: auto;
-        text-align: left;
-      }
-
-      .image-container {
-        position: absolute;
-        left: 250px;
-        top: 30px;
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' width='10' height='10' patternUnits='userSpaceOnUse'><rect width='100%' height='100%' fill='%232b2b31' fill-opacity='0'/><path fill='none' stroke='%23E38B29' stroke-linecap='square' stroke-width='1' d='M2.5 5h5M5 2.5v5'/></pattern></defs><rect width='1600%' height='1600%' fill='url(%23a)' transform='translate(-40 -40)'/></svg>");
-        background-repeat: repeat;
-        background-size: auto;
-        background-position: center;
-        width: 700px;
-        height: 170px;
-        z-index: 0;
-        display: inline-block;
-        transform: scaleX(0);
-        transform-origin: center;
-        opacity: 0;
-        animation: expandWithBounce 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
-        animation-delay: 1s;
-
-        @include screen-down("lg") {
-          left: 160px;
-          top: -36px;
-          width: 400px;
-          height: 264px;
-        }
-
-        @include screen-down("md") {
-          left: 110px;
-          top: -100px;
-          width: 160px;
-          height: 400px;
-        }
-      }
-
-      @include screen-down("lg") {
-        grid-template-columns: repeat(1, 1fr);
-      }
+    @include screen-down("md") {
+      left: 110px;
+      top: -100px;
+      width: 160px;
+      height: 400px;
     }
   }
 
-  @include screen-down("md") {
-    width: 100%;
+  @include screen-down("lg") {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.home-projects-section {
+  width: 100%;
+  max-width: 1216px;
+  margin: 80px auto 0;
+}
+
+.home-projects-content {
+  display: grid;
+  gap: 40px;
+}
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  .section-label {
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $orangePrimary;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: rgba($orangePrimary, 0.15);
+  }
+}
+
+.projects-coming-soon {
+  display: grid;
+  gap: 16px;
+  padding: 56px 32px;
+  border: 2px dashed rgba($orangePrimary, 0.35);
+  border-radius: 12px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: showUp 0.5s ease-out forwards;
+  animation-delay: 1.2s;
+
+  .coming-label {
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $orangeSecondary;
+    font-weight: 700;
+  }
+
+  .coming-desc {
+    margin: 0;
+    opacity: 0.75;
+    line-height: 1.8;
+    font-weight: 500;
+
+    .coming-sub {
+      opacity: 0.85;
+    }
+  }
+
+  .coming-cta {
+    display: inline-block;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: $orangePrimary;
+    text-decoration: none;
+    font-weight: 700;
+    border-bottom: 2px solid rgba($orangePrimary, 0.4);
+    padding-bottom: 2px;
+    width: fit-content;
+    margin: 8px auto 0;
+    transition:
+      border-color 0.2s ease,
+      opacity 0.2s ease;
+
+    &:hover {
+      border-color: $orangePrimary;
+      opacity: 0.8;
+    }
   }
 }
 
