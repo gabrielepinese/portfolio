@@ -9,6 +9,10 @@
   align-items: center;
   position: relative;
 
+  h1, h2 {
+    margin: 0;
+  }
+
   .bigTitle {
     text-align: left;
     z-index: 1;

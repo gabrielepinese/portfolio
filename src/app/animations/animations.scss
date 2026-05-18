@@ -18,7 +18,6 @@
   }
 }
 
-// Keyframe Animations
 @keyframes slideInLeft {
   from {
     transform: translateX(-100%);
@@ -40,18 +39,6 @@
     opacity: 0;
   }
 }
-
-/* Animazione per far apparire il pulsante 2 */
-// @keyframes showUp {
-//   from {
-//     opacity: 0;
-//     transform: translateY(20px); /* Inizia più in basso */
-//   }
-//   to {
-//     opacity: 1;
-//     transform: translateY(0); /* Arriva alla posizione finale */
-//   }
-// }
 
 @keyframes bounce {
   0%,
