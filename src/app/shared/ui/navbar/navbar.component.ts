@@ -64,11 +64,16 @@ export class NavbarComponent {
   }
 
   navigate(path: string) {
-    this.navService.navigate(path, () => this.toggleMenu());
+    const isSameRoute = this.currentRoute() === path;
+    this.navService.navigate(path, () => {
+      if (this.menuOpen()) this.toggleMenu();
+    });
 
-    setTimeout(() => {
-      this.menuOpen.set(false);
-    }, 1000);
+    if (!isSameRoute) {
+      setTimeout(() => {
+        this.menuOpen.set(false);
+      }, 1000);
+    }
   }
 
   toggleMenu() {
