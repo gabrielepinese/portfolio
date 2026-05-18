@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnDestroy, PLATFORM_ID } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnDestroy, PLATFORM_ID, signal } from "@angular/core";
 import { DOCUMENT, NgClass, isPlatformBrowser } from "@angular/common";
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { toSignal } from "@angular/core/rxjs-interop";
@@ -16,6 +16,9 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
   private document = inject(DOCUMENT);
   private platformId = inject(PLATFORM_ID);
   private btnParallaxCleanup?: () => void;
+
+  readonly showFallback = signal(false);
+  readonly emailCopied = signal(false);
 
   readonly isMedium = toSignal(
     this.breakpointObserver
@@ -64,6 +67,16 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.document.location.href =
         "mailto:gabrielepinese97@gmail.com?subject=Portfolio%20Request&body=";
+      this.showFallback.set(true);
+    }
+  }
+
+  copyEmail() {
+    if (isPlatformBrowser(this.platformId)) {
+      navigator.clipboard.writeText("gabrielepinese97@gmail.com").then(() => {
+        this.emailCopied.set(true);
+        setTimeout(() => this.emailCopied.set(false), 2000);
+      });
     }
   }
 }

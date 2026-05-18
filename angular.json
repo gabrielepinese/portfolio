@@ -37,6 +37,11 @@
                 "glob": "**/*",
                 "input": "src/assets/icon",
                 "output": "assets/icon"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/pdf",
+                "output": "assets/pdf"
               }
             ],
             "styles": ["src/styles.scss"],

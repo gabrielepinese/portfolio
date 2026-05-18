@@ -54,6 +54,23 @@
           </span>
         </span>
       </button>
+
+      @if (showFallback()) {
+        <div class="fallback-pill">
+          <span class="fallback-label">No mail client?</span>
+          <div class="fallback-actions">
+            <button type="button" class="fallback-action-btn" (click)="copyEmail()">
+              {{ emailCopied() ? 'Copied!' : 'Copy email' }}
+            </button>
+            <a
+              class="fallback-action-btn"
+              href="https://www.linkedin.com/in/gabriele-pinese/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >LinkedIn</a>
+          </div>
+        </div>
+      }
     </div>
   </div>
 </div>

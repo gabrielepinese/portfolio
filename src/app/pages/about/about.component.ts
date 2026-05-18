@@ -63,9 +63,10 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
 
   private loadDevicons() {
     if (this.document.querySelector('link[href*="devicons"]')) return;
-    const link = this.document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css';
+    const link = this.document.createElement("link");
+    link.rel = "stylesheet";
+    link.href =
+      "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css";
     this.document.head.appendChild(link);
   }
 
@@ -130,8 +131,8 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
   downloadCV() {
     if (!isPlatformBrowser(this.platformId)) return;
     const link = document.createElement("a");
-    link.href = "assets/pdf/CV -Gabriele-Pinese.pdf";
-    link.download = "CV -Gabriele-Pinese.pdf";
+    link.href = "assets/pdf/CV_Gabriele_Pinese.pdf";
+    link.download = "CV_Gabriele_Pinese.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

@@ -26,7 +26,9 @@
         (click)="toggleMenu()"
         type="button"
         [attr.aria-expanded]="expanded"
-        [attr.aria-label]="expanded ? 'Close navigation menu' : 'Open navigation menu'"
+        [attr.aria-label]="
+          expanded ? 'Close navigation menu' : 'Open navigation menu'
+        "
       >
         <span aria-hidden="true">{{ label }}</span>
       </button>
@@ -37,7 +39,10 @@
 <div class="navbar-container">
   <div class="navbar-content" [ngClass]="routeColor()">
     <ng-container
-      *ngTemplateOutlet="topBar; context: { label: 'MENU', expanded: menuOpen() }"
+      *ngTemplateOutlet="
+        topBar;
+        context: { label: 'MENU', expanded: menuOpen() }
+      "
     ></ng-container>
   </div>
 </div>
@@ -66,7 +71,10 @@
       <div class="menu-content">
         <div class="menu-top-content">
           <ng-container
-            *ngTemplateOutlet="topBar; context: { label: 'CLOSE', expanded: menuOpen() }"
+            *ngTemplateOutlet="
+              topBar;
+              context: { label: 'CLOSE', expanded: menuOpen() }
+            "
           ></ng-container>
         </div>
         <div class="social-container">
@@ -131,7 +139,7 @@
               type="button"
               [attr.aria-current]="currentRoute() === 'works' ? 'page' : null"
             >
-              <span [ngClass]="routeColor()" class="heading1">Works</span>
+              <span [ngClass]="routeColor()" class="heading1">Work</span>
             </button>
             <span class="desc-link">Find out what I can do</span>
           </div>

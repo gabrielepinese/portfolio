@@ -66,6 +66,54 @@
     display: grid;
     gap: 32px;
     align-content: start;
+
+    .fallback-pill {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 12px 20px;
+      border: 1px solid rgba($greenAccent, 0.2);
+      border-radius: 8px;
+      background: rgba($greenAccent, 0.04);
+      width: fit-content;
+      animation: pill-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .fallback-label {
+      font-family: "Courier New", monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba($greenAccent, 0.6);
+      white-space: nowrap;
+    }
+
+    .fallback-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .fallback-action-btn {
+      font-family: "Courier New", monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: $greenAccent;
+      background: transparent;
+      border: 1px solid rgba($greenAccent, 0.3);
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+
+      &:hover {
+        background: rgba($greenAccent, 0.1);
+        border-color: $greenAccent;
+      }
+    }
   }
 
   .body20 {
@@ -144,5 +192,16 @@
         transform: translateX(5px);
       }
     }
+  }
+}
+
+@keyframes pill-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
