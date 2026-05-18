@@ -10,4 +10,5 @@ import { NavbarComponent } from './shared/ui/navbar/navbar.component';
 })
 export class AppComponent {
   title = 'AngularPortfolio';
+  currentYear = new Date().getFullYear();
 }
