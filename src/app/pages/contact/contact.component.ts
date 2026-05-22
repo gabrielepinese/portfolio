@@ -1,4 +1,13 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnDestroy, PLATFORM_ID, signal } from "@angular/core";
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+  PLATFORM_ID,
+  signal,
+} from "@angular/core";
+import { ContentService } from "../../core/services/content.service";
 import { DOCUMENT, NgClass, isPlatformBrowser } from "@angular/common";
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { toSignal } from "@angular/core/rxjs-interop";
@@ -12,6 +21,7 @@ import { map } from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent implements AfterViewInit, OnDestroy {
+  readonly c = inject(ContentService).c;
   private breakpointObserver = inject(BreakpointObserver);
   private document = inject(DOCUMENT);
   private platformId = inject(PLATFORM_ID);

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { NavigationService } from "../../core/services/navigation.service";
+import { ContentService } from "../../core/services/content.service";
 
 @Component({
   selector: "app-home",
@@ -9,9 +10,11 @@ import { NavigationService } from "../../core/services/navigation.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
+  readonly c = inject(ContentService).c;
+
   constructor(private navService: NavigationService) {}
 
   goToWorks() {
-    this.navService.navigate('works');
+    this.navService.navigate("works");
   }
 }

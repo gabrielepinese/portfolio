@@ -4,16 +4,9 @@
     <div class="title-container">
       <div class="title-content">
         <div class="bigTitle bold">
-          About me<span class="purplePrimary">.</span>
+          {{ c.about.title }}<span class="purplePrimary">.</span>
         </div>
-        <div class="body24 opacityT">
-          What excites me most about <strong>Frontend Development</strong> is
-          the chance to bring ideas to life — to turn abstract concepts into
-          intuitive, beautiful, and high-performance interfaces. Each project is
-          an opportunity to <strong>refine details</strong>, explore new
-          solutions, and create something that <strong>feels smooth</strong> and
-          <strong>meaningful</strong> for the user.
-        </div>
+        <div class="body24 opacityT" [innerHTML]="c.about.intro"></div>
       </div>
     </div>
 
@@ -32,17 +25,9 @@
 
       <div class="pres-container">
         <div class="heading3 bold">
-          My journey into technology began with a simple curiosity that grew
-          into a deep passion for coding and design<span class="purplePrimary"
-            >.</span
-          >
+          {{ c.about.journeyHeading }}<span class="purplePrimary">.</span>
         </div>
-        <div class="body20 opacityT">
-          During my years at the <strong>University of Milan</strong>, I not
-          only strengthened my <strong>technical knowledge</strong> but also
-          discovered the value of <strong>collaboration</strong> and
-          <strong>creative problem-solving</strong>.
-        </div>
+        <div class="body20 opacityT" [innerHTML]="c.about.journeyBody"></div>
       </div>
     </div>
 
@@ -53,7 +38,12 @@
           <div class="stack-icon" [style.--i]="$index">
             <div class="icon-wrap">
               @if (item.imgSrc) {
-                <img [src]="item.imgSrc" [alt]="item.label" class="stack-img" loading="lazy" />
+                <img
+                  [src]="item.imgSrc"
+                  [alt]="item.label"
+                  class="stack-img"
+                  loading="lazy"
+                />
               } @else {
                 <i [class]="item.icon"></i>
               }
@@ -70,51 +60,38 @@
         <!-- Row 1: Angular + Design -->
         <div class="focus-row reveal">
           <div class="focus-row__text">
-            <div class="focus-item body18">
-              I build with Angular, focusing on modular architecture,
-              predictable state management, and reusable components that stay
-              clean even as projects grow. My goal is to create codebases that
-              scale smoothly, remain easy to understand, and avoid unnecessary
-              complexity over time. On the development side, I care about
-              structure and consistency: components are designed to be flexible,
-              maintainable, and ready to adapt to different needs without
-              breaking the overall system. Design plays an equally important
-              role in my work. I focus on intentional layouts, balanced spacing,
-              and clear visual hierarchy to build interfaces that feel coherent
-              and easy to navigate.
-            </div>
+            <div class="focus-item body18">{{ c.about.angularBody }}</div>
           </div>
 
           <div class="focus-row__visual">
-            <img src="assets/images/about-angular-design.svg" alt="" aria-hidden="true" loading="lazy" />
+            <img
+              src="assets/images/about-angular-design.svg"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+            />
           </div>
         </div>
 
-        <!-- Row 2: User Flow + Performance (visual left) -->
+        <!-- Row 2: Modular Architecture -->
         <div class="focus-row focus-row--reverse reveal" style="--delay: 0.1s">
           <div class="focus-row__text">
             <div class="skills-header reveal">
               <div class="heading3 bold">
-                Modular Architecture<span class="purplePrimary">.</span>
+                {{ c.about.architectureTitle
+                }}<span class="purplePrimary">.</span>
               </div>
             </div>
-            <div class="focus-item body18">
-              Architecture comes before features — I focus on building solid
-              foundations with modular structures, maintainable patterns, and
-              predictable systems that remain clear as projects grow. From
-              frontend organization to backend integration, every layer is
-              designed to work cohesively and evolve without introducing
-              unnecessary complexity. I approach development with a full-picture
-              mindset: reusable components, structured APIs, efficient data
-              flow, and backend-aware decisions that improve stability and
-              long-term maintainability. Performance remains a core principle,
-              with lean bundles, optimized loading, and code that earns its
-              place in the build.
-            </div>
+            <div class="focus-item body18">{{ c.about.architectureBody }}</div>
           </div>
 
           <div class="focus-row__visual">
-            <img src="assets/images/about-architecture.svg" alt="" aria-hidden="true" loading="lazy" />
+            <img
+              src="assets/images/about-architecture.svg"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
@@ -122,17 +99,7 @@
 
     <!-- Drawing -->
     <div class="about-drawing-section reveal">
-      <span class="body18 opacityT">
-        Drawing has always been my <strong>favorite way</strong> to express
-        ideas, long before I ever wrote a line of code. That passion for visual
-        storytelling gradually evolved into a love for
-        <strong>digital design</strong>.<br /><br />Today, as a frontend
-        developer, I find true fulfillment in translating creative concepts into
-        functional and engaging user interfaces. <br /><br />Implementing design
-        is where my artistic sensibility meets my technical mindset, allowing me
-        to <strong>craft experiences</strong> that are not only beautiful but
-        also intuitive and user-focused.
-      </span>
+      <span class="body18 opacityT" [innerHTML]="c.about.drawing"></span>
     </div>
   </div>
 
@@ -141,15 +108,14 @@
     <div class="cta-divider reveal"></div>
 
     <div class="heading1 bold reveal" style="--delay: 0.1s">
-      Do you like me<span class="purplePrimary">?</span>
+      {{ c.about.ctaHeading }}<span class="purplePrimary">?</span>
     </div>
 
-    <div class="body20 cta-body reveal opacityT" style="--delay: 0.25s">
-      Maybe you like me, maybe you don't — but if you've scrolled this far,
-      something must've caught your eye.<br /><br />
-      Code, components, and a strong dislike for spaghetti code.
-      <strong>Grab my CV.</strong> No clichés. Just real stuff.
-    </div>
+    <div
+      class="body20 cta-body reveal opacityT"
+      style="--delay: 0.25s"
+      [innerHTML]="c.about.ctaBody"
+    ></div>
 
     <button
       class="secondary-btn about-btn reveal"
@@ -160,8 +126,8 @@
     >
       <span class="btn-float-wrap">
         <span class="btn-inner">
-          <span class="btn-text">Download my CV</span>
-          <span class="btn-text" aria-hidden="true">Download my CV</span>
+          <span class="btn-text">{{ c.about.ctaBtn }}</span>
+          <span class="btn-text" aria-hidden="true">{{ c.about.ctaBtn }}</span>
         </span>
       </span>
     </button>

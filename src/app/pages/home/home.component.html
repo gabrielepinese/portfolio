@@ -4,16 +4,16 @@
       <div class="title-content">
         <h1 class="bigTitle">
           <span class="text-con-bordo"
-            >Hello,<br />
-            I'm <span class="bold">Gabriele</span
+            >{{ c.home.greeting }}<br />
+            {{ c.home.namePrefix }} <span class="bold">{{ c.home.name }}</span
             ><span class="orangePrimary">.</span></span
           >
         </h1>
         <h2 class="body24">
           <span class="text-con-bordo">
-            I'm a <span class="bold">Front End Developer</span> passionate about
-            creating elegant, responsive, and user-centered
-            <span class="bold">web experiences.</span></span
+            {{ c.home.rolePrefix }} <span class="bold">{{ c.home.role }}</span>
+            {{ c.home.roleDesc }}
+            <span class="bold">{{ c.home.roleSuffix }}</span></span
           >
         </h2>
         <div class="image-container"></div>
@@ -27,23 +27,28 @@
     </div>
   </div>
 
-  <section class="home-projects-section" aria-label="Selected Work">
+  <section
+    class="home-projects-section"
+    [attr.aria-label]="c.home.selectedWork"
+  >
     <div class="home-projects-content">
       <div class="section-divider">
-        <span class="section-label">Selected Work</span>
+        <span class="section-label">{{ c.home.selectedWork }}</span>
         <div class="section-line"></div>
       </div>
 
       <div class="projects-coming-soon">
-        <span class="coming-label">Coming soon</span>
+        <span class="coming-label">{{ c.home.comingSoon.label }}</span>
         <p class="body20 coming-desc">
-          Projects are in the making.<br />
-          <span class="coming-sub"
-            >Check back soon — something good is on the way.</span
-          >
+          {{ c.home.comingSoon.desc }}<br />
+          <span class="coming-sub">{{ c.home.comingSoon.sub }}</span>
         </p>
-        <button class="coming-cta neutral-btn" type="button" (click)="goToWorks()">
-          See work experience <span aria-hidden="true">→</span>
+        <button
+          class="coming-cta neutral-btn"
+          type="button"
+          (click)="goToWorks()"
+        >
+          {{ c.home.cta }} <span aria-hidden="true">→</span>
         </button>
       </div>
     </div>

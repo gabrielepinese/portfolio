@@ -1,4 +1,4 @@
-<a href="#main-content" class="skip-link">Skip to main content</a>
+<a href="#main-content" class="skip-link">{{ c.app.skipToMain }}</a>
 <div class="frame">
   <app-navbar></app-navbar>
   <div class="frame-empty top"></div>
@@ -9,6 +9,6 @@
     <router-outlet></router-outlet>
   </main>
   <footer class="app-footer">
-    <p class="body14">© {{ currentYear }} Gabriele Pinese</p>
+    <p class="body14">© {{ currentYear }} {{ c.app.authorName }}</p>
   </footer>
 </div>

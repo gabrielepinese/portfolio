@@ -1,0 +1,78 @@
+{
+  "app": {
+    "skipToMain": "Skip to main content",
+    "authorName": "Gabriele Pinese"
+  },
+  "home": {
+    "greeting": "Hello,",
+    "namePrefix": "I'm",
+    "name": "Gabriele",
+    "rolePrefix": "I'm a",
+    "role": "Front End Developer",
+    "roleDesc": "passionate about creating elegant, responsive, and user-centered",
+    "roleSuffix": "web experiences.",
+    "selectedWork": "Selected Work",
+    "comingSoon": {
+      "label": "Coming soon",
+      "desc": "Projects are in the making.",
+      "sub": "Check back soon — something good is on the way."
+    },
+    "cta": "See work experience"
+  },
+  "contact": {
+    "title": "Contact me",
+    "subtitle": "Got a project, an idea, or just curious? Reach out — I'm always happy to connect, collaborate, and bring new digital experiences to life.",
+    "status": "Employed full-time",
+    "heading": "Let's build something together",
+    "body": "I'm a front-end developer with a strong focus on architectural quality and technical complexity.<br /><br />I'm drawn to well-structured, ambitious projects where there's room to think deeply about performance, scalability, and long-term maintainability. I choose my collaborations carefully: I look for projects with a clear direction, solid purpose, and a thoughtful approach to what's being built both technically and conceptually.<br /><br />If you're working on something structured and challenging, we might be a good fit.",
+    "cta": "Get in touch",
+    "noMailClient": "No mail client?",
+    "copyEmail": "Copy email",
+    "copied": "Copied!",
+    "linkedin": "LinkedIn"
+  },
+  "about": {
+    "title": "About me",
+    "intro": "What excites me most about <strong>Frontend Development</strong> is the chance to bring ideas to life — to turn abstract concepts into intuitive, beautiful, and high-performance interfaces. Each project is an opportunity to <strong>refine details</strong>, explore new solutions, and create something that <strong>feels smooth</strong> and <strong>meaningful</strong> for the user.",
+    "journeyHeading": "My journey into technology began with a simple curiosity that grew into a deep passion for coding and design",
+    "journeyBody": "During my years at the <strong>University of Milan</strong>, I not only strengthened my <strong>technical knowledge</strong> but also discovered the value of <strong>collaboration</strong> and <strong>creative problem-solving</strong>.",
+    "angularBody": "I build with Angular, focusing on modular architecture, predictable state management, and reusable components that stay clean even as projects grow. My goal is to create codebases that scale smoothly, remain easy to understand, and avoid unnecessary complexity over time. On the development side, I care about structure and consistency: components are designed to be flexible, maintainable, and ready to adapt to different needs without breaking the overall system. Design plays an equally important role in my work. I focus on intentional layouts, balanced spacing, and clear visual hierarchy to build interfaces that feel coherent and easy to navigate.",
+    "architectureTitle": "Modular Architecture",
+    "architectureBody": "Architecture comes before features — I focus on building solid foundations with modular structures, maintainable patterns, and predictable systems that remain clear as projects grow. From frontend organization to backend integration, every layer is designed to work cohesively and evolve without introducing unnecessary complexity. I approach development with a full-picture mindset: reusable components, structured APIs, efficient data flow, and backend-aware decisions that improve stability and long-term maintainability. Performance remains a core principle, with lean bundles, optimized loading, and code that earns its place in the build.",
+    "drawing": "Drawing has always been my <strong>favorite way</strong> to express ideas, long before I ever wrote a line of code. That passion for visual storytelling gradually evolved into a love for <strong>digital design</strong>.<br /><br />Today, as a frontend developer, I find true fulfillment in translating creative concepts into functional and engaging user interfaces.<br /><br />Implementing design is where my artistic sensibility meets my technical mindset, allowing me to <strong>craft experiences</strong> that are not only beautiful but also intuitive and user-focused.",
+    "ctaHeading": "Do you like me",
+    "ctaBody": "Maybe you like me, maybe you don't — but if you've scrolled this far, something must've caught your eye.<br /><br />Code, components, and a strong dislike for spaghetti code. <strong>Grab my CV.</strong> No clichés. Just real stuff.",
+    "ctaBtn": "Download my CV"
+  },
+  "works": {
+    "title": "Work",
+    "subtitle": "A peek into <b>my journey</b> as a Frontend Developer: real experiences, projects in the works, and plenty of code on the way",
+    "experiences": "Experiences",
+    "projects": "Projects",
+    "comingSoon": {
+      "label": "Coming soon",
+      "desc": "Personal and open-source projects are on their way."
+    }
+  },
+  "navbar": {
+    "menu": "MENU",
+    "close": "CLOSE",
+    "contactMe": "CONTACT ME",
+    "aria": {
+      "goHome": "Go to home",
+      "closeMenu": "Close navigation menu",
+      "openMenu": "Open navigation menu",
+      "contactMe": "Contact me",
+      "navMenu": "Navigation menu",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "facebook": "Facebook"
+    },
+    "links": {
+      "home": { "label": "Home", "desc": "Return to home page" },
+      "about": { "label": "About me", "desc": "Something about me..." },
+      "work": { "label": "Work", "desc": "Find out what I can do" },
+      "contact": { "label": "Contact", "desc": "Let's contact me" }
+    }
+  }
+}

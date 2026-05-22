@@ -6,6 +6,7 @@ import {
   OnDestroy,
   PLATFORM_ID,
 } from "@angular/core";
+import { ContentService } from "../../core/services/content.service";
 import { DOCUMENT, NgClass, isPlatformBrowser } from "@angular/common";
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { toSignal } from "@angular/core/rxjs-interop";
@@ -26,6 +27,7 @@ interface StackItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutComponent implements AfterViewInit, OnDestroy {
+  readonly c = inject(ContentService).c;
   private breakpointObserver = inject(BreakpointObserver);
   private platformId = inject(PLATFORM_ID);
   private document = inject(DOCUMENT);

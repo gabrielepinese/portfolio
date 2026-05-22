@@ -3,12 +3,9 @@
     <div class="title-container">
       <div class="title-content">
         <h1 class="bigTitle bold">
-          Work<span class="redPrimary">.</span>
+          {{ c.works.title }}<span class="redPrimary">.</span>
         </h1>
-        <h2 class="body24">
-          A peek into <b>my journey</b> as a Frontend Developer: real
-          experiences, projects in the works, and plenty of code on the way
-        </h2>
+        <h2 class="body24" [innerHTML]="c.works.subtitle"></h2>
       </div>
     </div>
 
@@ -21,7 +18,7 @@
 
   <div class="works-main-section">
     <div class="section-title">
-      <span class="section-label">Experiences</span>
+      <span class="section-label">{{ c.works.experiences }}</span>
       <div class="section-line"></div>
     </div>
     @for (company of companyList; track $index) {
@@ -38,14 +35,14 @@
 
     <div class="projects-section" id="projects">
       <div class="section-title">
-        <span class="section-label">Projects</span>
+        <span class="section-label">{{ c.works.projects }}</span>
         <div class="section-line"></div>
       </div>
 
       @if (projectList.length === 0) {
         <div class="projects-empty">
-          <span class="empty-label">Coming soon</span>
-          <p class="body18 empty-desc">Personal and open-source projects are on their way.</p>
+          <span class="empty-label">{{ c.works.comingSoon.label }}</span>
+          <p class="body18 empty-desc">{{ c.works.comingSoon.desc }}</p>
         </div>
       } @else {
         @for (project of projectList; track project.id) {

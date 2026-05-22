@@ -1,10 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   Inject,
   PLATFORM_ID,
   signal,
 } from "@angular/core";
+import { ContentService } from "../../../core/services/content.service";
 import {
   DOCUMENT,
   NgClass,
@@ -25,13 +27,20 @@ import { NavigationService } from "../../../core/services/navigation.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
+  readonly c = inject(ContentService).c;
   readonly routeColor = signal<string | undefined>(undefined);
   readonly menuOpen = signal(false);
-  readonly currentRoute = signal<string>('');
+  readonly currentRoute = signal<string>("");
 
-  get transitionColor() { return this.navService.transitionColor; }
-  get startTransition() { return this.navService.startTransition; }
-  get showDots() { return this.navService.showDots; }
+  get transitionColor() {
+    return this.navService.transitionColor;
+  }
+  get startTransition() {
+    return this.navService.startTransition;
+  }
+  get showDots() {
+    return this.navService.showDots;
+  }
 
   constructor(
     private router: Router,
@@ -43,7 +52,7 @@ export class NavbarComponent {
     this.routeColor.set(
       this.getChild(this.activatedRoute).snapshot.data["color"],
     );
-    this.currentRoute.set(this.router.url.replace(/^\/+/, '') || 'home');
+    this.currentRoute.set(this.router.url.replace(/^\/+/, "") || "home");
 
     this.router.events
       .pipe(
@@ -54,7 +63,7 @@ export class NavbarComponent {
         this.routeColor.set(
           this.getChild(this.activatedRoute).snapshot.data["color"],
         );
-        this.currentRoute.set(this.router.url.replace(/^\/+/, '') || 'home');
+        this.currentRoute.set(this.router.url.replace(/^\/+/, "") || "home");
       });
   }
 

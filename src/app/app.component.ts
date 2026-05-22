@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './shared/ui/navbar/navbar.component';
+import { Component, inject } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { NavbarComponent } from "./shared/ui/navbar/navbar.component";
+import { ContentService } from "./core/services/content.service";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   imports: [RouterOutlet, NavbarComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  templateUrl: "./app.component.html",
+  styleUrl: "./app.component.scss",
 })
 export class AppComponent {
-  title = 'AngularPortfolio';
-  currentYear = new Date().getFullYear();
+  readonly c = inject(ContentService).c;
+  readonly currentYear = new Date().getFullYear();
 }

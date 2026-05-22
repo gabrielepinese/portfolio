@@ -3,11 +3,10 @@
     <div class="title-container">
       <div class="title-content">
         <div class="bigTitle bold">
-          Contact me<span class="greenPrimary">.</span>
+          {{ c.contact.title }}<span class="greenPrimary">.</span>
         </div>
         <div class="body24">
-          Got a project, an idea, or just curious? Reach out — I'm always happy
-          to connect, collaborate, and bring new digital experiences to life.
+          {{ c.contact.subtitle }}
         </div>
       </div>
     </div>
@@ -21,25 +20,16 @@
 
   <div class="contact-desc-container">
     <div class="contact-desc-left">
-      <span class="contact-label bold">Employed full-time</span>
+      <span class="contact-label bold">{{ c.contact.status }}</span>
       <div class="heading1 bold">
         <span class="text-con-bordo2">
-          Let's build something together<span class="greenPrimary">.</span>
+          {{ c.contact.heading }}<span class="greenPrimary">.</span>
         </span>
       </div>
     </div>
     <div class="contact-desc-right">
       <div class="body20">
-        <span class="text-con-bordo2"
-          >I'm a front-end developer with a strong focus on architectural
-          quality and technical complexity.<br /><br />I'm drawn to
-          well-structured, ambitious projects where there's room to think deeply
-          about performance, scalability, and long-term maintainability. I
-          choose my collaborations carefully: I look for projects with a clear
-          direction, solid purpose, and a thoughtful approach to what's being
-          built both technically and conceptually.<br /><br />If you're working
-          on something structured and challenging, we might be a good fit.</span
-        >
+        <span class="text-con-bordo2" [innerHTML]="c.contact.body"></span>
       </div>
       <button
         class="secondary-btn contact-btn"
@@ -49,29 +39,29 @@
       >
         <span class="btn-float-wrap">
           <span class="btn-inner">
-            <span class="btn-text">Get in touch</span>
-            <span class="btn-text" aria-hidden="true">Get in touch</span>
+            <span class="btn-text">{{ c.contact.cta }}</span>
+            <span class="btn-text" aria-hidden="true">{{ c.contact.cta }}</span>
           </span>
         </span>
       </button>
 
       @if (showFallback()) {
         <div class="fallback-pill">
-          <span class="fallback-label bold">No mail client?</span>
+          <span class="fallback-label bold">{{ c.contact.noMailClient }}</span>
           <div class="fallback-actions">
             <button
               type="button"
               class="fallback-action-btn bold"
               (click)="copyEmail()"
             >
-              {{ emailCopied() ? "Copied!" : "Copy email" }}
+              {{ emailCopied() ? c.contact.copied : c.contact.copyEmail }}
             </button>
             <a
               class="fallback-action-btn bold"
               href="https://www.linkedin.com/in/gabriele-pinese/"
               target="_blank"
               rel="noopener noreferrer"
-              >LinkedIn</a
+              >{{ c.contact.linkedin }}</a
             >
           </div>
         </div>
