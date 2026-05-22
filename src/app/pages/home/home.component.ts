@@ -12,6 +12,6 @@ export class HomeComponent {
   constructor(private navService: NavigationService) {}
 
   goToWorks() {
-    this.navService.navigate('works', undefined, 'projects');
+    this.navService.navigate('works');
   }
 }
