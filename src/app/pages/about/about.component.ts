@@ -26,7 +26,6 @@ interface StackItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutComponent implements AfterViewInit, OnDestroy {
-  readonly c = inject(ContentService).c;
   private breakpointObserver = inject(BreakpointObserver);
   private platformId = inject(PLATFORM_ID);
   private document = inject(DOCUMENT);

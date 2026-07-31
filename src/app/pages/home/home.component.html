@@ -4,16 +4,16 @@
       <div class="title-content">
         <h1 class="bigTitle">
           <span class="text-con-bordo"
-            >{{ c.home.greeting }}<br />
-            {{ c.home.namePrefix }} <span class="bold">{{ c.home.name }}</span
+            >Hello,<br />
+            I'm <span class="bold">Gabriele</span
             ><span class="orangePrimary">.</span></span
           >
         </h1>
         <h2 class="body24">
           <span class="text-con-bordo">
-            {{ c.home.rolePrefix }} <span class="bold">{{ c.home.role }}</span>
-            {{ c.home.roleDesc }}
-            <span class="bold">{{ c.home.roleSuffix }}</span></span
+            I'm a <span class="bold">Front End Developer</span> passionate about
+            creating elegant, responsive, and user-centered
+            <span class="bold">web experiences.</span></span
           >
         </h2>
         <div class="image-container"></div>
@@ -27,29 +27,24 @@
     </div>
   </div>
 
-  <section
-    class="home-projects-section"
-    [attr.aria-label]="c.home.selectedWork"
-  >
+  <section class="home-projects-section" aria-label="Selected Work">
     <div class="home-projects-content">
       <div class="section-divider">
-        <span class="section-label">{{ c.home.selectedWork }}</span>
+        <span class="section-label">Selected Work</span>
         <div class="section-line"></div>
       </div>
 
       <div class="projects-coming-soon">
-        <span class="coming-label">{{ c.home.comingSoon.label }}</span>
+        <span class="coming-label">Coming soon</span>
         <p class="body20 coming-desc">
-          {{ c.home.comingSoon.desc }}<br />
-          <span class="coming-sub">{{ c.home.comingSoon.sub }}</span>
+          Projects are in the making.<br />
+          <span class="coming-sub"
+            >Check back soon — something good is on the way.</span
+          >
         </p>
-        <button
-          class="coming-cta neutral-btn"
-          type="button"
-          (click)="goToWorks()"
-        >
-          {{ c.home.cta }} <span aria-hidden="true">→</span>
-        </button>
+        <a class="coming-cta" [routerLink]="['/works']" fragment="projects">
+          See work experience <span aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
   </section>

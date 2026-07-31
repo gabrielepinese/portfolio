@@ -1,12 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  inject,
   Inject,
   PLATFORM_ID,
   signal,
 } from "@angular/core";
-import { ContentService } from "../../../core/services/content.service";
 import {
   DOCUMENT,
   NgClass,
@@ -17,7 +15,6 @@ import {
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { filter } from "rxjs";
-import { NavigationService } from "../../../core/services/navigation.service";
 
 @Component({
   selector: "app-navbar",
@@ -27,32 +24,32 @@ import { NavigationService } from "../../../core/services/navigation.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
-  readonly c = inject(ContentService).c;
   readonly routeColor = signal<string | undefined>(undefined);
   readonly menuOpen = signal(false);
-  readonly currentRoute = signal<string>("");
+  readonly transitionColor = signal("");
+  readonly startTransition = signal(false);
+  readonly showDots = signal(false);
+  readonly currentRoute = signal<string>('');
 
-  get transitionColor() {
-    return this.navService.transitionColor;
-  }
-  get startTransition() {
-    return this.navService.startTransition;
-  }
-  get showDots() {
-    return this.navService.showDots;
-  }
+  private dotsTimer?: ReturnType<typeof setTimeout>;
+
+  private readonly routeColors: Record<string, string> = {
+    home: "#f1a661",
+    about: "#aac4ff",
+    works: "#d2665a",
+    contact: "#c4d7b2",
+  };
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: object,
-    private navService: NavigationService,
   ) {
     this.routeColor.set(
       this.getChild(this.activatedRoute).snapshot.data["color"],
     );
-    this.currentRoute.set(this.router.url.replace(/^\/+/, "") || "home");
+    this.currentRoute.set(this.router.url.replace(/^\/+/, '') || 'home');
 
     this.router.events
       .pipe(
@@ -63,7 +60,7 @@ export class NavbarComponent {
         this.routeColor.set(
           this.getChild(this.activatedRoute).snapshot.data["color"],
         );
-        this.currentRoute.set(this.router.url.replace(/^\/+/, "") || "home");
+        this.currentRoute.set(this.router.url.replace(/^\/+/, '') || 'home');
       });
   }
 
@@ -73,16 +70,36 @@ export class NavbarComponent {
   }
 
   navigate(path: string) {
-    const isSameRoute = this.currentRoute() === path;
-    this.navService.navigate(path, () => {
-      if (this.menuOpen()) this.toggleMenu();
-    });
-
-    if (!isSameRoute) {
-      setTimeout(() => {
-        this.menuOpen.set(false);
-      }, 1000);
+    if (this.router.url.replace(/^\/+/, "") === path) {
+      this.toggleMenu();
+      return;
     }
+
+    this.transitionColor.set(this.routeColors[path] ?? "#000");
+    this.startTransition.set(true);
+
+    clearTimeout(this.dotsTimer);
+    this.dotsTimer = setTimeout(() => {
+      this.showDots.set(true);
+    }, 500);
+
+    setTimeout(() => {
+      this.menuOpen.set(false);
+    }, 1000);
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.document.body.style.overflow = "";
+    }
+
+    setTimeout(() => {
+      this.router.navigateByUrl(path).then(() => {
+        const frame = this.document.querySelector(".frame");
+        if (frame) frame.scrollTop = 0;
+        this.startTransition.set(false);
+        this.showDots.set(false);
+        clearTimeout(this.dotsTimer);
+      });
+    }, 800);
   }
 
   toggleMenu() {

@@ -1,11 +1,6 @@
 <ng-template #topBar let-label="label" let-expanded="expanded">
   <div class="top-left-container">
-    <button
-      class="logo-wrap"
-      type="button"
-      (click)="navigate('home')"
-      [attr.aria-label]="c.navbar.aria.goHome"
-    >
+    <button class="logo-wrap" type="button" (click)="navigate('home')" aria-label="Go to home">
       <span class="cookie-logo" aria-hidden="true"></span>
     </button>
     <div class="menu-btn-container">
@@ -15,7 +10,7 @@
         type="button"
         [attr.aria-expanded]="expanded"
         [attr.aria-label]="
-          expanded ? c.navbar.aria.closeMenu : c.navbar.aria.openMenu
+          expanded ? 'Close navigation menu' : 'Open navigation menu'
         "
       >
         <span aria-hidden="true">{{ label }}</span>
@@ -29,14 +24,14 @@
     <ng-container
       *ngTemplateOutlet="
         topBar;
-        context: { label: c.navbar.menu, expanded: menuOpen() }
+        context: { label: 'MENU', expanded: menuOpen() }
       "
     ></ng-container>
     <button
       class="chat-btn neutral-btn"
       type="button"
       (click)="navigate('contact')"
-      [attr.aria-label]="c.navbar.aria.contactMe"
+      aria-label="Contact me"
     >
       <svg
         class="chat-icon"
@@ -45,13 +40,10 @@
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <circle class="icon-bg" cx="512" cy="512" r="460" />
-        <path
-          class="icon-fg"
-          d="M362.666667 640a32 32 0 0 1 0-64h170.666666a32 32 0 0 1 0 64h-170.666666z m0-192a32 32 0 0 1 0-64h298.666666a32 32 0 0 1 0 64H362.666667z m455.786666 390.784l28.096 60.586667A42.666667 42.666667 0 0 1 807.850667 960H512C264.576 960 64 759.424 64 512S264.576 64 512 64s448 200.576 448 448a446.762667 446.762667 0 0 1-141.546667 326.784zM512 896h262.442667l-14.037334-30.293333a64 64 0 0 1 14.272-73.6A382.698667 382.698667 0 0 0 896 512c0-212.074667-171.925333-384-384-384S128 299.925333 128 512s171.925333 384 384 384z"
-        />
+        <circle class="icon-bg" cx="512" cy="512" r="460"/>
+        <path class="icon-fg" d="M362.666667 640a32 32 0 0 1 0-64h170.666666a32 32 0 0 1 0 64h-170.666666z m0-192a32 32 0 0 1 0-64h298.666666a32 32 0 0 1 0 64H362.666667z m455.786666 390.784l28.096 60.586667A42.666667 42.666667 0 0 1 807.850667 960H512C264.576 960 64 759.424 64 512S264.576 64 512 64s448 200.576 448 448a446.762667 446.762667 0 0 1-141.546667 326.784zM512 896h262.442667l-14.037334-30.293333a64 64 0 0 1 14.272-73.6A382.698667 382.698667 0 0 0 896 512c0-212.074667-171.925333-384-384-384S128 299.925333 128 512s171.925333 384 384 384z"/>
       </svg>
-      <span class="chat-label">{{ c.navbar.contactMe }}</span>
+      <span class="chat-label">CONTACT ME</span>
     </button>
   </div>
 </div>
@@ -73,7 +65,7 @@
       class="menu-container"
       role="dialog"
       aria-modal="true"
-      [attr.aria-label]="c.navbar.aria.navMenu"
+      aria-label="Navigation menu"
       [ngClass]="routeColor()"
       (click)="$event.stopPropagation()"
     >
@@ -82,7 +74,7 @@
           <ng-container
             *ngTemplateOutlet="
               topBar;
-              context: { label: c.navbar.close, expanded: menuOpen() }
+              context: { label: 'CLOSE', expanded: menuOpen() }
             "
           ></ng-container>
         </div>
@@ -94,7 +86,7 @@
               class="social-link"
               target="_blank"
               rel="noopener noreferrer"
-              [attr.aria-label]="c.navbar.aria.linkedin"
+              aria-label="LinkedIn"
             >
               <span class="icon icon-linkedin" aria-hidden="true"></span>
             </a>
@@ -103,7 +95,7 @@
               class="social-link"
               target="_blank"
               rel="noopener noreferrer"
-              [attr.aria-label]="c.navbar.aria.instagram"
+              aria-label="Instagram"
             >
               <span class="icon icon-instagram" aria-hidden="true"></span>
             </a>
@@ -112,7 +104,7 @@
               class="social-link"
               target="_blank"
               rel="noopener noreferrer"
-              [attr.aria-label]="c.navbar.aria.facebook"
+              aria-label="Facebook"
             >
               <span class="icon icon-facebook" aria-hidden="true"></span>
             </a>
@@ -126,11 +118,9 @@
               type="button"
               [attr.aria-current]="currentRoute() === 'home' ? 'page' : null"
             >
-              <span [ngClass]="routeColor()" class="heading1">{{
-                c.navbar.links.home.label
-              }}</span>
+              <span [ngClass]="routeColor()" class="heading1">Home</span>
             </button>
-            <span class="desc-link">{{ c.navbar.links.home.desc }}</span>
+            <span class="desc-link">Return to home page</span>
           </div>
           <div class="link-content">
             <button
@@ -139,11 +129,9 @@
               type="button"
               [attr.aria-current]="currentRoute() === 'about' ? 'page' : null"
             >
-              <span [ngClass]="routeColor()" class="heading1">{{
-                c.navbar.links.about.label
-              }}</span>
+              <span [ngClass]="routeColor()" class="heading1">About me</span>
             </button>
-            <span class="desc-link">{{ c.navbar.links.about.desc }}</span>
+            <span class="desc-link">Something about me...</span>
           </div>
           <div class="link-content">
             <button
@@ -152,11 +140,9 @@
               type="button"
               [attr.aria-current]="currentRoute() === 'works' ? 'page' : null"
             >
-              <span [ngClass]="routeColor()" class="heading1">{{
-                c.navbar.links.work.label
-              }}</span>
+              <span [ngClass]="routeColor()" class="heading1">Work</span>
             </button>
-            <span class="desc-link">{{ c.navbar.links.work.desc }}</span>
+            <span class="desc-link">Find out what I can do</span>
           </div>
           <div class="link-content">
             <button
@@ -165,11 +151,9 @@
               type="button"
               [attr.aria-current]="currentRoute() === 'contact' ? 'page' : null"
             >
-              <span [ngClass]="routeColor()" class="heading1">{{
-                c.navbar.links.contact.label
-              }}</span>
+              <span [ngClass]="routeColor()" class="heading1">Contact</span>
             </button>
-            <span class="desc-link">{{ c.navbar.links.contact.desc }}</span>
+            <span class="desc-link">Let's contact me</span>
           </div>
         </div>
       </div>

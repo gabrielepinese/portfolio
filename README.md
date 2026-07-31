@@ -46,27 +46,22 @@ npm run serve:ssr:AngularPortfolio   # SSR server
 
 ```
 src/
-  ├── app/
-  │   ├── animations/
-  │   ├── core/
-  │   │   ├── content/
-  │   │   ├── models/
-  │   │   └── services/
-  │   ├── pages/
-  │   │   ├── about/
-  │   │   │   └── terminal-card/
-  │   │   ├── contact/
-  │   │   ├── home/
-  │   │   └── works/
-  │   └── shared/
-  │       └── ui/
-  │           ├── item-list/
-  │           └── navbar/
-  └── assets/
-      ├── color/
-      ├── fonts/
-      ├── icon/
-      ├── images/
-      ├── pdf/
-      └── styles/
+├── app/
+│   ├── pages/
+│   │   ├── home/
+│   │   ├── about/
+│   │   ├── works/
+│   │   └── contact/
+│   ├── shared/
+│   │   └── ui/
+│   │       ├── navbar/
+│   │       └── item-list/
+│   ├── app.component.ts
+│   ├── app.config.ts
+│   └── app.routes.ts
+└── assets/
+    ├── color/
+    ├── fonts/
+    ├── images/
+    └── styles/
 ```
