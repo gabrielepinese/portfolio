@@ -1,16 +1,14 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   inject,
-  AfterViewInit,
-  OnDestroy,
-  PLATFORM_ID,
-} from '@angular/core';
-import { DOCUMENT, NgClass, isPlatformBrowser } from '@angular/common';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
-import { TerminalCardComponent } from './terminal-card/terminal-card.component';
+} from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+import { TerminalCardComponent } from "./terminal-card/terminal-card.component";
+import { injectIsMediumBreakpoint } from "../../shared/utils/breakpoint";
+import { MagneticButtonDirective } from "../../shared/directives/magnetic-button.directive";
 
 interface StackItem {
   icon?: string;
@@ -19,122 +17,83 @@ interface StackItem {
 }
 
 @Component({
-  selector: 'app-about',
-  imports: [NgClass, TerminalCardComponent],
-  templateUrl: './about.component.html',
-  styleUrl: './about.component.scss',
+  selector: "app-about",
+  imports: [TerminalCardComponent, MagneticButtonDirective],
+  templateUrl: "./about.component.html",
+  styleUrl: "./about.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AboutComponent implements AfterViewInit, OnDestroy {
-  private breakpointObserver = inject(BreakpointObserver);
-  private platformId = inject(PLATFORM_ID);
-  private document = inject(DOCUMENT);
-  private observer?: IntersectionObserver;
-  private btnParallaxCleanup?: () => void;
+export class AboutComponent {
+  private readonly document = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
 
-  readonly isMedium = toSignal(
-    this.breakpointObserver
-      .observe(['(min-width: 768px) and (max-width: 1279px)'])
-      .pipe(map((r) => r.matches)),
-    { initialValue: false },
-  );
+  readonly isMedium = injectIsMediumBreakpoint();
 
   readonly STACK: StackItem[] = [
-    { icon: 'devicon-angular-plain colored', label: 'Angular' },
-    { icon: 'devicon-typescript-plain colored', label: 'TypeScript' },
-    { icon: 'devicon-react-original colored', label: 'React' },
-    { icon: 'devicon-html5-plain colored', label: 'HTML5' },
-    { icon: 'devicon-css3-plain colored', label: 'CSS3' },
-    { icon: 'devicon-sass-original colored', label: 'SCSS' },
-    { icon: 'devicon-tailwindcss-plain colored', label: 'Tailwind' },
-    { icon: 'devicon-figma-plain colored', label: 'Figma' },
-    { icon: 'devicon-git-plain colored', label: 'Git' },
-    { imgSrc: 'assets/icon/zed.webp', label: 'Zed' },
-    { icon: 'devicon-csharp-plain colored', label: 'C#' },
+    { icon: "devicon-angular-plain colored", label: "Angular" },
+    { icon: "devicon-typescript-plain colored", label: "TypeScript" },
+    { icon: "devicon-react-original colored", label: "React" },
+    { icon: "devicon-html5-plain colored", label: "HTML5" },
+    { icon: "devicon-css3-plain colored", label: "CSS3" },
+    { icon: "devicon-sass-original colored", label: "SCSS" },
+    { icon: "devicon-tailwindcss-plain colored", label: "Tailwind" },
+    { icon: "devicon-figma-plain colored", label: "Figma" },
+    { icon: "devicon-git-plain colored", label: "Git" },
+    { imgSrc: "assets/icon/zed.webp", label: "Zed" },
+    { icon: "devicon-csharp-plain colored", label: "C#" },
   ];
 
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
+  constructor() {
+    afterNextRender(() => {
       this.loadDevicons();
       this.initScrollReveal();
-      this.initBtnParallax();
-    }
+    });
   }
 
   private loadDevicons() {
     if (this.document.querySelector('link[href*="devicons"]')) return;
-    const link = this.document.createElement('link');
-    link.rel = 'stylesheet';
+    const link = this.document.createElement("link");
+    link.rel = "stylesheet";
     link.href =
-      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css';
+      "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css";
     this.document.head.appendChild(link);
   }
 
   private initScrollReveal() {
-    const frameEl = document.querySelector('.frame') as Element | null;
+    const frameEl = this.document.querySelector(".frame");
 
-    this.observer = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            this.observer!.unobserve(entry.target);
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0, rootMargin: '0px 0px 80px 0px', root: frameEl },
+      { threshold: 0, rootMargin: "0px 0px 80px 0px", root: frameEl },
     );
 
     const frameRect = frameEl?.getBoundingClientRect();
-    document.querySelectorAll('.reveal').forEach((el) => {
+    this.document.querySelectorAll(".reveal").forEach((el) => {
       const rect = el.getBoundingClientRect();
       const frameTop = frameRect?.top ?? 0;
       if (rect.bottom < frameTop) {
-        el.classList.add('visible');
+        el.classList.add("visible");
       } else {
-        this.observer!.observe(el);
+        observer.observe(el);
       }
     });
-  }
 
-  private initBtnParallax() {
-    const btn = document.querySelector<HTMLElement>('.about-btn');
-    if (!btn) return;
-
-    const onMove = (e: MouseEvent) => {
-      const rect = btn.getBoundingClientRect();
-      const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
-      const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
-      btn.style.setProperty('--float-x', `${dx * 5}px`);
-      btn.style.setProperty('--float-y', `${dy * 5}px`);
-    };
-
-    const onLeave = () => {
-      btn.style.setProperty('--float-x', '0px');
-      btn.style.setProperty('--float-y', '0px');
-    };
-
-    btn.addEventListener('mousemove', onMove);
-    btn.addEventListener('mouseleave', onLeave);
-
-    this.btnParallaxCleanup = () => {
-      btn.removeEventListener('mousemove', onMove);
-      btn.removeEventListener('mouseleave', onLeave);
-    };
-  }
-
-  ngOnDestroy() {
-    this.observer?.disconnect();
-    this.btnParallaxCleanup?.();
+    this.destroyRef.onDestroy(() => observer.disconnect());
   }
 
   downloadCV() {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const link = document.createElement('a');
-    link.href = 'assets/pdf/Gabriele_Pinese_CV.pdf';
-    link.download = 'Gabriele_Pinese_CV.pdf';
-    document.body.appendChild(link);
+    const link = this.document.createElement("a");
+    link.href = "assets/pdf/Gabriele_Pinese_CV.pdf";
+    link.download = "Gabriele_Pinese_CV.pdf";
+    this.document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    this.document.body.removeChild(link);
   }
 }

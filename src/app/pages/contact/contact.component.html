@@ -43,7 +43,8 @@
       </div>
       <button
         class="secondary-btn contact-btn"
-        [ngClass]="{ 'mx-auto': isMedium() }"
+        [class.mx-auto]="isMedium()"
+        appMagneticButton
         type="button"
         (click)="sendMail()"
       >

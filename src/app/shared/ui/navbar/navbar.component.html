@@ -19,13 +19,13 @@
   </div>
 </ng-template>
 
+@let color = routeColor();
+
 <div class="navbar-container">
-  <div class="navbar-content" [ngClass]="routeColor()">
+  <div class="navbar-content" [class]="color">
     <ng-container
-      *ngTemplateOutlet="
-        topBar;
-        context: { label: 'MENU', expanded: menuOpen() }
-      "
+      [ngTemplateOutlet]="topBar"
+      [ngTemplateOutletContext]="{ label: 'MENU', expanded: menuOpen() }"
     ></ng-container>
     <button
       class="chat-btn neutral-btn"
@@ -51,7 +51,7 @@
 <div
   class="route-transition"
   [class.show]="startTransition()"
-  [ngStyle]="{ backgroundColor: transitionColor() }"
+  [style.background-color]="transitionColor()"
 ></div>
 
 <div class="loader-dots" [class.show]="showDots()">
@@ -66,16 +66,14 @@
       role="dialog"
       aria-modal="true"
       aria-label="Navigation menu"
-      [ngClass]="routeColor()"
+      [class]="color"
       (click)="$event.stopPropagation()"
     >
       <div class="menu-content">
         <div class="menu-top-content">
           <ng-container
-            *ngTemplateOutlet="
-              topBar;
-              context: { label: 'CLOSE', expanded: menuOpen() }
-            "
+            [ngTemplateOutlet]="topBar"
+            [ngTemplateOutletContext]="{ label: 'CLOSE', expanded: menuOpen() }"
           ></ng-container>
         </div>
         <div class="social-container">
