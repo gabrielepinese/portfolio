@@ -1,5 +1,5 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, inject, PLATFORM_ID } from "@angular/core";
-import { isPlatformBrowser } from "@angular/common";
+import { afterNextRender, ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import { ItemListComponent } from "../../shared/ui/item-list/item-list.component";
 import { LIST_ITEMS, CompanyList } from "../../core/models/company-list";
@@ -12,20 +12,20 @@ import { PROJECT_ITEMS, Project } from "../../core/models/project-list";
   styleUrl: "./works.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WorksComponent implements AfterViewInit {
-  private route = inject(ActivatedRoute);
-  private platformId = inject(PLATFORM_ID);
+export class WorksComponent {
+  private readonly route = inject(ActivatedRoute);
+  private readonly document = inject(DOCUMENT);
 
   readonly companyList: CompanyList[] = LIST_ITEMS;
   readonly projectList: Project[] = PROJECT_ITEMS;
 
-  ngAfterViewInit() {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const fragment = this.route.snapshot.fragment;
-    if (fragment) {
+  constructor() {
+    afterNextRender(() => {
+      const fragment = this.route.snapshot.fragment;
+      if (!fragment) return;
       setTimeout(() => {
-        document.getElementById(fragment)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        this.document.getElementById(fragment)?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 100);
-    }
+    });
   }
 }

@@ -1,118 +1,59 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  PLATFORM_ID,
-  signal,
-} from "@angular/core";
-import {
-  DOCUMENT,
-  NgClass,
-  NgStyle,
-  NgTemplateOutlet,
-  isPlatformBrowser,
-} from "@angular/common";
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from "@angular/core";
+import { DOCUMENT, NgClass, NgTemplateOutlet } from "@angular/common";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { toSignal } from "@angular/core/rxjs-interop";
 import { filter } from "rxjs";
+import { PageTransitionService } from "../../services/page-transition.service";
 
 @Component({
   selector: "app-navbar",
-  imports: [NgClass, NgStyle, NgTemplateOutlet],
+  imports: [NgTemplateOutlet, NgClass],
   templateUrl: "./navbar.component.html",
   styleUrl: "./navbar.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
-  readonly routeColor = signal<string | undefined>(undefined);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly document = inject(DOCUMENT);
+  protected readonly pageTransition = inject(PageTransitionService);
+
+  private readonly navigationEnd = toSignal(
+    this.router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd)),
+  );
+
+  readonly routeColor = computed<string | undefined>(() => {
+    this.navigationEnd();
+    return this.deepestChild(this.activatedRoute).snapshot.data["color"];
+  });
+
+  readonly currentRoute = computed(() => {
+    this.navigationEnd();
+    return this.router.url.replace(/^\/+/, "") || "home";
+  });
+
   readonly menuOpen = signal(false);
-  readonly transitionColor = signal("");
-  readonly startTransition = signal(false);
-  readonly showDots = signal(false);
-  readonly currentRoute = signal<string>('');
 
-  private dotsTimer?: ReturnType<typeof setTimeout>;
-
-  private readonly routeColors: Record<string, string> = {
-    home: "#f1a661",
-    about: "#aac4ff",
-    works: "#d2665a",
-    contact: "#c4d7b2",
-  };
-
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: object,
-  ) {
-    this.routeColor.set(
-      this.getChild(this.activatedRoute).snapshot.data["color"],
-    );
-    this.currentRoute.set(this.router.url.replace(/^\/+/, '') || 'home');
-
-    this.router.events
-      .pipe(
-        filter((e) => e instanceof NavigationEnd),
-        takeUntilDestroyed(),
-      )
-      .subscribe(() => {
-        this.routeColor.set(
-          this.getChild(this.activatedRoute).snapshot.data["color"],
-        );
-        this.currentRoute.set(this.router.url.replace(/^\/+/, '') || 'home');
-      });
-  }
-
-  private getChild(route: ActivatedRoute): ActivatedRoute {
+  private deepestChild(route: ActivatedRoute): ActivatedRoute {
     while (route.firstChild) route = route.firstChild;
     return route;
   }
 
   navigate(path: string) {
-    if (this.router.url.replace(/^\/+/, "") === path) {
+    if (this.currentRoute() === path) {
       this.toggleMenu();
       return;
     }
 
-    this.transitionColor.set(this.routeColors[path] ?? "#000");
-    this.startTransition.set(true);
+    setTimeout(() => this.menuOpen.set(false), 1000);
+    this.document.body.style.overflow = "";
 
-    clearTimeout(this.dotsTimer);
-    this.dotsTimer = setTimeout(() => {
-      this.showDots.set(true);
-    }, 500);
-
-    setTimeout(() => {
-      this.menuOpen.set(false);
-    }, 1000);
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.document.body.style.overflow = "";
-    }
-
-    setTimeout(() => {
-      this.router.navigateByUrl(path).then(() => {
-        const frame = this.document.querySelector(".frame");
-        if (frame) frame.scrollTop = 0;
-        this.startTransition.set(false);
-        this.showDots.set(false);
-        clearTimeout(this.dotsTimer);
-      });
-    }, 800);
+    this.pageTransition.navigate(path);
   }
 
   toggleMenu() {
-    if (this.menuOpen()) {
-      this.menuOpen.set(false);
-      if (isPlatformBrowser(this.platformId)) {
-        this.document.body.style.overflow = "";
-      }
-    } else {
-      if (isPlatformBrowser(this.platformId)) {
-        this.document.body.style.overflow = "hidden";
-      }
-      this.menuOpen.set(true);
-    }
+    const open = !this.menuOpen();
+    this.menuOpen.set(open);
+    this.document.body.style.overflow = open ? "hidden" : "";
   }
 }

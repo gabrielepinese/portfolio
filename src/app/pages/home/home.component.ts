@@ -1,11 +1,17 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { PageTransitionService } from "../../shared/services/page-transition.service";
 
 @Component({
   selector: "app-home",
-  imports: [RouterLink],
+  imports: [],
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {}
+export class HomeComponent {
+  private readonly pageTransition = inject(PageTransitionService);
+
+  goToWorkProjects(): void {
+    this.pageTransition.navigate("works", { fragment: "projects" });
+  }
+}
