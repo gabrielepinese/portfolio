@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from "@angular/core";
-import { DOCUMENT } from "@angular/common";
+import { DOCUMENT, NgClass, NgTemplateOutlet } from "@angular/common";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { filter } from "rxjs";
+import { PageTransitionService } from "../../services/page-transition.service";
 
 @Component({
   selector: "app-navbar",
-  imports: [],
+  imports: [NgTemplateOutlet, NgClass],
   templateUrl: "./navbar.component.html",
   styleUrl: "./navbar.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,6 +16,7 @@ export class NavbarComponent {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly document = inject(DOCUMENT);
+  protected readonly pageTransition = inject(PageTransitionService);
 
   private readonly navigationEnd = toSignal(
     this.router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd)),
@@ -31,18 +33,6 @@ export class NavbarComponent {
   });
 
   readonly menuOpen = signal(false);
-  readonly transitionColor = signal("");
-  readonly startTransition = signal(false);
-  readonly showDots = signal(false);
-
-  private dotsTimer?: ReturnType<typeof setTimeout>;
-
-  private readonly routeColors: Record<string, string> = {
-    home: "#f1a661",
-    about: "#aac4ff",
-    works: "#d2665a",
-    contact: "#c4d7b2",
-  };
 
   private deepestChild(route: ActivatedRoute): ActivatedRoute {
     while (route.firstChild) route = route.firstChild;
@@ -55,25 +45,10 @@ export class NavbarComponent {
       return;
     }
 
-    this.transitionColor.set(this.routeColors[path] ?? "#000");
-    this.startTransition.set(true);
-
-    clearTimeout(this.dotsTimer);
-    this.dotsTimer = setTimeout(() => this.showDots.set(true), 500);
-
     setTimeout(() => this.menuOpen.set(false), 1000);
-
     this.document.body.style.overflow = "";
 
-    setTimeout(() => {
-      this.router.navigateByUrl(path).then(() => {
-        const frame = this.document.querySelector(".frame");
-        if (frame) frame.scrollTop = 0;
-        this.startTransition.set(false);
-        this.showDots.set(false);
-        clearTimeout(this.dotsTimer);
-      });
-    }, 800);
+    this.pageTransition.navigate(path);
   }
 
   toggleMenu() {

@@ -50,11 +50,11 @@
 
 <div
   class="route-transition"
-  [class.show]="startTransition()"
-  [style.background-color]="transitionColor()"
+  [class.show]="pageTransition.startTransition()"
+  [style.background-color]="pageTransition.transitionColor()"
 ></div>
 
-<div class="loader-dots" [class.show]="showDots()">
+<div class="loader-dots" [class.show]="pageTransition.showDots()">
   <span class="dot"></span>
   <span class="dot"></span>
 </div>
