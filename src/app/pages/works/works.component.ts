@@ -3,11 +3,11 @@ import { DOCUMENT } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import { ItemListComponent } from "../../shared/ui/item-list/item-list.component";
 import { LIST_ITEMS, CompanyList } from "../../core/models/company-list";
-import { PROJECT_ITEMS, Project } from "../../core/models/project-list";
+import { GithubProjectsComponent } from "./github-projects/github-projects.component";
 
 @Component({
   selector: "app-works",
-  imports: [ItemListComponent],
+  imports: [ItemListComponent, GithubProjectsComponent],
   templateUrl: "./works.component.html",
   styleUrl: "./works.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,7 +17,6 @@ export class WorksComponent {
   private readonly document = inject(DOCUMENT);
 
   readonly companyList: CompanyList[] = LIST_ITEMS;
-  readonly projectList: Project[] = PROJECT_ITEMS;
 
   constructor() {
     afterNextRender(() => {

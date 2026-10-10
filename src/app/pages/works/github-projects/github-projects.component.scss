@@ -1,0 +1,204 @@
+@use "colors.variables" as *;
+@use "responsive.mixin.scss" as *;
+
+.github-panel {
+  display: grid;
+  gap: 32px;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+  background-color: transparent;
+  border: 2px solid rgba($redPrimary, 0.2);
+  border-radius: 16px;
+  padding: 20px 24px;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+
+  .avatar {
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .profile-info {
+    display: grid;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .profile-handle {
+    opacity: 0.6;
+    font-weight: 500;
+  }
+
+  .profile-bio {
+    opacity: 0.8;
+  }
+
+  .profile-stats {
+    display: flex;
+    gap: 16px;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    opacity: 0.75;
+  }
+
+  .profile-icon {
+    flex-shrink: 0;
+    color: $redPrimary;
+  }
+
+  &:hover {
+    background-color: rgba($redPrimary, 0.04);
+    border-color: $redPrimary;
+  }
+
+  @include screen-down("sm") {
+    flex-wrap: wrap;
+  }
+}
+
+.github-state {
+  display: grid;
+  gap: 12px;
+  padding: 48px 32px;
+  border: 2px dashed rgba($redPrimary, 0.35);
+  border-radius: 12px;
+  text-align: center;
+
+  .empty-label {
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $redSecondary;
+    font-weight: 700;
+  }
+
+  .empty-desc {
+    opacity: 0.75;
+    margin: 0;
+    font-weight: 500;
+
+    a {
+      color: $redPrimary;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+  }
+}
+
+.language-group {
+  display: grid;
+  gap: 16px;
+}
+
+.language-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .language-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .language-name {
+    font-size: 18px;
+  }
+
+  .language-count {
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    opacity: 0.5;
+  }
+}
+
+.repo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  @include screen-down("md") {
+    grid-template-columns: 1fr;
+  }
+}
+
+.repo-card {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+  background-color: transparent;
+  border: 1px solid rgba($redPrimary, 0.15);
+  border-radius: 12px;
+  padding: 20px;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+
+  .repo-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .status-pill {
+    flex-shrink: 0;
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: $redPrimary;
+    background: rgba($redPrimary, 0.1);
+    border-radius: 24px;
+    padding: 4px 10px;
+  }
+
+  .repo-desc {
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  .repo-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .repo-chip {
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 24px;
+    padding: 3px 10px;
+    border: 1px solid rgba($redPrimary, 0.25);
+    color: $redPrimary;
+  }
+
+  .repo-meta {
+    display: flex;
+    gap: 14px;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    opacity: 0.6;
+  }
+
+  &:hover {
+    background-color: rgba($redPrimary, 0.04);
+    border-color: $redPrimary;
+    transform: translateY(-2px);
+  }
+}
