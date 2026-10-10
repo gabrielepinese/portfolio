@@ -1,5 +1,6 @@
 @use "colors.variables" as *;
 @use "responsive.mixin.scss" as *;
+@use "animations.scss" as *;
 
 .github-panel {
   display: grid;
@@ -79,6 +80,25 @@
     text-transform: uppercase;
     color: $redSecondary;
     font-weight: 700;
+  }
+
+  .loader-dots {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    padding: 8px 0;
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: $redPrimary;
+      animation: dotPulse 0.9s ease-in-out infinite;
+
+      &:nth-child(2) {
+        animation-delay: -0.45s;
+      }
+    }
   }
 
   .empty-desc {

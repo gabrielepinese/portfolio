@@ -358,18 +358,6 @@
   }
 }
 
-@keyframes dotPulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.55;
-  }
-  50% {
-    transform: scale(1.7);
-    opacity: 1;
-  }
-}
-
 .loader-dots {
   position: fixed;
   inset: 0;
