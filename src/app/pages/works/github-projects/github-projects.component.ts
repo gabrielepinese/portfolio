@@ -1,7 +1,7 @@
 import { afterNextRender, ChangeDetectionStrategy, Component, inject, signal } from "@angular/core";
 import { forkJoin } from "rxjs";
 import { GithubService } from "../../../core/services/github.service";
-import { GithubLanguageGroup, GithubUser } from "../../../core/models/github.model";
+import { GithubRepoWithLanguages, GithubUser } from "../../../core/models/github.model";
 
 const LANGUAGE_COLORS: Record<string, string> = {
   Python: "#3572A5",
@@ -33,7 +33,7 @@ export class GithubProjectsComponent {
   readonly loading = signal(true);
   readonly error = signal(false);
   readonly user = signal<GithubUser | null>(null);
-  readonly groups = signal<GithubLanguageGroup[]>([]);
+  readonly repos = signal<GithubRepoWithLanguages[]>([]);
 
   constructor() {
     afterNextRender(() => {
@@ -41,22 +41,9 @@ export class GithubProjectsComponent {
         next: ([user, repos]) => {
           this.user.set(user);
 
-          const byLanguage = new Map<string, GithubLanguageGroup>();
-          for (const repo of repos) {
-            const language = repo.primaryLanguage;
-            const group = byLanguage.get(language) ?? { language, repos: [] };
-            group.repos.push(repo);
-            byLanguage.set(language, group);
-          }
+          const sorted = [...repos].sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at));
 
-          const groups = [...byLanguage.values()]
-            .map((group) => ({
-              ...group,
-              repos: [...group.repos].sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at)),
-            }))
-            .sort((a, b) => b.repos.length - a.repos.length || a.language.localeCompare(b.language));
-
-          this.groups.set(groups);
+          this.repos.set(sorted);
           this.loading.set(false);
         },
         error: () => {

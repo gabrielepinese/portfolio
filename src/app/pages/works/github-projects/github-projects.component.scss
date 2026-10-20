@@ -114,34 +114,6 @@
   }
 }
 
-.language-group {
-  display: grid;
-  gap: 16px;
-}
-
-.language-group-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  .language-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .language-name {
-    font-size: 18px;
-  }
-
-  .language-count {
-    font-family: "Courier New", monospace;
-    font-size: 12px;
-    opacity: 0.5;
-  }
-}
-
 .repo-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -153,9 +125,10 @@
 }
 
 .repo-card {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-  align-content: start;
+  height: 100%;
   width: 100%;
   cursor: pointer;
   text-align: left;
@@ -170,8 +143,21 @@
   .repo-card-head {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 8px;
+  }
+
+  .language-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .repo-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .status-pill {
@@ -190,12 +176,20 @@
   .repo-desc {
     opacity: 0.8;
     margin: 0;
+    min-height: calc(2em * 1.4);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .repo-chips {
     display: flex;
     flex-wrap: wrap;
+    align-content: start;
     gap: 6px;
+    height: fit-content;
+    margin-top: auto;
   }
 
   .repo-chip {
@@ -211,6 +205,7 @@
     display: flex;
     align-items: center;
     gap: 14px;
+    margin-top: 14px;
     font-family: "Courier New", monospace;
     font-size: 12px;
     opacity: 0.6;
