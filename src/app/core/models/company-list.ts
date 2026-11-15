@@ -12,13 +12,13 @@ export interface CompanyList {
 export const LIST_ITEMS: CompanyList[] = [
   {
     id: 1,
-    from: "SEP 2022",
+    from: "OCT 2022",
     to: "Present",
     companyName: "Lunalabs",
-    title: "Angular Frontend Developer",
+    title: "Software Engineer",
     description:
-      "I had the opportunity to dive deep into Angular and turn it into a true passion, building increasingly complex and optimized architectures with a strong focus on code quality and performance. I love bringing designers' ideas to life by transforming them into dynamic, accessible interfaces where aesthetics and functionality work in harmony. This experience allowed me to work in a team, face real-world challenges, and actively contribute to the development of well-designed, engaging, and meaningful projects.",
-    chips: ["Angular", "HTML & SCSS", "TypeScript", "Node.js"],
+      "I started out on the frontend, diving deep into Angular and TypeScript: building and refactoring complex components, optimizing performance, and turning designers' ideas into dynamic, accessible interfaces. Over time my role grew into Software Engineering: today I own features end-to-end, from the UI to REST API integration, application logic, database and server-side work, collaborating closely with the backend team and taking part in architectural decisions. This experience taught me to work in a team, face real-world challenges, and look at a product as a whole rather than a single layer.",
+    chips: ["Angular", "TypeScript", "HTML & SCSS", "Node.js", "REST API", "SQL"],
     link: "https://www.lunalabs.it/",
   },
   {

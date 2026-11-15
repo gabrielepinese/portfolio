@@ -33,14 +33,13 @@ export class AboutComponent {
     { icon: "devicon-angular-plain colored", label: "Angular" },
     { icon: "devicon-typescript-plain colored", label: "TypeScript" },
     { icon: "devicon-react-original colored", label: "React" },
-    { icon: "devicon-html5-plain colored", label: "HTML5" },
-    { icon: "devicon-css3-plain colored", label: "CSS3" },
-    { icon: "devicon-sass-original colored", label: "SCSS" },
-    { icon: "devicon-tailwindcss-plain colored", label: "Tailwind" },
-    { icon: "devicon-figma-plain colored", label: "Figma" },
-    { icon: "devicon-git-plain colored", label: "Git" },
-    { imgSrc: "assets/icon/zed.webp", label: "Zed" },
+    { imgSrc: "assets/icon/java.svg", label: "Java" },
+    { imgSrc: "assets/icon/kotlin.svg", label: "Kotlin" },
     { icon: "devicon-csharp-plain colored", label: "C#" },
+    { icon: "devicon-tailwindcss-plain colored", label: "Tailwind" },
+    { icon: "devicon-git-plain colored", label: "Git" },
+    { icon: "devicon-figma-plain colored", label: "Figma" },
+    { imgSrc: "assets/icon/zed.webp", label: "Zed" },
   ];
 
   constructor() {
