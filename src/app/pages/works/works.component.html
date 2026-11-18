@@ -1,48 +1,105 @@
 <div class="works-container works">
-  <div class="works-content">
+  <div class="works-content" [class.go]="done()" [class.typing]="typing()">
     <div class="title-container">
       <div class="title-content">
+        <span class="hero-kicker" aria-hidden="true">
+          <span class="kicker-dot"></span>currently shipping · lunalabs
+        </span>
         <h1 class="bigTitle bold">
-          Work<span class="redPrimary">.</span>
+          <span class="sr-only">Work.</span>
+          <span class="title-chars" aria-hidden="true">
+            <span class="typed">{{ title().shown }}</span>@if (title().dot) {<span class="title-dot">.</span>}<span class="caret" [class.off]="!caret()"></span><span class="ghost">{{ title().hidden }}@if (!title().dot) {.}</span>
+          </span>
         </h1>
-        <h2 class="body24">
-          A peek into <b>my journey</b> as a Software Engineer: real
-          experiences, projects in the works, and plenty of code on the way
-        </h2>
+        <p class="body24 subtitle">
+          <span class="sr-only">{{ subtitle }}</span>
+          <span aria-hidden="true">
+            @for (w of subtitleWords; track $index) {<span class="word" [style.--i]="$index">{{ w }}</span>}
+          </span>
+        </p>
+      </div>
+
+      <!-- the career printed as a git log, newest on top.
+           Decorative: the sections below say the same thing in plain words. -->
+      <div class="term" aria-hidden="true">
+        <div class="term-bar">
+          <span class="term-dots"><i></i><i></i><i></i></span>
+          <span class="term-title">~/career</span>
+        </div>
+        <div class="term-body">
+          <div class="term-line term-cmd" [style.--t]="'0.25s'">
+            <span class="term-prompt">$</span> git log --graph --oneline
+          </div>
+          @for (l of log; track $index; let firstLine = $first) {
+            <div class="term-line log-line" [style.--t]="logStart + $index * logStep + 's'">
+              <span class="graph">@for (c of l.graph; track $index) {<span [class.node]="c === '*'" [class.head]="c === '*' && firstLine">{{ c }}</span>}</span>
+              @if (l.hash) {
+                <span class="msg-wrap">
+                  <span class="hash">{{ l.hash }}</span>
+                  @if (l.refs) {
+                    <span class="refs">(@for (r of l.refs; track r.label) {<span [class]="'ref ' + r.kind">{{ r.label }}</span>@if (!$last) {, }})</span>
+                  }
+                  <span class="msg">{{ l.msg }}</span>
+                </span>
+              }
+            </div>
+          }
+          <div class="term-line term-end" [style.--t]="logStart + log.length * logStep + 's'">
+            <span class="term-prompt">$</span><span class="term-caret"></span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="scroll-indicator" aria-hidden="true">
-      <div class="scroll-track">
-        <div class="scroll-dot"></div>
-      </div>
-    </div>
+    <!-- scroll cue: a terminal-flavoured pill pointing at the experiences below -->
+    <button type="button" class="log-cue" (click)="jumpTo(experiences)">
+      <span class="cue-arrow" aria-hidden="true">↓</span>
+      read the full log<span class="sr-only">: scroll to experiences and projects</span>
+    </button>
   </div>
 
   <div class="works-main-section">
-    <div class="section-title">
-      <span class="section-label">Experiences</span>
-      <div class="section-line"></div>
-    </div>
-    @for (company of companyList; track $index) {
-      <app-item-list
-        [link]="company.link"
-        [from]="company.from"
-        [to]="company.to"
-        [company]="company.companyName"
-        [title]="company.title"
-        [desc]="company.description"
-        [chips]="company.chips"
-      ></app-item-list>
-    }
+    <section class="works-section" #experiences aria-labelledby="experiences-title">
+      <div class="section-head scroll-reveal" appReveal>
+        <span class="section-kicker"><span class="section-index">01</span> experiences</span>
+        <h2 class="heading1 bold" id="experiences-title">
+          Where I've shipped<span class="accent-dot">.</span>
+        </h2>
+      </div>
 
-    <div class="projects-section" id="projects">
-      <div class="section-title">
-        <span class="section-label">Projects</span>
-        <div class="section-line"></div>
+      <div class="timeline">
+        @for (company of companyList; track company.id) {
+          <app-item-list
+            class="scroll-reveal"
+            appReveal
+            [style.--delay]="$index * 0.1 + 's'"
+            [link]="company.link"
+            [from]="company.from"
+            [to]="company.to"
+            [company]="company.companyName"
+            [title]="company.title"
+            [desc]="company.description"
+            [chips]="company.chips"
+            [current]="company.to === 'Present'"
+            [open]="openIndex() === $index"
+            (toggle)="openIndex.set(openIndex() === $index ? -1 : $index)"
+          ></app-item-list>
+        }
+      </div>
+    </section>
+
+    <section class="works-section projects-section" id="projects" aria-labelledby="projects-title">
+      <div class="section-head scroll-reveal" appReveal>
+        <span class="section-kicker"><span class="section-index">02</span> side projects</span>
+        <h2 class="heading1 bold" id="projects-title">
+          Built on my own time<span class="accent-dot">.</span>
+        </h2>
+        <p class="body18 section-desc">
+          Live from GitHub: what I'm tinkering with outside of work, freshest first.
+        </p>
       </div>
 
       <app-github-projects></app-github-projects>
-    </div>
+    </section>
   </div>
 </div>

@@ -4,6 +4,7 @@
 
 .github-panel {
   display: grid;
+  grid-template-columns: minmax(0, 1fr); // implicit `auto` column grows with content on phones
   gap: 32px;
 }
 
@@ -14,23 +15,29 @@
   width: 100%;
   cursor: pointer;
   text-align: left;
-  background-color: transparent;
-  border: 2px solid rgba($redPrimary, 0.2);
-  border-radius: 16px;
+  background: rgba(#fff, 0.45);
+  border: 1px solid rgba($redPrimary, 0.15);
+  border-radius: 20px;
   padding: 20px 24px;
+  font: inherit;
+  color: inherit;
   transition:
     background-color 0.3s ease,
-    border-color 0.3s ease;
+    border-color 0.3s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
   .avatar {
     border-radius: 50%;
     flex-shrink: 0;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba($redPrimary, 0.25);
   }
 
   .profile-info {
     display: grid;
     gap: 6px;
     flex: 1;
+    min-width: 0;
   }
 
   .profile-handle {
@@ -51,17 +58,53 @@
   }
 
   .profile-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
     flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid rgba($redPrimary, 0.2);
     color: $redPrimary;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
   }
 
   &:hover {
-    background-color: rgba($redPrimary, 0.04);
-    border-color: $redPrimary;
+    background-color: #fff;
+    border-color: rgba($redPrimary, 0.3);
+    box-shadow: 0 24px 48px -30px rgba($redPrimary, 0.45);
+    transform: translateY(-3px);
+
+    .profile-icon {
+      background: $redPrimary;
+      color: $red3;
+    }
   }
 
-  @include screen-down("sm") {
-    flex-wrap: wrap;
+  &:focus-visible {
+    outline: 2px solid $redPrimary;
+    outline-offset: 3px;
+  }
+
+  // phones: the whole card is the link, the round GitHub icon only steals width
+  @include screen-down("md") {
+    gap: 16px;
+    padding: 18px;
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+    }
+
+    .profile-handle {
+      display: block;
+    }
+
+    .profile-icon {
+      display: none;
+    }
   }
 }
 
@@ -69,8 +112,9 @@
   display: grid;
   gap: 12px;
   padding: 48px 32px;
-  border: 2px dashed rgba($redPrimary, 0.35);
-  border-radius: 12px;
+  border: 1px dashed rgba($redPrimary, 0.35);
+  border-radius: 20px;
+  background: rgba(#fff, 0.3);
   text-align: center;
 
   .empty-label {
@@ -132,13 +176,17 @@
   width: 100%;
   cursor: pointer;
   text-align: left;
-  background-color: transparent;
-  border: 1px solid rgba($redPrimary, 0.15);
-  border-radius: 12px;
-  padding: 20px;
+  background: rgba(#fff, 0.45);
+  border: 1px solid rgba($redPrimary, 0.12);
+  border-radius: 20px;
+  padding: 24px;
+  font: inherit;
+  color: inherit;
   transition:
     background-color 0.3s ease,
-    border-color 0.3s ease;
+    border-color 0.3s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
   .repo-card-head {
     display: flex;
@@ -193,12 +241,14 @@
   }
 
   .repo-chip {
-    font-size: 12px;
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 11px;
     font-weight: 700;
-    border-radius: 24px;
+    border-radius: 999px;
     padding: 3px 10px;
-    border: 1px solid rgba($redPrimary, 0.25);
+    border: 1px solid rgba($redPrimary, 0.22);
     color: $redPrimary;
+    background: rgba($red3, 0.6);
   }
 
   .repo-meta {
@@ -206,6 +256,8 @@
     align-items: center;
     gap: 14px;
     margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba($redPrimary, 0.15);
     font-family: "JetBrains Mono", "Courier New", monospace;
     font-size: 12px;
     opacity: 0.6;
@@ -218,7 +270,22 @@
   }
 
   &:hover {
-    background-color: rgba($redPrimary, 0.04);
-    border-color: $redPrimary;
+    background-color: #fff;
+    border-color: rgba($redPrimary, 0.3);
+    box-shadow: 0 24px 48px -30px rgba($redPrimary, 0.45);
+    transform: translateY(-3px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $redPrimary;
+    outline-offset: 3px;
+  }
+}
+
+// animations paused (OS reduced motion or the toggle): fades stay, movement goes
+:host-context(.motion-paused) {
+  .profile-card:hover,
+  .repo-card:hover {
+    transform: none;
   }
 }

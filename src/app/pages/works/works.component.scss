@@ -1,74 +1,526 @@
 @use "colors.variables" as *;
-@use "animations.scss" as *;
 @use "responsive.mixin.scss" as *;
 
+$mono: "JetBrains Mono", "Courier New", monospace;
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+// terminal palette: deep maroon window, peach text, git's own decoration colours (softened)
+$term-bg: #2a1015;
+$term-bar: #3a171e;
+$term-text: $red2;
+$term-dim: rgba($red2, 0.55);
+$git-head: #7fd6e0;
+$git-branch: #95d99a;
+$git-tag: #f2c46d;
+
+// The page container (class.mixin) is a centred grid with an implicit `auto` column, which
+// grows to the widest content and pushes the page off-screen on phones. Pin it to the
+// viewport width (same fix as Contact / About) and clip anything that pokes out sideways.
+.works-container {
+  grid-template-columns: minmax(0, 1fr);
+  overflow-x: clip;
+}
+
+// ───────────────────────── hero ─────────────────────────
+// Left: kicker, typed title with a blinking caret, subtitle.
+// Right: the career printed as a git log. Stacks below "lg" (all tablets, iPad Pro 13" included).
 .title-container {
-  font-family: "Fraunces", Georgia, serif;
   display: grid;
-  max-width: 1000px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 72px;
   align-items: center;
   position: relative;
 
-  h1,
-  h2 {
-    margin: 0;
-  }
-
-  .bigTitle {
-    text-align: left;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: showUp 0.5s ease-out forwards;
-    animation-delay: 0.4s;
-  }
-  .body24 {
-    text-align: left;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: showUp 0.5s ease-out forwards;
-    animation-delay: 0.8s;
+  @include screen-down("lg") {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: 48px;
   }
 
   .title-content {
     display: grid;
-    gap: 28px;
-    margin: auto;
+    gap: 24px;
     text-align: left;
+  }
+
+  h1,
+  p {
+    margin: 0;
   }
 }
 
-.works-main-section {
-  display: grid;
-  width: 100%;
-  max-width: 1216px;
-  gap: 0;
-
-  .section-title {
+// Below "lg" the stacked hero is taller than the fixed-height content box (class.mixin):
+// let it grow, at least one viewport tall with the content centred (same as Contact).
+.works-content {
+  @include screen-down("lg") {
     display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 48px 0 0;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    height: auto;
+    min-height: 100svh;
+    margin: 0 auto;
+    padding: 96px 0;
+  }
 
-    .section-label {
-      font-family: "JetBrains Mono", "Courier New", monospace;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: $redPrimary;
-      font-weight: 700;
-      white-space: nowrap;
-    }
+  @include screen-down("md") {
+    padding-top: 80px;
+  }
 
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: rgba($redPrimary, 0.15);
+  .log-cue {
+    align-self: flex-start; // flex column would stretch the pill full-width
+  }
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  font-family: $mono;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1; // tight line box: the dot centres on the caps, not on the line gap
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: $redPrimary;
+  opacity: 0;
+  animation: fadeUp 0.5s $ease-out 0.15s forwards;
+
+  .kicker-dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $redSecondary;
+    animation: statusPulse 1.4s ease-out 0.6s 3;
+  }
+}
+
+// "Work." is typed in (TS), like the Home / Contact headlines; the full stop in the page
+// colour. Caret: solid while typing, blinking ~1/s while idle (far below the 3 flashes/s
+// threshold, WCAG 2.3.1), removed after 5 s (2.2.2).
+.title-dot {
+  color: $redSecondary;
+}
+
+.caret {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 1em;
+  vertical-align: -0.12em;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 2px;
+    width: max(2px, 0.07em);
+    height: 100%;
+    background: $redPrimary;
+    animation: caretBlink 1.05s steps(1) infinite;
+  }
+}
+
+.typing .caret::after {
+  animation: none;
+}
+
+// Hidden caret stays in the DOM: removing it would change the line box height.
+.caret.off::after {
+  opacity: 0;
+  animation: none;
+}
+
+.ghost {
+  opacity: 0;
+}
+
+// Everything after the title waits for it: animations stay frozen (delays included)
+// until the title is written and .go lands on the hero.
+.works-content:not(.go) {
+  .subtitle .word,
+  .term,
+  .term *,
+  .log-cue {
+    animation-play-state: paused;
+  }
+}
+
+// subtitle: words fade in from a blur
+.subtitle .word {
+  display: inline-block;
+  margin-right: 0.28em;
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(12px);
+  animation: wordIn 0.5s $ease-out forwards;
+  animation-delay: calc(0.05s + var(--i) * 0.03s);
+}
+
+// ── terminal ──
+// Window chrome + `git log --graph`. Each line prints at --t (seconds after the title).
+.term {
+  width: 100%;
+  max-width: 560px;
+  justify-self: end;
+  box-sizing: border-box;
+  border-radius: 18px;
+  overflow: hidden;
+  background: $term-bg;
+  box-shadow:
+    0 30px 60px -30px rgba($redPrimary, 0.55),
+    0 0 0 1px rgba($redPrimary, 0.25);
+  font-family: $mono;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: $term-text;
+  opacity: 0;
+  transform: translateY(24px) scale(0.97);
+  animation: popIn 0.6s $ease-out 0.1s forwards;
+
+  @include screen-down("lg") {
+    justify-self: stretch;
+    max-width: none;
+  }
+
+  @include screen-down("md") {
+    font-size: 12px;
+    border-radius: 14px;
+  }
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: $term-bar;
+  border-bottom: 1px solid rgba($red2, 0.08);
+
+  .term-dots {
+    display: inline-flex;
+    gap: 7px;
+
+    i {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba($red2, 0.18);
+
+      &:first-child {
+        background: $redSecondary;
+      }
     }
   }
 
-  .projects-section {
-    margin-top: 48px;
+  .term-title {
+    font-size: 12px;
+    color: $term-dim;
+  }
+}
+
+.term-body {
+  display: grid;
+  padding: 18px 20px 20px;
+
+  @include screen-down("md") {
+    padding: 14px 14px 16px;
+  }
+}
+
+.term-line {
+  opacity: 0;
+  animation: lineIn 0.35s $ease-out var(--t) forwards;
+}
+
+.term-cmd {
+  margin-bottom: 6px;
+  color: $term-text;
+}
+
+.term-prompt {
+  color: $redSecondary;
+  font-weight: 700;
+}
+
+// graph column fixed, message wraps under itself (hanging indent) on narrow cards
+.log-line {
+  display: grid;
+  grid-template-columns: 4ch minmax(0, 1fr);
+
+  .graph {
+    white-space: pre;
+    color: $term-dim;
+
+    .node {
+      color: $redSecondary;
+      font-weight: 700;
+    }
+
+    .head {
+      display: inline-block;
+      color: $git-head;
+      animation: headPulse 1.6s ease-in-out calc(var(--t) + 0.4s) 3;
+    }
+  }
+
+  .hash {
+    color: $red1;
+    margin-right: 0.6ch;
+
+    // phones: hashes take a third of the line, the story reads fine without them
+    @include screen-down("md") {
+      display: none;
+    }
+  }
+
+  .refs {
+    margin-right: 0.6ch;
+    color: $git-tag;
+  }
+
+  .ref {
+    font-weight: 700;
+
+    &.head {
+      color: $git-head;
+    }
+    &.branch {
+      color: $git-branch;
+    }
+    &.tag {
+      color: $git-tag;
+    }
+  }
+}
+
+.term-end {
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+  margin-top: 6px;
+}
+
+.term-caret {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  background: $red2;
+  opacity: 0.85;
+  // a few blinks, then rest (WCAG 2.2.2)
+  animation: caretBlink 1.05s steps(1) calc(var(--t) + 0.3s) 4;
+}
+
+// ── scroll cue ──
+// Terminal-flavoured pill. Shows up after the log, bobs a few times (finite: WCAG 2.2.2).
+.log-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 56px;
+  padding: 8px 16px 8px 8px;
+  border: 1px solid rgba($redPrimary, 0.18);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 10px 24px -14px rgba($redPrimary, 0.5);
+  color: $redPrimary;
+  font-family: $mono;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  animation:
+    fadeUp 0.45s $ease-out 3s forwards,
+    cueBob 1.2s ease-in-out 3.5s 3;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  .cue-arrow {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: $redPrimary;
+    color: $red3;
+    font-size: 14px;
+  }
+
+  &:hover {
+    background: $red3;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $redPrimary;
+    outline-offset: 3px;
+  }
+
+  @include screen-down("lg") {
+    margin-top: 40px;
+  }
+}
+
+// ───────────────────────── sections ─────────────────────────
+.works-main-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); // implicit `auto` columns grow with content on phones
+  gap: 120px;
+  width: 100%;
+  max-width: 1216px;
+  margin-inline: auto; // the container column is full-width: centre like .works-content
+  padding-top: 48px;
+  border-top: 1px solid rgba($redPrimary, 0.15);
+
+  @include screen-down("md") {
+    gap: 88px;
+  }
+}
+
+.works-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+  scroll-margin-top: 120px; // #projects fragment: land below the fixed navbar
+}
+
+.section-head {
+  display: grid;
+  gap: 14px;
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  .heading1 {
+    line-height: 1.15;
+  }
+
+  .accent-dot {
+    color: $redSecondary;
+  }
+
+  .section-desc {
+    max-width: 620px;
+    opacity: 0.8;
+  }
+}
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: $mono;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: $redPrimary;
+
+  .section-index {
+    display: grid;
+    place-items: center;
+    min-width: 28px;
+    height: 22px;
+    padding: 0 6px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background: $redPrimary;
+    color: $red3;
+    letter-spacing: 0;
+  }
+}
+
+// commit rail: one vertical line through every experience node (nodes live in item-list)
+.timeline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+
+  @include screen-down("md") {
+    gap: 28px; // no rail on phones: a bit more air between period + card pairs
+  }
+}
+
+// ───────────────────────── keyframes ─────────────────────────
+@keyframes caretBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes lineIn {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes cueBob {
+  0%,
+  100% {
+    transform: none;
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes popIn {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes headPulse {
+  0%,
+  100% {
+    transform: none;
+    text-shadow: none;
+  }
+  50% {
+    transform: scale(1.35);
+    text-shadow: 0 0 10px rgba($git-head, 0.8);
+  }
+}
+
+@keyframes wordIn {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+@keyframes statusPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($redSecondary, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 9px rgba($redSecondary, 0);
   }
 }

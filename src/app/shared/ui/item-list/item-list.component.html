@@ -1,35 +1,112 @@
-<button type="button" (click)="goto(link())" [attr.aria-label]="company() + ' — ' + title() + '. Opens in new tab'">
-  <div class="item-list-container">
-    <div class="item-list-content">
-      <div class="period bold">
-        <span>{{ from() }}</span>
-        <div class="period-line"></div>
-        <span>{{ to() }}</span>
-      </div>
-      <div class="job-content">
-        <div class="item-title-container">
-          <div class="body32 bold">{{ company() }}</div>
-          <div class="icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
-              aria-hidden="true"
-            >
-              <path
-                fill="#000000"
-                d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
-              />
-            </svg>
+<!-- shared pieces, used by both layouts -->
+<ng-template #period>
+  <span class="period">
+    <span>{{ from() }}</span>
+    <span class="period-sep" aria-hidden="true"></span>
+    <span>{{ to() }}</span>
+  </span>
+</ng-template>
+
+<ng-template #headline>
+  <span class="company body32 bold">{{ company() }}</span>
+  @if (current()) {
+    <span class="head-badge" aria-hidden="true">HEAD</span>
+  }
+</ng-template>
+
+<ng-template #details>
+  <span class="desc body16">{{ desc() }}</span>
+  <span class="chip-container">
+    @for (chip of chips(); track $index) {
+      <span class="chip">{{ chip }}</span>
+    }
+  </span>
+</ng-template>
+
+<ng-template #arrow>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <!-- ↗ drawn diagonal (no CSS rotation): its box centre is its visual centre -->
+    <path
+      d="M7 17 17 7M9 7h8v8"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</ng-template>
+
+@if (!mobile()) {
+  <!-- tablet / desktop: the whole card opens the company site -->
+  <button
+    type="button"
+    class="item"
+    [class.current]="current()"
+    (click)="goto(link())"
+    [attr.aria-label]="company() + ' — ' + title() + (current() ? ', current role' : '') + '. Opens in new tab'"
+  >
+    <span class="rail" aria-hidden="true"><span class="node"></span></span>
+    <ng-container [ngTemplateOutlet]="period" />
+
+    <span class="card">
+      <span class="card-head">
+        <ng-container [ngTemplateOutlet]="headline" />
+        <span class="icon" aria-hidden="true"><ng-container [ngTemplateOutlet]="arrow" /></span>
+      </span>
+      <span class="role body20 bold">{{ title() }}</span>
+      <ng-container [ngTemplateOutlet]="details" />
+    </span>
+  </button>
+} @else {
+  <!-- phones: accordion, the header toggles the details -->
+  <!-- no timeline rail on phones: the period above each card is enough -->
+  <div class="item" [class.current]="current()" [class.open]="open()">
+    <ng-container [ngTemplateOutlet]="period" />
+
+    <div class="card">
+      <button
+        type="button"
+        class="toggle"
+        [attr.aria-expanded]="open()"
+        [attr.aria-controls]="bodyId"
+        (click)="onToggle()"
+      >
+        <span class="toggle-text">
+          <span class="card-head">
+            <ng-container [ngTemplateOutlet]="headline" />
+            @if (current()) {
+              <span class="sr-only">, current role</span>
+            }
+          </span>
+          <span class="role body20 bold">{{ title() }}</span>
+        </span>
+        <span class="icon chevron" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M7 9.5l5 5 5-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+      </button>
+
+      <div class="body" [id]="bodyId" [attr.inert]="open() ? null : ''">
+        <div class="body-inner">
+          <div class="body-pad">
+          <ng-container [ngTemplateOutlet]="details" />
+          <a class="visit" [href]="link()" target="_blank" rel="noopener noreferrer">
+            Visit website
+            <span class="visit-icon" aria-hidden="true"><ng-container [ngTemplateOutlet]="arrow" /></span>
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
           </div>
-        </div>
-        <div class="body24 bold">{{ title() }}</div>
-        <div class="body16">{{ desc() }}</div>
-        <div class="chip-container">
-          @for (chip of chips(); track $index) {
-            <div class="chip bold body14">{{ chip }}</div>
-          }
         </div>
       </div>
     </div>
   </div>
-</button>
+}

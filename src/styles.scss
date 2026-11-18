@@ -121,18 +121,23 @@ a {
 }
 
 // "Pause animations" (WCAG 2.2.2) — MotionService puts .motion-paused on <html>.
-// Scoped to the pages that use it (home, contact): entrance animations jump to
+// Scoped to the pages that use it (home, contact, works): entrance animations jump to
 // their end state, looping ones stop after one instant pass. Canvas and typewriters are
 // paused in TS.
+// Transitions: only fades survive (colour, border, shadow, opacity: hover feedback, not
+// motion). Anything that moves or resizes (transform, height, …) is dropped from the
+// transition list, so it jumps straight to its end state.
 .motion-paused .home-container,
-.motion-paused .contact-container {
+.motion-paused .contact-container,
+.motion-paused .works-container {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-property: color, background-color, border-color, outline-color, box-shadow, fill, stroke,
+      opacity !important;
     transition-delay: 0s !important;
   }
 
