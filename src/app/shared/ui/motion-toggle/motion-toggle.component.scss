@@ -1,0 +1,65 @@
+@use "colors.variables" as *;
+@use "responsive.mixin.scss" as *;
+
+$mono: "JetBrains Mono", "Courier New", monospace;
+
+// floating, inside the white page frame
+:host {
+  position: fixed;
+  right: 48px;
+  bottom: 44px;
+  z-index: 15;
+
+  @include screen-down("lg") {
+    right: 40px;
+    bottom: 36px;
+  }
+
+  @include screen-down("md") {
+    right: 26px;
+    bottom: 26px;
+  }
+}
+
+.motion-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 6px 14px;
+  border: 1.5px solid $orangePrimary;
+  border-radius: 999px;
+  background: rgba($orange2, 0.95);
+  color: $orangePrimary;
+  font-family: $mono;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: $orange1;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $orangePrimary;
+    outline-offset: 3px;
+  }
+
+  // pause / play glyph drawn in CSS
+  .motion-icon {
+    width: 10px;
+    height: 10px;
+    box-sizing: border-box;
+    border-left: 3px solid currentColor;
+    border-right: 3px solid currentColor;
+  }
+
+  &.paused .motion-icon {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 0 5px 9px;
+    border-color: transparent transparent transparent currentColor;
+  }
+}

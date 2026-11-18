@@ -1,0 +1,36 @@
+<div class="window" [class.typing]="typing()">
+  <div class="window-header">
+    <div class="dots">
+      <span class="dot close"></span>
+      <span class="dot minimize"></span>
+      <span class="dot maximize"></span>
+    </div>
+    <div class="tabs">
+      @for (file of files; track file; let first = $first) {
+        <div class="tab" [class.active]="first">
+          <span class="file-icon">TS</span>
+          <span class="file-name">{{ file }}</span>
+          <span class="file-close">×</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="window-body">
+    @for (line of lines(); track $index; let i = $index) {
+      <div class="code-line">
+        <span class="ln">{{ i + 1 }}</span>
+        <span class="code">@for (tok of line; track $index) {<span [class]="tok.cls">{{ tok.shown }}@if (tok.caret) {<span class="caret"></span>}<span class="ghost">{{ tok.hidden }}</span></span>}</span>
+      </div>
+    }
+  </div>
+
+  <div class="window-terminal">
+    <div class="terminal-title">TERMINAL</div>
+    @for (out of output; track $index; let i = $index) {
+      <div class="term-line" [class.shown]="i < outputShown()" [class.cmd]="i === 0" [class.last]="i === output.length - 1">
+        {{ out }}
+      </div>
+    }
+  </div>
+</div>

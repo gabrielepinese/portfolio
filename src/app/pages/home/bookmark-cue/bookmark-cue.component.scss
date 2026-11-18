@@ -1,0 +1,158 @@
+@use "colors.variables" as *;
+@use "responsive.mixin.scss" as *;
+
+$mono: "JetBrains Mono", "Courier New", monospace;
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+// Sits right under the board, aligned to its right side, tucked beneath its bottom edge.
+:host {
+  position: relative;
+  z-index: 0; // below the board (z-index 1) so the ribbon looks like it comes out from under it
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 920px;
+  margin: -10px auto 0;
+  padding-right: 88px;
+  box-sizing: border-box;
+
+  @include screen-down("md") {
+    margin-top: 8px;
+    padding-right: 20px;
+  }
+}
+
+.bookmark {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: $orangePrimary;
+  font-family: $mono;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $orangePrimary;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+}
+
+// slides out from under the board once, after it has landed
+.ribbon-drop {
+  display: block;
+  // soft cast shadow (box-shadow would be cut by the clip-path)
+  filter: drop-shadow(3px 4px 0 rgba($orangePrimary, 0.22));
+  animation: ribbonDrop 0.7s $ease-out 1.4s both;
+}
+
+.ribbon {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 42px;
+  height: 100px;
+  padding-bottom: 28px;
+  box-sizing: border-box;
+  // brown fabric: stands out from the board's orange shadow and the cream page
+  background: linear-gradient(90deg, #5a2c08, $orangePrimary 40%, #7a3f10 70%, #5f2f09);
+  color: $orange2;
+  // swallow-tail cut at the bottom
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  transform-origin: top center;
+  animation: sway 3.2s ease-in-out 2.1s infinite;
+  // pulled on hover, rolls back up smoothly on leave
+  transition: height 0.45s $ease-out;
+
+  // stitching along both edges
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 10px;
+    left: 4px;
+    right: 4px;
+    border-left: 1px dashed rgba($orange2, 0.5);
+    border-right: 1px dashed rgba($orange2, 0.5);
+  }
+}
+
+.ribbon-arrow {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+// label slides out next to the ribbon when it's "pulled"
+.bookmark-label {
+  position: absolute;
+  top: 62px;
+  right: calc(100% + 12px);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(8px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s $ease-out;
+}
+
+.bookmark:hover,
+.bookmark:focus-visible {
+  .ribbon {
+    height: 122px;
+    animation: none;
+  }
+
+  .bookmark-label {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+// touch: no hover, so keep the label visible
+@media (hover: none) {
+  .bookmark-label {
+    opacity: 1;
+    transform: none;
+    // ...but only once the ribbon has dropped in
+    animation: labelIn 0.4s ease 2s backwards;
+  }
+}
+
+@keyframes labelIn {
+  from {
+    opacity: 0;
+  }
+}
+
+// starts invisible too: until the board has faded in it can't hide the ribbon behind it
+@keyframes ribbonDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// starts and ends at 0°, so stopping/restarting the sway on hover never jumps
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(4deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+}

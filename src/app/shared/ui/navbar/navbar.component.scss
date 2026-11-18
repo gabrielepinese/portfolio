@@ -101,8 +101,12 @@
     }
   }
 
+  // ≤1279px the layout has right padding, so the bar must stop where the content does:
+  // --scrollbar-w is measured at runtime (NavbarComponent) — 17px on Windows, 0 on
+  // iPad/phones. (It used to be a hard-coded 65px = 48 + a 17px scrollbar, leaving a
+  // see-through gap on devices without a scrollbar.)
   @include screen-down("lg") {
-    width: calc(100% - 65px);
+    width: calc(100% - 48px - var(--scrollbar-w, 0px));
   }
 
   @include screen-down("md") {

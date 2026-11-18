@@ -14,3 +14,13 @@ export function injectIsMediumBreakpoint(): Signal<boolean> {
     { initialValue: false },
   );
 }
+
+/** Signal that is true on phone widths (≤767px, same as the SCSS "md" breakpoint). */
+export function injectIsMobile(): Signal<boolean> {
+  const breakpointObserver = inject(BreakpointObserver);
+
+  return toSignal(
+    breakpointObserver.observe(["(max-width: 767px)"]).pipe(map((r) => r.matches)),
+    { initialValue: false },
+  );
+}

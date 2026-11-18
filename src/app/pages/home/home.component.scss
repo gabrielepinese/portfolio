@@ -2,88 +2,565 @@
 @use "animations.scss" as *;
 @use "responsive.mixin.scss" as *;
 
-// .home-container and .home-content base styles come from class.mixin
+$accent: #e38b29;
+// contrast-safe variants on the light background (WCAG AA)
+$accent-on-light: #b8621a; // 3.8:1 → large text / non-text only
+$brown-hover: #8a4512; // cream text on it: 6.3:1
+// dark board shades (roasted browns, same family as $orangePrimary)
+$board-hi: #4a2e19;
+$board-bg: #33200f;
+$board-deep: #29180b;
+$serif: "Fraunces", Georgia, serif;
+$mono: "JetBrains Mono", "Courier New", monospace;
+$flow-cycle: 8s;
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
-.title-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: center;
+// .home-container base styles come from class.mixin
+.home-container {
   position: relative;
-  box-sizing: border-box;
+  overflow: hidden;
+  font-family: $serif;
+  // Fraunces "soft" axis: rounded, friendly terminals while staying a classy serif
+  font-variation-settings: "SOFT" 100;
 
-  h1, h2 {
-    margin: 0;
-  }
-
-  .bigTitle {
-    text-align: left;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: showUp 0.5s ease-out forwards;
-    animation-delay: 0.4s;
-  }
-
-  .body24 {
-    max-width: 700px;
-    text-align: left;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: showUp 0.5s ease-out forwards;
-    animation-delay: 0.8s;
-  }
-
-  .title-content {
-    display: grid;
-    gap: 28px;
-    margin: auto;
-    text-align: left;
-  }
-
-  .image-container {
-    position: absolute;
-    left: 250px;
-    top: 30px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' width='10' height='10' patternUnits='userSpaceOnUse'><rect width='100%' height='100%' fill='%232b2b31' fill-opacity='0'/><path fill='none' stroke='%23E38B29' stroke-linecap='square' stroke-width='1' d='M2.5 5h5M5 2.5v5'/></pattern></defs><rect width='1600%' height='1600%' fill='url(%23a)' transform='translate(-40 -40)'/></svg>");
-    background-repeat: repeat;
-    background-size: auto;
-    background-position: center;
-    width: 700px;
-    height: 170px;
-    z-index: 0;
-    display: inline-block;
-    transform: scaleX(0);
-    transform-origin: center;
-    opacity: 0;
-    animation: expandWithBounce 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55)
-      forwards;
-    animation-delay: 1s;
-
-    @include screen-down("lg") {
-      left: 160px;
-      top: -36px;
-      width: 400px;
-      height: 264px;
-    }
-
-    @include screen-down("md") {
-      left: 110px;
-      top: -100px;
-      width: 160px;
-      height: 400px;
-    }
-  }
-
-  @include screen-down("lg") {
-    grid-template-columns: repeat(1, 1fr);
+  .hero-field {
+    bottom: auto;
+    height: 100vh;
   }
 }
 
-.home-projects-section {
+.section-label {
+  font-family: $mono;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: $orangePrimary;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+// ───────────────────────── caret (shared) ─────────────────────────
+.caret {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 1em;
+  vertical-align: -0.12em;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 2px;
+    width: max(2px, 0.07em);
+    height: 100%;
+    background: $accent;
+    animation: caretBlink 1.05s steps(1) infinite;
+  }
+}
+
+.hero.typing .caret::after {
+  animation: none;
+}
+
+.ghost {
+  opacity: 0;
+}
+
+// ───────────────────────── HERO ─────────────────────────
+.home-content {
+  position: relative;
+  z-index: 1;
+  height: auto;
+  min-height: calc(100vh - 160px);
+  margin: 0 auto;
+  padding-top: 110px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include screen-down("md") {
+    padding-top: 80px;
+  }
+}
+
+// ───────── the board: opaque card holding the hero, particles bounce off it ─────────
+.board {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  border-radius: 18px;
+  border: 2px solid $orangePrimary;
+  background: linear-gradient(160deg, $board-hi, $board-bg); // fully opaque: nothing shows through
+  box-shadow:
+    12px 12px 0 $orangeSecondary,
+    0 40px 80px -30px rgba($orangePrimary, 0.6);
+  color: $orange2;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(24px) scale(0.94);
+  animation: boardIn 0.8s $bounce 0.1s forwards;
+
+  @include screen-down("md") {
+    border-radius: 14px;
+    box-shadow: 6px 6px 0 $orangeSecondary;
+  }
+}
+
+// IntelliJ-like editor tab bar: fixed height, tab flush with the bar, underline on the active tab
+.board-header {
+  display: flex;
+  align-items: stretch;
+  height: 40px;
+  padding: 0 16px;
+  background: $board-deep;
+  border-bottom: 1px solid rgba($orangeSecondary, 0.18);
+  font-family: $mono;
+  font-size: 13px;
+  line-height: 1;
+  color: rgba($orange2, 0.6);
+
+  .dots {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-right: 16px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+
+    &.close {
+      background: #ff5f57;
+    }
+    &.minimize {
+      background: #febc2e;
+    }
+    &.maximize {
+      background: #28c840;
+    }
+  }
+
+  .board-tab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 14px;
+    background: rgba($orangeSecondary, 0.08);
+    color: $orange2;
+
+    // active-tab underline sitting on the bar's bottom edge
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: $orangeSecondary;
+    }
+  }
+
+  .file-icon {
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    background: $orangeSecondary;
+    color: $board-deep;
+    font-size: 8px;
+    font-weight: 800;
+  }
+
+  .file-close {
+    font-size: 14px;
+    color: rgba($orange2, 0.6);
+  }
+
+  .board-status {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #28c840;
+      transition: background-color 0.8s ease;
+    }
+
+    // slow, soft "breathing" (no flashing): well under 1 cycle per second
+    &.busy .status-dot {
+      background: $accent;
+      animation: statusBreath 2.4s ease-in-out infinite;
+    }
+  }
+}
+
+.board-body {
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  text-align: center;
+  padding: 44px 48px 52px;
+
+  h1,
+  h2,
+  p {
+    margin: 0;
+  }
+
+  @include screen-down("md") {
+    padding: 28px 20px 34px;
+    gap: 18px;
+  }
+}
+
+.code-comment {
+  font-family: $mono;
+  font-size: 15px;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 1px;
+  color: rgba($orange2, 0.62); // ≥ 4.5:1 on the board
+  min-height: 1.6em;
+}
+
+.headline {
+  font-size: clamp(44px, 6.4vw, 92px);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+
+  // gradient only on the typed letters: background-clip would also paint the invisible ghost ones
+  .bold .typed {
+    font-weight: 800;
+    background: linear-gradient(100deg, $orangeSecondary, $orange1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .orangePrimary {
+    color: $accent;
+  }
+}
+
+// gabriele.build("…") — fixed-width box so the line never jumps around
+.rotator {
+  font-family: $mono;
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba($orange2, 0.55);
+  opacity: 0;
+  transform: translateY(14px);
+
+  .revealed & {
+    animation: showUp 0.6s $ease-out 0.75s forwards;
+  }
+
+  .rot-box {
+    display: inline-block;
+    width: 39ch;
+    max-width: 100%;
+    text-align: left;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: $board-deep;
+    border: 1px solid rgba($orangeSecondary, 0.18);
+    box-sizing: content-box;
+    white-space: nowrap;
+  }
+
+  .r-var {
+    color: $orange1;
+  }
+  .r-fn {
+    color: $accent;
+  }
+  .r-str {
+    color: $orangeSecondary;
+    font-weight: 500;
+  }
+
+  // here the caret gets real width, otherwise it sits on top of the closing quote
+  .caret {
+    width: 0.6ch;
+    vertical-align: -0.15em;
+
+    &::after {
+      left: 0.15ch;
+    }
+  }
+
+  @include screen-down("md") {
+    font-size: 13px;
+    .rot-box {
+      padding: 6px 10px;
+    }
+  }
+}
+
+.subtitle {
+  max-width: 760px;
+  line-height: 1.6;
+  color: rgba($orange2, 0.78);
+
+  .bold {
+    color: $orange1;
+  }
+
+  .word {
+    display: inline-block;
+    margin-right: 0.28em;
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(14px);
+  }
+
+  .revealed & .word {
+    animation: wordIn 0.55s $ease-out forwards;
+    animation-delay: calc(0.15s + var(--i) * 0.035s);
+  }
+}
+
+// dark-board variants
+.board-body .cta {
+  &.cta-primary {
+    background: $orangeSecondary;
+    border-color: $orangeSecondary;
+    color: $board-deep;
+
+    &:hover {
+      background: $orange1;
+      border-color: $orange1;
+    }
+  }
+
+  &.cta-ghost {
+    color: $orange2;
+    border-color: rgba($orange2, 0.35);
+
+    &:hover {
+      background: rgba($orangeSecondary, 0.15);
+      border-color: $orangeSecondary;
+      color: $orangeSecondary;
+    }
+  }
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 8px;
+  opacity: 0;
+  transform: translateY(16px);
+
+  .revealed & {
+    animation: showUp 0.6s $ease-out 1.1s forwards;
+  }
+}
+
+// Button stays put; only its label drifts toward the cursor (MagneticButtonDirective sets --float-x/y)
+.cta {
+  --float-x: 0px;
+  --float-y: 0px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 26px;
+  border-radius: 10px;
+  font-family: $mono;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 2px solid $orangePrimary;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+
+  .cta-label {
+    display: inline-block;
+    transform: translate(var(--float-x), var(--float-y));
+    transition: transform 0.2s ease-out;
+  }
+
+  &.cta-primary {
+    background: $orangePrimary;
+    color: $orange2;
+
+    &:hover {
+      background: $brown-hover;
+      border-color: $brown-hover;
+    }
+  }
+
+  &.cta-ghost {
+    background: transparent;
+    color: $orangePrimary;
+
+    &:hover {
+      background: $orangeSecondary;
+    }
+  }
+}
+
+.hint {
+  position: relative;
+  z-index: 1;
+  margin: 28px 0 0;
+  text-align: center;
+  font-family: $mono;
+  font-size: 12px;
+  color: rgba($orangePrimary, 0.85);
+  opacity: 0;
+
+  &.revealed {
+    animation: hintIn 0.8s ease 2.2s forwards;
+  }
+
+  @media (pointer: coarse) {
+    display: none;
+  }
+}
+
+// ───────────────────────── INTRO (text + code window) ─────────────────────────
+.intro-section {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 1216px;
-  margin: 80px auto 0;
+  margin: 120px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 64px;
+  align-items: center;
+
+  @include screen-down("lg") {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+.intro-text {
+  display: grid;
+  gap: 22px;
+
+  h3,
+  p {
+    margin: 0;
+  }
+
+  .accent-dot {
+    color: $accent-on-light;
+  }
+
+  .intro-desc {
+    opacity: 0.8;
+    max-width: 520px;
+  }
+}
+
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 10px;
+  max-width: 460px;
+
+  .flow-node {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    font-family: $mono;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    border: 1.5px solid $orangePrimary;
+    border-radius: 6px;
+    background: $orange2;
+    color: $orangePrimary;
+    box-shadow: 2px 2px 0 $orangeSecondary;
+
+    // colour that "fills" the node when the data dot arrives (all share one $flow-cycle)
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(90deg, $orangeSecondary, $orange1);
+      transform-origin: left center;
+      transform: scaleX(0);
+      animation: fillUi $flow-cycle infinite;
+    }
+
+    &:nth-child(3)::before {
+      animation-name: fillApi;
+    }
+    &:nth-child(5)::before {
+      animation-name: fillDb;
+    }
+  }
+
+  .flow-link {
+    position: relative;
+    flex: 1;
+    height: 1px;
+    margin: 0 6px;
+    background: repeating-linear-gradient(
+      to right,
+      rgba($orangePrimary, 0.45) 0 4px,
+      transparent 4px 8px
+    );
+    background-size: 16px 1px;
+    animation: dashMove 0.8s linear infinite;
+  }
+
+  .flow-packet {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    margin-top: -3px;
+    border-radius: 50%;
+    background: $accent;
+    box-shadow: 0 0 6px $accent;
+    transform: scale(0);
+    animation: packetToApi $flow-cycle linear infinite;
+
+    // second leg starts once API has filled up
+    &.delay {
+      animation-name: packetToDb;
+    }
+  }
+}
+
+// ───────────────────────── SELECTED WORK ─────────────────────────
+.home-projects-section {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1216px;
+  margin: 140px auto 0;
 }
 
 .home-projects-content {
@@ -96,101 +573,443 @@
   align-items: center;
   gap: 20px;
 
-  .section-label {
-    font-family: "Courier New", monospace;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: $orangePrimary;
-    white-space: nowrap;
-    font-weight: 700;
-  }
-
   .section-line {
     flex: 1;
     height: 1px;
     background: rgba($orangePrimary, 0.15);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.2s $ease-out 0.2s;
+  }
+
+  &.in-view .section-line {
+    transform: scaleX(1);
   }
 }
 
-.projects-coming-soon {
+.projects-card {
+  position: relative;
   display: grid;
+  justify-items: center;
   gap: 16px;
-  padding: 56px 32px;
-  border: 2px dashed rgba($orangePrimary, 0.35);
+  padding: 64px 32px;
   border-radius: 12px;
   text-align: center;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: showUp 0.5s ease-out forwards;
-  animation-delay: 1.2s;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background: rgba($orangeSecondary, 0.12);
+
+    .ants rect {
+      stroke: $accent;
+    }
+  }
+
+  // dashed border (static)
+  .ants {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+
+    rect {
+      width: calc(100% - 2px);
+      height: calc(100% - 2px);
+      fill: none;
+      stroke: rgba($orangePrimary, 0.45);
+      stroke-width: 2;
+      stroke-dasharray: 10 8;
+      transition: stroke 0.3s ease;
+    }
+  }
 
   .coming-label {
-    font-family: "Courier New", monospace;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: $mono;
     font-size: 12px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: $orangeSecondary;
+    color: $orangePrimary;
     font-weight: 700;
+    line-height: 1;
+  }
+
+  // trim the line box to the capital letters so they centre exactly on the dot
+  .live-text {
+    display: block;
+    text-box: trim-both cap alphabetic;
+  }
+
+  .live-dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #28c840;
+    box-shadow: 0 0 0 0 rgba(40, 200, 64, 0.6);
+    animation: livePulse 1.6s ease-out infinite;
   }
 
   .coming-desc {
     margin: 0;
-    opacity: 0.75;
+    opacity: 0.85;
     line-height: 1.8;
     font-weight: 500;
-
-    .coming-sub {
-      opacity: 0.85;
-    }
   }
 
-  .coming-cta {
-    display: inline-block;
-    font-family: "Courier New", monospace;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: $orangePrimary;
-    text-decoration: none;
-    font-weight: 700;
-    border-bottom: 2px solid rgba($orangePrimary, 0.4);
-    padding-bottom: 2px;
-    width: fit-content;
-    margin: 8px auto 0;
-    transition:
-      border-color 0.2s ease,
-      opacity 0.2s ease;
+  .cta {
+    margin-top: 8px;
+  }
+}
 
-    &:hover {
-      border-color: $orangePrimary;
-      opacity: 0.8;
+// ───────────────────────── keyframes ─────────────────────────
+@keyframes caretBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes statusBreath {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes boardIn {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes wordIn {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+@keyframes hintIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dashMove {
+  to {
+    background-position: 16px 0;
+  }
+}
+
+// ── UI → API → DB timeline, % of $flow-cycle ──
+//  0–12  UI fills          12–40  dot travels to API (grows out, shrinks in)
+// 40–52  API fills         52–80  dot travels to DB
+// 80–92  DB fills          92–100 all fills fade out, loop
+@mixin node-fill($name, $from, $to) {
+  @keyframes #{$name} {
+    0%,
+    #{$from} {
+      transform: scaleX(0);
+      opacity: 1;
+      animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1);
+    }
+    #{$to},
+    92% {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scaleX(1);
+      opacity: 0;
     }
   }
 }
 
-.neutral-btn {
-  position: relative;
-  display: inline-block;
-  color: white;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 1;
+@include node-fill(fillUi, 0%, 12%);
+@include node-fill(fillApi, 40%, 52%);
+@include node-fill(fillDb, 80%, 92%);
 
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0.1em;
-    height: 2px;
+@mixin packet-leg($name, $start, $end) {
+  @keyframes #{$name} {
+    0%,
+    #{$start} {
+      left: 0;
+      transform: scale(0);
+    }
+    #{$start + 3%} {
+      left: 0;
+      transform: scale(1);
+      animation-timing-function: ease-in-out;
+    }
+    #{$end - 3%} {
+      left: calc(100% - 6px);
+      transform: scale(1);
+    }
+    #{$end},
+    100% {
+      left: calc(100% - 6px);
+      transform: scale(0);
+    }
+  }
+}
+
+@include packet-leg(packetToApi, 12%, 40%);
+@include packet-leg(packetToDb, 52%, 80%);
+
+@keyframes livePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(40, 200, 64, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(40, 200, 64, 0);
+  }
+}
+
+// ═════════════════════════ PHONES ═════════════════════════
+// No squeezed card: the board loses its chrome and turns light (same palette as the page),
+// text goes left-aligned like code, and the particles move into a playground below it.
+// "Run" toggle in the board header (phones only)
+.run-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: auto 0 auto 12px;
+  padding: 5px 10px;
+  border: 1.5px solid $orangePrimary;
+  border-radius: 6px;
+  background: transparent;
+  color: $orangePrimary;
+  font-family: $mono;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  .run-icon {
     width: 0;
-    background-color: white;
-    z-index: -1;
-    transition: width 0.3s ease;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 0 5px 8px;
+    border-color: transparent transparent transparent #28a745;
   }
 
-  &:hover::after {
+  &.running {
+    background: $orangePrimary;
+    color: $orange2;
+
+    .run-icon {
+      width: 8px;
+      height: 8px;
+      border: 0;
+      border-radius: 1px;
+      background: #ff5f57;
+    }
+  }
+}
+
+.playground {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 280px;
+  margin-top: 28px;
+  border-radius: 16px;
+  border: 1px dashed rgba($orangePrimary, 0.3);
+  background: rgba($orangeSecondary, 0.1);
+  overflow: hidden;
+
+  app-code-field {
+    flex: 1;
+  }
+
+  &.pg-enter {
+    animation: pgIn 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &.pg-leave {
+    animation: pgIn 0.3s ease-in reverse forwards;
+  }
+
+  .playground-label {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    z-index: 1;
+    font-family: $mono;
+    font-size: 11px;
+    color: rgba($orangePrimary, 0.85);
+    pointer-events: none;
+  }
+}
+
+@keyframes pgIn {
+  from {
+    height: 0;
+    margin-top: 0;
+    opacity: 0;
+  }
+}
+
+@include screen-down("md") {
+  .home-content {
+    min-height: calc(100svh - 32px);
+    padding-top: 96px;
+    justify-content: flex-start;
+  }
+
+  .board {
+    max-width: none;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+    color: $orangePrimary;
+  }
+
+  .board-header {
+    padding: 0;
+    background: none;
+    border-bottom-color: rgba($orangePrimary, 0.15);
+    color: rgba($orangePrimary, 0.85);
+
+    .board-tab {
+      background: rgba($orangeSecondary, 0.18);
+      color: $orangePrimary;
+    }
+
+    .file-icon {
+      background: $orangePrimary;
+      color: $orange2;
+    }
+
+    .file-close {
+      color: rgba($orangePrimary, 0.8);
+    }
+
+    .dots {
+      display: none;
+    }
+  }
+
+  .board-body {
+    justify-items: start;
+    text-align: left;
+    gap: 16px;
+    margin: 20px 0 0 4px;
+    padding: 4px 0 4px 16px;
+    // indent guide, like an editor
+    border-left: 1px dashed rgba($orangePrimary, 0.25);
+  }
+
+  .code-comment {
+    color: rgba($orangePrimary, 0.8);
+  }
+
+  .headline {
+    font-size: clamp(36px, 12vw, 46px); // fits 320px screens (WCAG 1.4.10)
+
+    .bold .typed {
+      background-image: linear-gradient(100deg, $orangePrimary, $accent);
+    }
+  }
+
+  .rotator {
+    color: rgba($orangePrimary, 0.85);
+
+    .rot-box {
+      width: auto;
+      font-size: 12px;
+      // WCAG 1.4.10: at 320px the line can't fit, let it wrap instead of being clipped
+      white-space: normal;
+      overflow-wrap: anywhere;
+      background: rgba($orangeSecondary, 0.16);
+      border-color: rgba($orangePrimary, 0.12);
+    }
+
+    .r-var {
+      color: $orangePrimary;
+    }
+    .r-str {
+      color: #8a5a1c;
+    }
+  }
+
+  .subtitle {
+    font-size: 17px;
+    color: rgba($orangePrimary, 0.85);
+
+    .bold {
+      color: $orangePrimary;
+    }
+  }
+
+  .board-body .cta {
+    &.cta-primary {
+      background: $orangePrimary;
+      border-color: $orangePrimary;
+      color: $orange2;
+
+      &:hover {
+        background: $brown-hover;
+        border-color: $brown-hover;
+      }
+    }
+
+    &.cta-ghost {
+      color: $orangePrimary;
+      border-color: $orangePrimary;
+
+      &:hover {
+        background: $orangeSecondary;
+        color: $orangePrimary;
+      }
+    }
+  }
+
+  .cta-row {
+    flex-direction: column;
+    align-self: stretch;
+    gap: 10px;
+  }
+
+  .cta {
     width: 100%;
+    box-sizing: border-box;
+  }
+
+  .hint {
+    display: none;
+  }
+
+
+  // ── sections below ──
+  .intro-section {
+    margin-top: 72px;
+    gap: 36px;
+  }
+
+  .home-projects-section {
+    margin-top: 96px;
+  }
+
+  .projects-card {
+    padding: 40px 20px;
   }
 }

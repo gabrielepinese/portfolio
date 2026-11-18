@@ -1,52 +1,148 @@
 <div class="home-container home">
+  @if (!isMobile()) {
+    <app-code-field class="hero-field" [obstacle]="board" />
+  }
+
+  <!-- HERO -->
   <div class="home-content">
-    <div class="title-container">
-      <div class="title-content">
-        <h1 class="bigTitle">
-          <span class="text-con-bordo"
-            >Hello,<br />
-            I'm <span class="bold">Gabriele</span
-            ><span class="orangePrimary">.</span></span
+    <div
+      #board
+      class="board hero"
+      [class.typing]="typing()"
+      [class.revealed]="stage() >= 1"
+    >
+      <div class="board-header">
+        <div class="dots" aria-hidden="true">
+          <span class="dot close"></span>
+          <span class="dot minimize"></span>
+          <span class="dot maximize"></span>
+        </div>
+        <div class="board-tab" aria-hidden="true">
+          <span class="file-icon">TS</span>
+          <span class="file-name">welcome.ts</span>
+          <span class="file-close">×</span>
+        </div>
+        <span class="board-status" [class.busy]="editing()" aria-hidden="true">
+          <span class="status-dot"></span>{{ editing() ? "typing…" : "saved" }}
+        </span>
+        @if (isMobile()) {
+          <!-- IDE-style run toggle: phones keep the particles hidden until asked -->
+          <button
+            type="button"
+            class="run-btn"
+            [class.running]="playOpen()"
+            [attr.aria-pressed]="playOpen()"
+            [attr.aria-label]="playOpen() ? 'Stop playground' : 'Run playground'"
+            (click)="togglePlayground()"
           >
+            <span class="run-icon" aria-hidden="true"></span>{{ playOpen() ? "Stop" : "Run" }}
+          </button>
+        }
+      </div>
+
+      <div class="board-body">
+        <p class="code-comment" aria-hidden="true">
+          <span>{{ comment().shown }}</span>@if (caretAt() === "comment") {<span class="caret"></span>}<span class="ghost">{{ comment().hidden }}</span>
+        </p>
+
+        <h1 class="bigTitle headline">
+          <span class="sr-only">Hello, I'm Gabriele.</span>
+          <span aria-hidden="true">
+            @for (seg of headline(); track $index) {@if (seg.br) {<br />} @else {<span [class]="seg.cls"><span class="typed">{{ seg.shown }}</span>@if (seg.caret) {<span class="caret"></span>}<span class="ghost">{{ seg.hidden }}</span></span>}}
+          </span>
         </h1>
-        <h2 class="body24">
-          <span class="text-con-bordo">
-            I'm a <span class="bold">Software Engineer</span> who enjoys
-            building reliable, well-architected software end-to-end, with a
-            growing interest in
-            <span class="bold">digital payments.</span></span
-          >
+
+        <p class="rotator" aria-hidden="true">
+          <span class="rot-box"><span class="r-var">gabriele</span>.<span class="r-fn">build</span>(<span class="r-str">"{{ rotText() }}@if (caretAt() === "rotator") {<span class="caret"></span>}"</span>)</span>
+        </p>
+
+        <h2 class="body24 subtitle">
+          <span class="sr-only">{{ subtitlePlain }}</span>
+          <span aria-hidden="true">
+            @for (w of subtitleWords; track $index) {<span class="word" [class.bold]="w.bold" [style.--i]="$index">{{ w.word }}</span>}
+          </span>
         </h2>
-        <div class="image-container"></div>
+
+        <div class="cta-row">
+          <button type="button" class="cta cta-primary" appMagneticButton (click)="goToWorkProjects()">
+            <span class="cta-label">See projects</span>
+          </button>
+          <button type="button" class="cta cta-ghost" appMagneticButton (click)="goToAbout()">
+            <span class="cta-label">&lt;about /&gt;</span>
+          </button>
+        </div>
       </div>
     </div>
 
-    <div class="scroll-indicator" aria-hidden="true">
-      <div class="scroll-track">
-        <div class="scroll-dot"></div>
+    <!-- scroll cue: a ribbon bookmark hanging from under the board -->
+    <app-bookmark-cue label="what i do" (jump)="scrollToSections()" />
+
+    @if (isMobile() && playOpen()) {
+      <div #playground class="playground" aria-hidden="true" animate.enter="pg-enter" animate.leave="pg-leave">
+        <span class="playground-label">▶ playground.ts — drag · tap</span>
+        <app-code-field [contained]="true" />
       </div>
-    </div>
+    }
+
+    <p class="hint" [class.revealed]="stage() >= 1" aria-hidden="true">
+      psst… the symbols around are alive: move the mouse, or click to blast them
+    </p>
+
   </div>
 
+  <!-- CODE + FLOW -->
+  <section #sections class="intro-section" aria-label="What I do">
+    <div class="intro-text scroll-reveal" appReveal>
+      <span class="section-label">// what i do</span>
+      <h3 class="heading2 bold">
+        From the interface<br />down to the data<span class="accent-dot">.</span>
+      </h3>
+      <p class="body20 intro-desc">
+        I own features <strong>end-to-end</strong>: the UI people touch, the APIs
+        behind it, and the database underneath — built to be
+        <strong>predictable</strong> when things go wrong.
+      </p>
+
+      <div class="flow" aria-hidden="true">
+        <span class="flow-node">UI</span>
+        <span class="flow-link"><span class="flow-packet"></span></span>
+        <span class="flow-node">API</span>
+        <span class="flow-link"><span class="flow-packet delay"></span></span>
+        <span class="flow-node">DB</span>
+      </div>
+    </div>
+
+    @if (!isMobile()) {
+      <div class="intro-code scroll-reveal" appReveal style="--delay: 0.15s">
+        <app-code-window />
+      </div>
+    }
+  </section>
+
+  <!-- SELECTED WORK -->
   <section class="home-projects-section" aria-label="Selected Work">
     <div class="home-projects-content">
-      <div class="section-divider">
+      <div class="section-divider scroll-reveal" appReveal>
         <span class="section-label">Selected Work</span>
         <div class="section-line"></div>
       </div>
 
-      <div class="projects-coming-soon">
-        <span class="coming-label">Live from GitHub</span>
+      <div class="projects-card scroll-reveal" appReveal>
+        <svg class="ants" aria-hidden="true">
+          <rect x="1" y="1" rx="12" ry="12" />
+        </svg>
+        <span class="coming-label"><span class="live-dot"></span><span class="live-text">Live from GitHub</span></span>
         <p class="body20 coming-desc">
           My public repositories, grouped by language.<br />
-          <span class="coming-sub"
-            >Side projects, experiments and work in progress.</span
-          >
+          <span class="coming-sub">Side projects, experiments and work in progress.</span>
         </p>
-        <button type="button" class="coming-cta neutral-btn" (click)="goToWorkProjects()">
-          See projects <span aria-hidden="true">→</span>
+        <button type="button" class="cta cta-primary" appMagneticButton (click)="goToWorkProjects()">
+          <span class="cta-label">See projects</span>
         </button>
       </div>
     </div>
   </section>
+
+  <!-- WCAG 2.2.2: every looping animation on this page can be paused -->
+  <app-motion-toggle />
 </div>

@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from "@angular/core";
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  signal,
+} from "@angular/core";
 import { DOCUMENT, NgClass, NgTemplateOutlet } from "@angular/common";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { toSignal } from "@angular/core/rxjs-interop";
@@ -37,6 +45,26 @@ export class NavbarComponent {
   private deepestChild(route: ActivatedRoute): ActivatedRoute {
     while (route.firstChild) route = route.firstChild;
     return route;
+  }
+
+  constructor() {
+    // The page scrolls inside `.frame`, so its scrollbar width varies by device
+    // (17px on Windows, 0 on iPad/phones/macOS overlay scrollbars). Expose it as
+    // --scrollbar-w so the fixed navbar can line up with the content on every device.
+    const destroyRef = inject(DestroyRef);
+    afterNextRender(() => {
+      const frame = this.document.querySelector<HTMLElement>(".frame");
+      if (!frame) return;
+      const root = this.document.documentElement;
+      const measure = () =>
+        root.style.setProperty("--scrollbar-w", `${frame.offsetWidth - frame.clientWidth}px`);
+      measure();
+      const ro = new ResizeObserver(measure);
+      ro.observe(frame);
+      const content = frame.querySelector(".app-layout");
+      if (content) ro.observe(content);
+      destroyRef.onDestroy(() => ro.disconnect());
+    });
   }
 
   navigate(path: string) {
