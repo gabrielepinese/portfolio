@@ -4,10 +4,11 @@ import {
   Component,
   computed,
   DestroyRef,
+  effect,
   inject,
   signal,
 } from "@angular/core";
-import { DOCUMENT, NgClass, NgTemplateOutlet } from "@angular/common";
+import { DOCUMENT, NgTemplateOutlet } from "@angular/common";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { filter } from "rxjs";
@@ -15,10 +16,11 @@ import { PageTransitionService } from "../../services/page-transition.service";
 
 @Component({
   selector: "app-navbar",
-  imports: [NgTemplateOutlet, NgClass],
+  imports: [NgTemplateOutlet],
   templateUrl: "./navbar.component.html",
   styleUrl: "./navbar.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { "(document:keydown)": "onKeydown($event)" },
 })
 export class NavbarComponent {
   private readonly router = inject(Router);
@@ -42,12 +44,32 @@ export class NavbarComponent {
 
   readonly menuOpen = signal(false);
 
+  /** Social profiles shown at the top of the menu. */
+  readonly socials = [
+    { name: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/in/gabriele-pinese/" },
+    { name: "instagram", label: "Instagram", url: "https://www.instagram.com/gabriele_pinese/" },
+    { name: "facebook", label: "Facebook", url: "https://www.facebook.com/gabriele.pinese.9/" },
+  ];
+
+  /** Pages shown as files in the menu's project-tree list. */
+  readonly menuItems = [
+    { path: "home", label: "home", desc: "return to home page" },
+    { path: "about", label: "about", desc: "something about me" },
+    { path: "works", label: "works", desc: "find out what I can do" },
+    { path: "contact", label: "contact", desc: "let's get in touch" },
+  ];
+
+  /** Element focused before the menu opened, to give focus back on close. */
+  private lastFocus: HTMLElement | null = null;
+
   private deepestChild(route: ActivatedRoute): ActivatedRoute {
     while (route.firstChild) route = route.firstChild;
     return route;
   }
 
   constructor() {
+    effect(() => this.document.body.classList.toggle("menu-open", this.menuOpen()));
+
     // The page scrolls inside `.frame`, so its scrollbar width varies by device
     // (17px on Windows, 0 on iPad/phones/macOS overlay scrollbars). Expose it as
     // --scrollbar-w so the fixed navbar can line up with the content on every device.
@@ -83,5 +105,34 @@ export class NavbarComponent {
     const open = !this.menuOpen();
     this.menuOpen.set(open);
     this.document.body.style.overflow = open ? "hidden" : "";
+
+    if (open) {
+      // move focus into the dialog (current page's entry, or the first one)
+      this.lastFocus = this.document.activeElement as HTMLElement | null;
+      setTimeout(() => {
+        const current = this.document.querySelector<HTMLElement>(
+          ".menu-container .tree-btn[aria-current='page']",
+        );
+        (current ?? this.document.querySelector<HTMLElement>(".menu-container .tree-btn"))?.focus();
+      });
+    } else {
+      this.lastFocus?.focus();
+      this.lastFocus = null;
+    }
+  }
+
+  /** Menu shortcuts: 1–4 open a page, Esc closes. */
+  onKeydown(e: KeyboardEvent): void {
+    if (!this.menuOpen() || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      this.toggleMenu();
+      return;
+    }
+    const item = this.menuItems[Number(e.key) - 1];
+    if (item) {
+      e.preventDefault();
+      this.navigate(item.path);
+    }
   }
 }

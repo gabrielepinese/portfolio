@@ -76,83 +76,59 @@
             [ngTemplateOutletContext]="{ label: 'CLOSE', expanded: menuOpen() }"
           ></ng-container>
         </div>
-        <div class="social-container">
-          <span class="social-divider"></span>
-          <div class="social-icons">
-            <a
-              href="https://www.linkedin.com/in/gabriele-pinese/"
-              class="social-link"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-            >
-              <span class="icon icon-linkedin" aria-hidden="true"></span>
-            </a>
-            <a
-              href="https://www.instagram.com/gabriele_pinese/"
-              class="social-link"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <span class="icon icon-instagram" aria-hidden="true"></span>
-            </a>
-            <a
-              href="https://www.facebook.com/gabriele.pinese.9/"
-              class="social-link"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-            >
-              <span class="icon icon-facebook" aria-hidden="true"></span>
-            </a>
-          </div>
-        </div>
-        <div class="link-container">
-          <div class="link-content">
-            <button
-              class="neutral-btn semibold"
-              (click)="navigate('home')"
-              type="button"
-              [attr.aria-current]="currentRoute() === 'home' ? 'page' : null"
-            >
-              <span [ngClass]="routeColor()" class="heading1">Home</span>
-            </button>
-            <span class="desc-link">Return to home page</span>
-          </div>
-          <div class="link-content">
-            <button
-              class="neutral-btn semibold"
-              (click)="navigate('about')"
-              type="button"
-              [attr.aria-current]="currentRoute() === 'about' ? 'page' : null"
-            >
-              <span [ngClass]="routeColor()" class="heading1">About me</span>
-            </button>
-            <span class="desc-link">Something about me...</span>
-          </div>
-          <div class="link-content">
-            <button
-              class="neutral-btn semibold"
-              (click)="navigate('works')"
-              type="button"
-              [attr.aria-current]="currentRoute() === 'works' ? 'page' : null"
-            >
-              <span [ngClass]="routeColor()" class="heading1">Work</span>
-            </button>
-            <span class="desc-link">Find out what I can do</span>
-          </div>
-          <div class="link-content">
-            <button
-              class="neutral-btn semibold"
-              (click)="navigate('contact')"
-              type="button"
-              [attr.aria-current]="currentRoute() === 'contact' ? 'page' : null"
-            >
-              <span [ngClass]="routeColor()" class="heading1">Contact</span>
-            </button>
-            <span class="desc-link">Let's contact me</span>
-          </div>
+        <!-- social profiles -->
+        <ul class="socials" aria-label="Social profiles">
+          @for (s of socials; track s.name) {
+            <li>
+              <a
+                class="social-link"
+                [href]="s.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="s.label + ' (opens in a new tab)'"
+                [style.--i]="$index"
+              >
+                <span [class]="'icon icon-' + s.name" aria-hidden="true"></span>
+                <span class="social-name">{{ s.label }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+
+        <!-- IntelliJ "Project"-style file list: files joined by tree guide lines -->
+        <nav class="explorer" aria-label="Main">
+          <ul class="tree">
+            @for (item of menuItems; track item.path; let i = $index) {
+              <li
+                class="tree-item"
+                [style.--i]="i"
+                [class.active]="currentRoute() === item.path"
+              >
+                <button
+                  type="button"
+                  class="tree-btn"
+                  (click)="navigate(item.path)"
+                  [attr.aria-current]="currentRoute() === item.path ? 'page' : null"
+                  [attr.aria-keyshortcuts]="i + 1"
+                >
+                  <span class="tree-icon" aria-hidden="true">TS</span>
+                  <span class="tree-name heading1">{{ item.label }}<span class="tree-ext" aria-hidden="true">.ts</span></span>
+                  <span class="tree-comment"><span aria-hidden="true">// </span>{{ item.desc }}</span>
+                  @if (currentRoute() === item.path) {
+                    <span class="tree-open" aria-hidden="true">open</span>
+                  }
+                  <kbd class="tree-key" aria-hidden="true">{{ i + 1 }}</kbd>
+                </button>
+              </li>
+            }
+          </ul>
+        </nav>
+
+        <div class="status-bar" aria-hidden="true">
+          <span>⎇ main</span>
+          <span class="status-sep"></span>
+          <span>{{ menuItems.length }} files</span>
+          <span class="status-hint"><kbd>1</kbd>–<kbd>4</kbd> open · <kbd>esc</kbd> close</span>
         </div>
       </div>
     </div>

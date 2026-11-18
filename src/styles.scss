@@ -146,6 +146,11 @@ a {
   }
 }
 
+// Floating page controls (e.g. "Pause animations") step aside while the menu is open
+body.menu-open app-motion-toggle {
+  display: none;
+}
+
 // Utilities
 .sr-only {
   position: absolute;

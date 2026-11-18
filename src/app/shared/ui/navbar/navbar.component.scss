@@ -185,150 +185,336 @@
   }
 }
 
-.menu-container.homePage .social-link:hover,
-.menu-container.aboutPage .social-link:hover,
-.menu-container.worksPage .social-link:hover,
-.menu-container.contactPage .social-link:hover {
-  color: $grey1;
-}
 
-.link-container {
-  max-width: 1216px;
+// ───────── menu as IntelliJ's "Project" tree ─────────
+// Pages as files, left-aligned, joined by tree guide lines (┌ ├ └).
+// Colours come from currentColor (each page's menu palette); highlights are white
+// overlays so the dark text only gains contrast.
+$mono: "JetBrains Mono", "Courier New", monospace;
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$guide: 1.5px solid currentColor;
+
+// left edge of the menu, same inset as the social links above
+.explorer {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: auto;
-  gap: 28px;
+  align-items: flex-start;
   width: 100%;
-  padding: 0 24px;
-
-  .link-content {
-    display: grid;
-    grid-template-columns: 300px auto;
-    align-items: baseline;
-    margin-left: 0;
-
-    .neutral-btn {
-      font-family: "Merriweather", serif;
-    }
-
-    .desc-link {
-      animation: showUp 0.5s ease-out forwards;
-      animation-delay: 0.3s;
-      opacity: 0;
-    }
-
-    @include screen-down("md") {
-      grid-template-columns: repeat(1, 1fr);
-      grid-template-rows: repeat(2, fit-content(100%));
-    }
-  }
-
-  .neutral-btn {
-    justify-content: left;
-    position: relative;
-    cursor: pointer;
-    z-index: 1;
-
-    .heading1 {
-      position: relative;
-      display: inline-block;
-
-      &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 5px;
-        height: 15px;
-        width: 0;
-        background-color: $grey1;
-        z-index: -1;
-        transition: width 0.3s ease;
-      }
-
-      &:hover::after {
-        width: 100%;
-      }
-    }
-  }
-
-  @include screen-down("md") {
-    margin-left: 24px;
-  }
-}
-
-.social-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
   padding: 0 20px;
+  box-sizing: border-box;
 
   @include screen-down("md") {
     padding: 0 16px;
   }
+}
 
-  .social-divider {
+// rows appear one after the other
+.tree-item {
+  opacity: 0;
+  transform: translateX(-12px);
+  animation: treeIn 0.4s $ease-out forwards;
+  animation-delay: calc(0.15s + var(--i) * 0.07s);
+}
+
+// ── files ──
+.tree {
+  width: min(100%, 1100px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tree-item {
+  position: relative;
+  padding-left: 22px;
+
+  // vertical guide
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    border-left: $guide;
+    opacity: 0.55;
+  }
+
+  // guide runs from the first file's branch to the last one's
+  &:first-child::before {
+    top: 50%;
+  }
+
+  &:last-child::before {
+    bottom: 50%;
+  }
+
+  // horizontal branch: ├─
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 18px;
+    border-top: $guide;
+    opacity: 0.55;
+  }
+}
+
+.tree-btn {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 2px;
+  width: 100%;
+  margin: 2px 0;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  // IntelliJ-like selected-row highlight
+  &:hover,
+  &:focus-visible {
+    background: rgba(255, 255, 255, 0.32);
+
+    .tree-name {
+      transform: translateX(6px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+.tree-item.active .tree-btn {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 3px 0 0 currentColor;
+}
+
+.tree-icon {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid currentColor;
+  border-radius: 4px;
+  font-family: $mono;
+  font-size: 9px;
+  font-weight: 800;
+  box-sizing: border-box;
+}
+
+.tree-name {
+  font-family: "Merriweather", serif;
+  font-weight: 600;
+  line-height: 1.1;
+  transition: transform 0.25s $ease-out;
+}
+
+.tree-ext {
+  margin-left: 2px;
+  font-family: $mono;
+  font-size: 0.4em;
+  font-weight: 700;
+}
+
+.tree-comment {
+  font-family: $mono;
+  font-size: 14px;
+  font-style: italic;
+
+  @include screen-down("md") {
+    flex-basis: 100%;
+    padding-left: 38px;
+  }
+}
+
+.tree-open {
+  padding: 3px 8px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-family: $mono;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+// keyboard-key badge
+.tree-key,
+.status-bar kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 4px;
+  border: 1px solid currentColor;
+  border-bottom-width: 3px;
+  border-radius: 5px;
+  font-family: $mono;
+  font-size: 12px;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.tree-key {
+  margin-left: auto;
+}
+
+// IDE status bar at the bottom of the menu
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-top: 1px solid currentColor;
+  font-family: $mono;
+  font-size: 12px;
+  font-weight: 600;
+  animation: showUp 0.4s ease-out 0.7s both;
+
+  .status-sep {
+    width: 1px;
+    height: 14px;
+    background: currentColor;
+  }
+
+  .status-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+  }
+}
+
+// no physical keyboard: hide the shortcut hints
+@media (hover: none) {
+  .tree-key,
+  .status-hint {
+    display: none !important;
+  }
+}
+
+@keyframes treeIn {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+// ───────── socials: plain outlined buttons, filled on hover like a selected IDE row ─────────
+.menu-container {
+  &.homePage {
+    --menu-bg: #{$orangeSecondary};
+  }
+  &.aboutPage {
+    --menu-bg: #{$purpleSecondary};
+  }
+  &.worksPage {
+    --menu-bg: #{$redSecondary};
+  }
+  &.contactPage {
+    --menu-bg: #{$greenSecondary};
+  }
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 8px 0 0;
+  padding: 0 20px;
+  list-style: none;
+
+  @include screen-down("md") {
+    padding: 0 16px;
+  }
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  border: 1.5px solid currentColor;
+  border-radius: 8px;
+  color: currentColor;
+  font-family: $mono;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  animation: socialIn 0.35s $ease-out backwards;
+  animation-delay: calc(0.15s + var(--i) * 0.06s);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  .icon {
     display: block;
-    height: 3px;
-    width: 0;
-    border-radius: 99px;
+    width: 18px;
+    height: 18px;
     background-color: currentColor;
-    animation: expandLine 0.3s ease-out forwards;
-    animation-delay: 0.1s;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
   }
 
-  .social-icons {
-    display: flex;
-    gap: 24px;
+  .icon-linkedin {
+    -webkit-mask-image: url('../../../../assets/icon/linkedin.svg');
+    mask-image: url('../../../../assets/icon/linkedin.svg');
   }
 
-  .social-link {
-    opacity: 0;
-    transform: translateY(12px);
-    animation: showUp 0.4s ease-out forwards;
-    color: currentColor;
-    display: block;
-    transition: color 0.2s ease;
+  .icon-instagram {
+    -webkit-mask-image: url('../../../../assets/icon/instagram.svg');
+    mask-image: url('../../../../assets/icon/instagram.svg');
+  }
 
-    &:nth-child(1) {
-      animation-delay: 0.3s;
-    }
-    &:nth-child(2) {
-      animation-delay: 0.45s;
-    }
-    &:nth-child(3) {
-      animation-delay: 0.6s;
-    }
+  .icon-facebook {
+    -webkit-mask-image: url('../../../../assets/icon/facebook.svg');
+    mask-image: url('../../../../assets/icon/facebook.svg');
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: currentColor;
 
     .icon {
-      display: block;
-      width: 24px;
-      height: 24px;
-      background-color: currentColor;
-      -webkit-mask-size: contain;
-      mask-size: contain;
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      -webkit-mask-position: center;
-      mask-position: center;
+      background-color: var(--menu-bg);
     }
 
-    .icon-linkedin {
-      -webkit-mask-image: url('../../../../assets/icon/linkedin.svg');
-      mask-image: url('../../../../assets/icon/linkedin.svg');
+    .social-name {
+      color: var(--menu-bg);
     }
+  }
 
-    .icon-instagram {
-      -webkit-mask-image: url('../../../../assets/icon/instagram.svg');
-      mask-image: url('../../../../assets/icon/instagram.svg');
-    }
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
 
-    .icon-facebook {
-      -webkit-mask-image: url('../../../../assets/icon/facebook.svg');
-      mask-image: url('../../../../assets/icon/facebook.svg');
-    }
+  @include screen-down("md") {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+@keyframes socialIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
 }
 
