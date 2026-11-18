@@ -1,0 +1,573 @@
+@use "colors.variables" as *;
+@use "responsive.mixin.scss" as *;
+
+// dark "IDE" greens for this page — every text colour below is ≥ 4.5:1 on $bg
+$bg: #1e2a22;
+$bg-deep: #18221b;
+$fg: $green2;
+$muted: rgba($green2, 0.62);
+$string: #c3e88d;
+$key: #f2c38b;
+$error: #ffb4a2;
+$mono: "JetBrains Mono", "Courier New", monospace;
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+// one editor line = one grid row of exactly $line height: numbers can't drift
+$line: 1.85em; // a touch taller than plain text so the ✎ label fits comfortably
+$gutter: 52px; // line-number column
+$gutter-pad: 16px; // numbers / ▶ / ✎ start here (left-aligned)
+
+:host {
+  display: block;
+}
+
+.http {
+  overflow: hidden;
+  border: 1.5px solid $greenAccent;
+  border-radius: 14px;
+  background: $bg;
+  color: $fg;
+  font-family: $mono;
+  font-size: 14px;
+  line-height: $line;
+  box-shadow:
+    10px 10px 0 $greenPrimary,
+    0 30px 60px -25px rgba($greenAccent, 0.6);
+
+  @include screen-down("md") {
+    font-size: 13px;
+    box-shadow: 6px 6px 0 $greenPrimary;
+  }
+}
+
+// ── tab bar ──
+.http-tabs {
+  display: flex;
+  height: 40px;
+  padding: 0 14px;
+  background: $bg-deep;
+  border-bottom: 1px solid rgba($greenPrimary, 0.25);
+  font-size: 13px;
+  line-height: 1;
+
+  .tab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 14px;
+    background: rgba($greenPrimary, 0.08);
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: $greenPrimary;
+    }
+  }
+
+  .file-icon {
+    display: grid;
+    place-items: center;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 3px;
+    background: $greenPrimary;
+    color: $bg-deep;
+    font-size: 8px;
+    font-weight: 800;
+  }
+
+  .file-close {
+    font-size: 14px;
+    color: $muted;
+  }
+}
+
+// ── editor ──
+.http-body {
+  padding: 14px 20px 12px 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: $gutter minmax(0, 1fr);
+  min-height: $line;
+}
+
+// gutter: numbers left-aligned, ▶ and ✎ on the same column
+.ln {
+  display: block;
+  padding-left: $gutter-pad;
+  color: $muted;
+  user-select: none;
+}
+
+// only the numbers stack; the ✎ label is styled on its own (see .ln-edit)
+.ln-stack > span:not(.ln-edit) {
+  display: block;
+  height: $line;
+}
+
+.code {
+  min-width: 0;
+  white-space: pre;
+}
+
+// code inside { }: 2 spaces of indent (keys and their boxes share it)
+.indent {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding-left: 2ch;
+  white-space: nowrap;
+}
+
+.comment {
+  color: $muted;
+  font-style: italic;
+}
+
+.punct {
+  color: rgba($fg, 0.8);
+}
+
+.hdr {
+  color: #9fd3c7;
+}
+
+.key {
+  color: $key;
+}
+
+.str {
+  color: $string;
+
+  &.err {
+    color: $error;
+  }
+}
+
+// request line: ▶ in the gutter, a light sweeps across while "in flight"
+.request {
+  .method {
+    color: $greenPrimary;
+    font-weight: 800;
+  }
+
+  .url {
+    color: $green1;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.sending .request .code {
+  background: linear-gradient(90deg, transparent, rgba($greenPrimary, 0.22), transparent) no-repeat;
+  background-size: 35% 100%;
+  animation: sweep 0.8s linear infinite;
+}
+
+.gutter-run {
+  justify-self: start;
+  align-self: center;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-left: $gutter-pad - 5px; // triangle (10px) centred in 20px → starts at $gutter-pad
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    border-style: solid;
+    border-width: 6px 0 6px 10px;
+    border-color: transparent transparent transparent $greenPrimary;
+  }
+
+  &:hover {
+    background: rgba($greenPrimary, 0.18);
+  }
+}
+
+// ── editable values: no padding/border that would break the line grid ──
+.val {
+  min-width: 0;
+  margin: 0;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 3px;
+  // "injected fragment" band, like IntelliJ highlights editable/injected code
+  background: rgba($greenPrimary, 0.1);
+  box-shadow: inset 0 -1px 0 rgba($greenPrimary, 0.65); // ≥ 3:1 edge (1.4.11)
+  color: $string;
+  font: inherit;
+  line-height: $line;
+  caret-color: $greenPrimary;
+
+  &::placeholder {
+    color: rgba($string, 0.62);
+    font-style: italic;
+  }
+
+  &:hover {
+    background: rgba($greenPrimary, 0.15);
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid $greenPrimary; // outline: never shifts the layout
+    outline-offset: 0;
+    background: rgba($greenPrimary, 0.16);
+  }
+}
+
+.val.inline {
+  flex: 1;
+  height: $line;
+  box-sizing: border-box;
+}
+
+// exactly N editor lines tall, fixed: it can't resize away from the numbers
+.val.block {
+  display: block;
+  width: 100%;
+  height: calc(#{$line} * 4);
+  overflow-y: auto;
+  resize: none;
+  box-sizing: border-box;
+}
+
+// ✎ label replaces the line number while you're inside a field
+// one fixed size for every ✎ label, hidden until its field has focus
+$edit-size: 20px;
+
+.ln-edit {
+  display: none;
+  box-sizing: border-box;
+  width: $edit-size;
+  height: $edit-size;
+  margin-top: calc((#{$line} - #{$edit-size}) / 2);
+  margin-left: -5px; // same column as the ▶
+  border-radius: 4px;
+  background: $greenPrimary;
+  vertical-align: top;
+
+  // pencil glyph
+  &::before {
+    content: "✎";
+    display: block;
+    color: $bg-deep;
+    font-size: 12px;
+    line-height: $edit-size;
+    text-align: center;
+  }
+}
+
+// on the input row, the first line number becomes ✎ while the field has focus
+.field:focus-within .input-row {
+  .ln-edit {
+    display: inline-block;
+  }
+
+  .ln-num {
+    display: none;
+  }
+}
+
+// in the stacked numbers of the textarea, ✎ takes the first slot: the number it covers
+// keeps its space (visibility, not display) so 10–12 don't move up
+.ln-stack .ln-edit {
+  position: absolute;
+  top: 0;
+}
+
+.field:focus-within .ln-stack .ln-num {
+  display: block;
+  visibility: hidden;
+}
+
+.ln-stack {
+  position: relative;
+}
+
+// ── error: inline, IntelliJ-style, on the closing line ──
+.invalid {
+  .val {
+    background: rgba($error, 0.1);
+    box-shadow: inset 0 -1px 0 $error;
+    outline-color: $error;
+  }
+
+  .ln-edit {
+    background: $error;
+  }
+}
+
+.inline-error {
+  margin-left: 2ch;
+  padding: 0 8px;
+  border-radius: 3px;
+  background: rgba($error, 0.12);
+  color: $error;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+// ── send ──
+.http-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 20px 18px $gutter;
+  line-height: 1.4;
+}
+
+.send-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 8px;
+  background: $greenPrimary;
+  color: $bg;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  .send-icon {
+    border-style: solid;
+    border-width: 5px 0 5px 8px;
+    border-color: transparent transparent transparent currentColor;
+  }
+
+  &:hover {
+    background: $greenSecondary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $greenPrimary;
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    cursor: progress;
+  }
+}
+
+.send-hint {
+  color: $muted;
+  font-size: 12px;
+
+  kbd {
+    padding: 2px 6px;
+    border: 1px solid rgba($fg, 0.4);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    font: inherit;
+  }
+
+  @media (hover: none) {
+    display: none;
+  }
+}
+
+// ── response ──
+.http-response {
+  padding: 12px 20px 14px $gutter;
+  border-top: 1px solid rgba($greenPrimary, 0.25);
+  background: $bg-deep;
+  font-size: 13px;
+  line-height: 1.6;
+
+  p,
+  pre {
+    margin: 0;
+  }
+}
+
+.resp-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  min-height: 24px;
+}
+
+.resp-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: $muted;
+}
+
+.resp-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: $fg;
+}
+
+.spinner {
+  width: 11px;
+  height: 11px;
+  border: 2px solid rgba($greenPrimary, 0.3);
+  border-top-color: $greenPrimary;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: $bg-deep;
+  font-weight: 800;
+  animation: respIn 0.3s $ease-out;
+
+  &.ok {
+    background: $greenPrimary;
+  }
+
+  &.err {
+    background: $error;
+  }
+}
+
+.resp-meta {
+  color: $muted;
+  font-size: 12px;
+}
+
+.resp-idle {
+  margin-top: 6px !important;
+  color: $muted;
+  font-style: italic;
+}
+
+.resp-body {
+  margin-top: 8px !important;
+  font: inherit;
+  white-space: pre-wrap;
+  animation: respIn 0.35s $ease-out 0.05s backwards;
+}
+
+// ── fallback actions (outside the aria-hidden panel) ──
+.resp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px 16px $gutter;
+  background: $bg-deep;
+  font-size: 12.5px;
+  line-height: 1.4;
+  animation: respIn 0.35s $ease-out 0.1s backwards;
+}
+
+.resp-actions-label {
+  color: $muted;
+}
+
+.resp-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid rgba($greenPrimary, 0.6);
+  border-radius: 6px;
+  background: transparent;
+  color: $fg;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    background: rgba($greenPrimary, 0.15);
+    border-color: $greenPrimary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $greenPrimary;
+    outline-offset: 2px;
+  }
+}
+
+// ── phones: slimmer gutter and indents ──
+@include screen-down("md") {
+  .row {
+    grid-template-columns: 38px minmax(0, 1fr);
+  }
+
+  // the URL may wrap on narrow screens instead of overflowing
+  .request .code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .ln {
+    padding-left: 10px;
+  }
+
+  .gutter-run {
+    margin-left: 10px - 5px;
+  }
+
+  .indent {
+    padding-left: 1ch;
+  }
+
+  .http-body {
+    padding-right: 12px;
+  }
+
+  .http-actions,
+  .http-response,
+  .resp-actions {
+    padding-left: 38px;
+    padding-right: 12px;
+  }
+
+  // the inline error may wrap instead of overflowing the line
+  .inline-error {
+    white-space: normal;
+  }
+}
+
+@keyframes sweep {
+  from {
+    background-position: -35% 0;
+  }
+  to {
+    background-position: 135% 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes respIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}

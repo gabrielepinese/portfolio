@@ -3,7 +3,7 @@
 @use "responsive.mixin.scss" as *;
 
 .title-container {
-  font-family: "Merriweather", serif;
+  font-family: "Fraunces", Georgia, serif;
   display: grid;
   max-width: 1000px;
   align-items: center;
@@ -52,7 +52,7 @@
     padding: 48px 0 0;
 
     .section-label {
-      font-family: "Courier New", monospace;
+      font-family: "JetBrains Mono", "Courier New", monospace;
       font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;

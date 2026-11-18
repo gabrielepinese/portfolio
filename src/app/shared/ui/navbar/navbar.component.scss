@@ -52,7 +52,9 @@
   padding-left: 16px;
 }
 
-.bricolage {
+// "MENU": small uppercase label → mono, like every other label on the site
+.menu-btn {
+  font-family: "JetBrains Mono", "Courier New", monospace; // $mono is declared further down
   display: inline-block;
   text-align: center;
   transform-origin: center;
@@ -314,7 +316,7 @@ $guide: 1.5px solid currentColor;
 }
 
 .tree-name {
-  font-family: "Merriweather", serif;
+  font-family: "Fraunces", Georgia, serif;
   font-weight: 600;
   line-height: 1.1;
   transition: transform 0.25s $ease-out;
@@ -595,7 +597,7 @@ $guide: 1.5px solid currentColor;
   }
 
   .chat-label {
-    font-family: "Bricolage Grotesque", sans-serif;
+    font-family: $mono; // small uppercase labels are mono site-wide, like the Home
     font-weight: 600;
     font-size: 12px;
     letter-spacing: 2px;

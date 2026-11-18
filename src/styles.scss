@@ -30,10 +30,11 @@ body {
   margin: 0;
   background: white;
   color-scheme: light;
-  font-family: "Merriweather", serif;
+  // Fraunces everywhere (the Home font); "SOFT" axis = rounded, friendly terminals
+  font-family: "Fraunces", Georgia, serif;
   line-height: 1.6;
   font-style: normal;
-  font-variation-settings: "wdth" 100;
+  font-variation-settings: "SOFT" 100;
 }
 
 $class-list: "home", "about", "works", "contact";
@@ -87,9 +88,6 @@ $class-list: "home", "about", "works", "contact";
   @include semibold;
 }
 
-.bricolage {
-  font-family: "Bricolage Grotesque", sans-serif;
-}
 
 // Colors
 .orangePrimary {
@@ -123,10 +121,11 @@ a {
 }
 
 // "Pause animations" (WCAG 2.2.2) — MotionService puts .motion-paused on <html>.
-// Scoped to the home page (the only page with the toggle): entrance animations jump to
+// Scoped to the pages that use it (home, contact): entrance animations jump to
 // their end state, looping ones stop after one instant pass. Canvas and typewriters are
 // paused in TS.
-.motion-paused .home-container {
+.motion-paused .home-container,
+.motion-paused .contact-container {
   *,
   *::before,
   *::after {
@@ -223,6 +222,10 @@ body.menu-open app-motion-toggle {
 
 // Layout
 .frame {
+  // containing block for every absolutely-positioned descendant (e.g. .sr-only text):
+  // without it they attach to the whole document, make it taller than the viewport, and
+  // once .frame is scrolled to the bottom the page itself keeps scrolling into blank space
+  position: relative;
   width: 100%;
   height: 100%;
   box-sizing: border-box;

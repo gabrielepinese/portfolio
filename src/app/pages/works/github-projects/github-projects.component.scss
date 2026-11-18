@@ -45,7 +45,7 @@
   .profile-stats {
     display: flex;
     gap: 16px;
-    font-family: "Courier New", monospace;
+    font-family: "JetBrains Mono", "Courier New", monospace;
     font-size: 13px;
     opacity: 0.75;
   }
@@ -74,7 +74,7 @@
   text-align: center;
 
   .empty-label {
-    font-family: "Courier New", monospace;
+    font-family: "JetBrains Mono", "Courier New", monospace;
     font-size: 12px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -162,7 +162,7 @@
 
   .status-pill {
     flex-shrink: 0;
-    font-family: "Courier New", monospace;
+    font-family: "JetBrains Mono", "Courier New", monospace;
     font-size: 10px;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -206,7 +206,7 @@
     align-items: center;
     gap: 14px;
     margin-top: 14px;
-    font-family: "Courier New", monospace;
+    font-family: "JetBrains Mono", "Courier New", monospace;
     font-size: 12px;
     opacity: 0.6;
   }

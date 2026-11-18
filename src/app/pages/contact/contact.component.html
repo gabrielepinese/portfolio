@@ -1,34 +1,65 @@
 <div class="contact-container contact">
-  <div class="contact-content">
+  <div class="contact-content" [class.go]="done()" [class.typing]="typing()">
     <div class="title-container">
       <div class="title-content">
-        <div class="bigTitle bold">
-          Contact me<span class="greenPrimary">.</span>
+        <span class="hero-kicker" aria-hidden="true">
+          <span class="kicker-dot"></span>inbox open · say hi
+        </span>
+        <h1 class="bigTitle bold">
+          <span class="sr-only">Contact me.</span>
+          <span class="title-chars" aria-hidden="true">
+            <span class="typed">{{ title().shown }}</span>@if (title().dot) {<span class="title-dot">.</span>}<span class="caret" [class.off]="!caret()"></span><span class="ghost">{{ title().hidden }}@if (!title().dot) {.}</span>
+          </span>
+        </h1>
+        <p class="body24 subtitle">
+          <span class="sr-only">{{ subtitle }}</span>
+          <span aria-hidden="true">
+            @for (w of subtitleWords; track $index) {<span class="word" [style.--i]="$index">{{ w }}</span>}
+          </span>
+        </p>
+      </div>
+
+      <!-- a short conversation plays out: someone writes in, I answer.
+           Decorative: the subtitle already says the same thing in plain words. -->
+      <div class="chat" aria-hidden="true">
+        <div class="chat-head">
+          <span class="chat-avatar">GP</span>
+          <span class="chat-who">
+            <span class="chat-name">Gabriele</span>
+            <span class="chat-presence"><span class="presence-dot"></span>online</span>
+          </span>
         </div>
-        <div class="body24">
-          Got a project, an idea, or just curious? Reach out — I'm always happy
-          to connect, especially if you work in payments or fintech.
-        </div>
+        @for (m of chat; track $index) {
+          <div class="msg" [class.mine]="m.mine" [style.--t]="m.at + 's'">
+            <span class="typing"><i></i><i></i><i></i></span>
+            <span class="bubble">{{ m.text }}</span>
+          </div>
+          @if (m.mine && !chat[$index + 1]?.mine) {
+            <span class="seen" [style.--t]="seenAt + 's'">Seen ✓✓</span>
+          }
+        }
       </div>
     </div>
 
-    <div class="scroll-indicator" aria-hidden="true">
-      <div class="scroll-track">
-        <div class="scroll-dot"></div>
-      </div>
-    </div>
+    <!-- scroll cue: a chat-app "new message" pill pointing at the form below -->
+    <button type="button" class="new-msg-cue" (click)="jumpToForm(form)">
+      <span class="cue-arrow" aria-hidden="true">↓</span>
+      <span class="cue-count" aria-hidden="true">1</span>
+      new message<span class="sr-only">: scroll to the contact form</span>
+    </button>
   </div>
 
-  <div class="contact-desc-container">
-    <div class="contact-desc-left">
-      <span class="contact-label bold">Employed full-time</span>
-      <div class="heading1 bold">
+  <div class="contact-desc-container" #form>
+    <div class="contact-desc-left scroll-reveal" appReveal>
+      <span class="contact-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Employed full-time · open to a chat
+      </span>
+      <h2 class="heading1 bold">
         <span class="text-con-bordo2">
-          Let's build something together<span class="greenPrimary">.</span>
+          Let's build something together<span class="accent-dot">.</span>
         </span>
-      </div>
-    </div>
-    <div class="contact-desc-right">
+      </h2>
       <div class="body20">
         <span class="text-con-bordo2"
           >I'm a software engineer with a strong focus on architectural
@@ -42,42 +73,14 @@
           good fit.</span
         >
       </div>
-      <button
-        class="secondary-btn contact-btn"
-        [class.mx-auto]="isMedium()"
-        appMagneticButton
-        type="button"
-        (click)="sendMail()"
-      >
-        <span class="btn-float-wrap">
-          <span class="btn-inner">
-            <span class="btn-text">Get in touch</span>
-            <span class="btn-text" aria-hidden="true">Get in touch</span>
-          </span>
-        </span>
-      </button>
+    </div>
 
-      @if (showFallback()) {
-        <div class="fallback-pill">
-          <span class="fallback-label bold">No mail client?</span>
-          <div class="fallback-actions">
-            <button
-              type="button"
-              class="fallback-action-btn bold"
-              (click)="copyEmail()"
-            >
-              {{ emailCopied() ? "Copied!" : "Copy email" }}
-            </button>
-            <a
-              class="fallback-action-btn bold"
-              href="https://www.linkedin.com/in/gabriele-pinese/"
-              target="_blank"
-              rel="noopener noreferrer"
-              >LinkedIn</a
-            >
-          </div>
-        </div>
-      }
+    <div class="contact-desc-right scroll-reveal" appReveal style="--delay: 0.15s">
+      <p class="playground-hint">
+        <span aria-hidden="true">// </span>write your message right in the request, then send it
+      </p>
+      <app-http-client />
     </div>
   </div>
+
 </div>

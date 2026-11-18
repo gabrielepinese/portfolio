@@ -1,0 +1,170 @@
+<form
+  class="http"
+  [class.sending]="state() === 'sending'"
+  (submit)="send($event)"
+  aria-labelledby="http-title"
+  novalidate
+>
+  <h3 id="http-title" class="sr-only">Send me a message</h3>
+
+  <!-- IntelliJ-like tab bar -->
+  <div class="http-tabs" aria-hidden="true">
+    <div class="tab">
+      <span class="file-icon">API</span>
+      <span>contact.http</span>
+      <span class="file-close">×</span>
+    </div>
+  </div>
+
+  <!-- editor: every row = [gutter | code], one text line per row, so numbers never drift -->
+  <div class="http-body">
+    <div class="row" aria-hidden="true">
+      <span class="ln">1</span>
+      <span class="code comment">### say hello</span>
+    </div>
+
+    <div class="row request" aria-hidden="true">
+      <!-- gutter ▶: mouse shortcut only, the real control is "Send request" below -->
+      <button type="submit" class="gutter-run" tabindex="-1" title="Send request (Ctrl+Enter)"></button>
+      <span class="code"><span class="method">POST</span>&nbsp;<span class="url">https://gabriele.dev/contact</span></span>
+    </div>
+
+    <div class="row" aria-hidden="true">
+      <span class="ln">3</span>
+      <span class="code"><span class="hdr">Content-Type</span><span class="punct">:</span>&nbsp;application/json</span>
+    </div>
+
+    <div class="row" aria-hidden="true"><span class="ln">4</span></div>
+
+    <div class="row" aria-hidden="true">
+      <span class="ln">5</span>
+      <span class="code punct">{{ "{" }}</span>
+    </div>
+
+    <!-- lines 6–7: "name": / input box aligned with the key's opening quote -->
+    <div class="field">
+      <div class="row">
+        <span class="ln" aria-hidden="true">6</span>
+        <span class="code indent">
+          <label class="key" for="http-name"><span aria-hidden="true">"</span>name<span aria-hidden="true">"</span><span class="sr-only"> (optional)</span></label><span class="punct" aria-hidden="true">:</span>
+        </span>
+      </div>
+      <div class="row input-row">
+        <span class="ln" aria-hidden="true"><span class="ln-num">7</span><span class="ln-edit"></span></span>
+        <span class="code indent">
+          <input
+            id="http-name"
+            class="val inline"
+            type="text"
+            autocomplete="name"
+            placeholder="Ada Lovelace"
+            [value]="name()"
+            (input)="name.set($any($event.target).value)"
+            (keydown)="onKey($event)"
+          />
+        </span>
+      </div>
+    </div>
+
+    <!-- lines 8–12: "message": / 4-line box aligned with the key's opening quote -->
+    <div class="field field-msg" [class.invalid]="state() === 'error'">
+      <div class="row">
+        <span class="ln" aria-hidden="true">8</span>
+        <span class="code indent">
+          <label class="key" for="http-msg"><span aria-hidden="true">"</span>message<span aria-hidden="true">"</span></label><span class="punct" aria-hidden="true">:</span>
+          @if (state() === "error") {
+            <span id="http-msg-error" class="inline-error"><span aria-hidden="true">⚠ </span>message is required</span>
+          }
+        </span>
+      </div>
+      <div class="row input-row">
+        <span class="ln ln-stack" aria-hidden="true">
+          @for (n of msgLines; track n; let first = $first) {
+            <span [class.ln-num]="first">{{ n }}</span>
+          }
+          <span class="ln-edit"></span>
+        </span>
+        <span class="code indent">
+          <textarea
+            #msg
+            id="http-msg"
+            class="val block"
+            [rows]="msgLines.length"
+            required
+            placeholder="Hi Gabriele, I'd like to talk about…"
+            aria-keyshortcuts="Control+Enter"
+            [attr.aria-invalid]="state() === 'error' ? 'true' : null"
+            [attr.aria-describedby]="state() === 'error' ? 'http-msg-error' : null"
+            [value]="message()"
+            (input)="onMessage($any($event.target).value)"
+            (keydown)="onKey($event)"
+          ></textarea>
+        </span>
+      </div>
+    </div>
+
+    <div class="row" aria-hidden="true">
+      <span class="ln">{{ msgLines[msgLines.length - 1] + 1 }}</span>
+      <span class="code punct">{{ "}" }}</span>
+    </div>
+  </div>
+
+  <div class="http-actions">
+    <button type="submit" class="send-btn" [disabled]="state() === 'sending'">
+      <span class="send-icon" aria-hidden="true"></span>
+      {{ state() === "sending" ? "Sending…" : "Send request" }}
+    </button>
+    <span class="send-hint" aria-hidden="true"><kbd>Ctrl</kbd> + <kbd>Enter</kbd></span>
+  </div>
+
+  <!-- what screen readers hear: plain sentences, not JSON -->
+  <p class="sr-only" aria-live="polite">{{ announcement() }}</p>
+
+  <!-- visual response panel -->
+  <div class="http-response" aria-hidden="true" [attr.data-state]="state()">
+    <div class="resp-head">
+      <span class="resp-title">Response</span>
+      @switch (state()) {
+        @case ("sending") {
+          <span class="resp-pending"><span class="spinner"></span>pending…</span>
+        }
+        @case ("done") {
+          <span class="badge ok">200 OK</span>
+          <span class="resp-meta">{{ latency() }} ms</span>
+        }
+        @case ("error") {
+          <span class="badge err">400 Bad Request</span>
+          <span class="resp-meta">{{ latency() }} ms</span>
+        }
+      }
+    </div>
+
+    @switch (state()) {
+      @case ("done") {
+        <pre class="resp-body"><span class="punct">{{ "{" }}</span>
+  <span class="key">"status"</span><span class="punct">: </span><span class="str">"opened in your mail client"</span>
+<span class="punct">{{ "}" }}</span></pre>
+      }
+      @case ("error") {
+        <pre class="resp-body"><span class="punct">{{ "{" }}</span>
+  <span class="key">"error"</span><span class="punct">: </span><span class="str err">"message is required"</span>
+<span class="punct">{{ "}" }}</span></pre>
+      }
+      @default {
+        <p class="resp-idle">Run the request to see the response.</p>
+      }
+    }
+  </div>
+
+  @if (state() === "done") {
+    <div class="resp-actions">
+      <span class="resp-actions-label">Mail client didn't open?</span>
+      <button type="button" class="resp-btn" (click)="copyEmail()">
+        {{ copied() ? "Copied!" : "Copy email" }}
+      </button>
+      <a class="resp-btn" [href]="linkedin" target="_blank" rel="noopener noreferrer">
+        LinkedIn<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+    </div>
+  }
+</form>
