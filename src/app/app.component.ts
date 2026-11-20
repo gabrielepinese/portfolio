@@ -9,4 +9,6 @@ import { NavbarComponent } from './shared/ui/navbar/navbar.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './app.component.scss',
 })
-export class AppComponent {}
+export class AppComponent {
+  readonly currentYear = new Date().getFullYear();
+}
