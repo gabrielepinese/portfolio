@@ -610,19 +610,11 @@ $ed-dim: rgba(white, 0.3);
     border-radius: 10px;
     background: $purple3;
 
-    i {
-      font-size: 24px;
-    }
 
     .stack-img {
       width: 24px;
       height: 24px;
       object-fit: contain;
-    }
-
-    // devicon's "colored" Angular glyph renders washed out: brand red instead
-    .devicon-angular-plain {
-      color: #dd0031;
     }
   }
 
@@ -643,9 +635,6 @@ $ed-dim: rgba(white, 0.3);
       width: 34px;
       height: 34px;
 
-      i {
-        font-size: 20px;
-      }
 
       .stack-img {
         width: 20px;
@@ -893,5 +882,18 @@ $ed-dim: rgba(white, 0.3);
   }
   100% {
     box-shadow: 0 0 0 9px rgba($purple-text, 0);
+  }
+}
+
+// @defer placeholder for the sketchpad: same footprint, so nothing jumps when it loads
+.sketchpad-placeholder {
+  height: 600px;
+
+  @include screen-down("mid") {
+    height: 710px;
+  }
+
+  @include screen-down("md") {
+    height: 507px;
   }
 }

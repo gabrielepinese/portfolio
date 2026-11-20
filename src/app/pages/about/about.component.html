@@ -111,7 +111,12 @@
         </p>
       </div>
 
-      <app-sketchpad class="scroll-reveal" appReveal style="--delay: 0.1s" />
+      <!-- below the fold: its code loads once the browser is idle, not with the page -->
+      @defer (on idle) {
+        <app-sketchpad class="scroll-reveal" appReveal style="--delay: 0.1s" />
+      } @placeholder {
+        <div class="sketchpad-placeholder" aria-hidden="true"></div>
+      }
     </section>
 
     <!-- 03 · toolbox -->
@@ -127,11 +132,7 @@
         @for (item of STACK; track item.label) {
           <li class="stack-item" [style.--i]="$index">
             <span class="icon-wrap" aria-hidden="true">
-              @if (item.imgSrc) {
-                <img [src]="item.imgSrc" alt="" class="stack-img" loading="lazy" />
-              } @else {
-                <i [class]="item.icon"></i>
-              }
+              <img [ngSrc]="item.src" width="24" height="24" alt="" class="stack-img" />
             </span>
             <span class="stack-label">{{ item.label }}</span>
           </li>

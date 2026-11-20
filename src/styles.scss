@@ -190,18 +190,6 @@ body.menu-open app-motion-toggle {
 }
 
 // Text shadow variants
-.text-con-bordo {
-  text-shadow:
-    4px 0 $orange2,
-    -4px 0 $orange2,
-    0 4px $orange2,
-    0 -4px $orange2,
-    3px 3px $orange2,
-    -3px -3px $orange2,
-    3px -3px $orange2,
-    -3px 3px $orange2;
-}
-
 .text-con-bordo2 {
   text-shadow:
     4px 0 $green2,
@@ -212,18 +200,6 @@ body.menu-open app-motion-toggle {
     -3px -3px $green2,
     3px -3px $green2,
     -3px 3px $green2;
-}
-
-.text-con-bordo3 {
-  text-shadow:
-    4px 0 $purple3,
-    -4px 0 $purple3,
-    0 4px $purple3,
-    0 -4px $purple3,
-    3px 3px $purple3,
-    -3px -3px $purple3,
-    3px -3px $purple3,
-    -3px 3px $purple3;
 }
 
 // Layout
@@ -304,47 +280,4 @@ body.menu-open app-motion-toggle {
   @include screen-down("md") {
     padding: 16px;
   }
-}
-
-.home {
-  --scroll-accent: #f1a661;
-}
-.about {
-  --scroll-accent: #b1b2ff;
-}
-.works {
-  --scroll-accent: #d2665a;
-}
-.contact {
-  --scroll-accent: #a0c49d;
-}
-
-.scroll-indicator {
-  padding-left: 12px;
-  padding-top: 56px;
-  padding-bottom: 32px;
-  display: flex;
-  justify-content: flex-start;
-  animation: showUp 0.5s ease-out forwards;
-  animation-delay: 1.2s;
-  opacity: 0;
-}
-
-.scroll-track {
-  position: relative;
-  width: 1px;
-  height: 108px;
-  background: rgba(0, 0, 0, 0.12);
-  border-radius: 1px;
-}
-
-.scroll-dot {
-  position: absolute;
-  left: -1.5px;
-  top: -4px;
-  width: 4px;
-  height: 32px;
-  background: var(--scroll-accent, #000);
-  border-radius: 2px;
-  animation: scrollTravel 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

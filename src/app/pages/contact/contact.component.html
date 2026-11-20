@@ -79,7 +79,11 @@
       <p class="playground-hint">
         <span aria-hidden="true">// </span>write your message right in the request, then send it
       </p>
-      <app-http-client />
+      @defer (on idle) {
+        <app-http-client />
+      } @placeholder {
+        <div class="http-placeholder" aria-hidden="true"></div>
+      }
     </div>
   </div>
 

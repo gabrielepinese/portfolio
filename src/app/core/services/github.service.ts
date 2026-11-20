@@ -1,11 +1,10 @@
-import { HttpClient } from "@angular/common/http";
 import { isPlatformBrowser } from "@angular/common";
 import { inject, Injectable, PLATFORM_ID } from "@angular/core";
-import { catchError, defer, forkJoin, map, Observable, of, switchMap, tap, throwError } from "rxjs";
 import { GithubRepo, GithubRepoWithLanguages, GithubUser } from "../models/github.model";
 
 const GITHUB_USERNAME = "gabrielepinese";
 const EXCLUDED_REPOS = new Set([GITHUB_USERNAME, "portfolio"]);
+const API = "https://api.github.com";
 
 /**
  * Responses are cached in the visitor's localStorage for an hour. Unauthenticated GitHub
@@ -14,6 +13,9 @@ const EXCLUDED_REPOS = new Set([GITHUB_USERNAME, "portfolio"]);
  * the GitHub profile is stored, nothing about the visitor, and it never leaves the browser.
  * After an hour the next visit fetches fresh data; if that fetch fails (rate limit,
  * offline), the last saved copy is shown instead of the "Unavailable" state.
+ *
+ * Plain `fetch` (no HttpClient / RxJS): two GET requests don't need the interceptor
+ * machinery, and it keeps HttpClient out of the app's bundles entirely.
  */
 const CACHE_TTL = 60 * 60 * 1000;
 const CACHE_PREFIX = "github-cache:v1:";
@@ -25,53 +27,46 @@ interface CacheEntry<T> {
 
 @Injectable({ providedIn: "root" })
 export class GithubService {
-  private readonly http = inject(HttpClient);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  getUser(): Observable<GithubUser> {
-    return this.cached("user", () =>
-      this.http.get<GithubUser>(`https://api.github.com/users/${GITHUB_USERNAME}`),
-    );
+  getUser(signal?: AbortSignal): Promise<GithubUser> {
+    return this.cached("user", () => getJson<GithubUser>(`${API}/users/${GITHUB_USERNAME}`, signal));
   }
 
-  getRepos(): Observable<GithubRepoWithLanguages[]> {
-    return this.cached("repos", () =>
-      this.http
-        .get<GithubRepo[]>(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`)
-        .pipe(
-          map((repos) => repos.filter((repo) => !repo.fork && !repo.archived && !EXCLUDED_REPOS.has(repo.name))),
-          switchMap((repos) => {
-            if (repos.length === 0) return of<GithubRepoWithLanguages[]>([]);
-            return forkJoin(repos.map((repo) => this.withLanguages(repo)));
-          }),
-        ),
-    );
+  getRepos(signal?: AbortSignal): Promise<GithubRepoWithLanguages[]> {
+    return this.cached("repos", async () => {
+      const repos = await getJson<GithubRepo[]>(
+        `${API}/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`,
+        signal,
+      );
+      const visible = repos.filter((r) => !r.fork && !r.archived && !EXCLUDED_REPOS.has(r.name));
+      return Promise.all(visible.map((repo) => this.withLanguages(repo, signal)));
+    });
   }
 
-  private withLanguages(repo: GithubRepo): Observable<GithubRepoWithLanguages> {
-    return this.http.get<Record<string, number>>(`https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/languages`).pipe(
-      map((bytesByLanguage) => {
-        const languages = Object.entries(bytesByLanguage).sort(([, a], [, b]) => b - a).map(([lang]) => lang);
-        return {
-          ...repo,
-          languages,
-          primaryLanguage: languages[0] ?? repo.language ?? "Other",
-        };
-      }),
+  private async withLanguages(repo: GithubRepo, signal?: AbortSignal): Promise<GithubRepoWithLanguages> {
+    const bytesByLanguage = await getJson<Record<string, number>>(
+      `${API}/repos/${GITHUB_USERNAME}/${repo.name}/languages`,
+      signal,
     );
+    const languages = Object.entries(bytesByLanguage)
+      .sort(([, a], [, b]) => b - a)
+      .map(([lang]) => lang);
+    return { ...repo, languages, primaryLanguage: languages[0] ?? repo.language ?? "Other" };
   }
 
   /** Fresh cache → no request. Otherwise fetch and save; on failure fall back to any saved copy. */
-  private cached<T>(key: string, fetch: () => Observable<T>): Observable<T> {
-    return defer(() => {
-      const saved = this.read<T>(key);
-      if (saved && Date.now() - saved.at < CACHE_TTL) return of(saved.data);
-
-      return fetch().pipe(
-        tap((data) => this.write(key, data)),
-        catchError((err) => (saved ? of(saved.data) : throwError(() => err))),
-      );
-    });
+  private async cached<T>(key: string, load: () => Promise<T>): Promise<T> {
+    const saved = this.read<T>(key);
+    if (saved && Date.now() - saved.at < CACHE_TTL) return saved.data;
+    try {
+      const data = await load();
+      this.write(key, data);
+      return data;
+    } catch (err) {
+      if (saved) return saved.data;
+      throw err;
+    }
   }
 
   private read<T>(key: string): CacheEntry<T> | null {
@@ -94,4 +89,10 @@ export class GithubService {
       // storage unavailable or full: the page still works, it just refetches next time
     }
   }
+}
+
+async function getJson<T>(url: string, signal?: AbortSignal): Promise<T> {
+  const res = await fetch(url, { headers: { Accept: "application/vnd.github+json" }, signal });
+  if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+  return res.json() as Promise<T>;
 }

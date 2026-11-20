@@ -4,6 +4,7 @@ import {
   Component,
   DestroyRef,
   effect,
+  ElementRef,
   inject,
   input,
   signal,
@@ -24,7 +25,6 @@ import { MotionService } from "../../../shared/services/motion.service";
   templateUrl: "./illustration.component.html",
   styleUrl: "./illustration.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // bound (not set with setProperty): Angular scopes custom properties per component
   host: { "[style.--mx]": "mx()", "[style.--my]": "my()" },
 })
 export class IllustrationComponent {
@@ -46,6 +46,8 @@ export class IllustrationComponent {
       }
     });
 
+    const host = inject(ElementRef<HTMLElement>).nativeElement as HTMLElement;
+
     afterNextRender(() => {
       const win = doc.defaultView;
       if (!win || !win.matchMedia("(pointer: fine)").matches) return;
@@ -55,9 +57,9 @@ export class IllustrationComponent {
       let y = 0;
       const apply = () => {
         frame = 0;
-        const paused = motion.paused();
-        this.mx.set(paused ? 0 : Math.round(x * 1000) / 1000);
-        this.my.set(paused ? 0 : Math.round(y * 1000) / 1000);
+        if (motion.paused()) return;
+        this.mx.set(Math.round(x * 1000) / 1000);
+        this.my.set(Math.round(y * 1000) / 1000);
       };
       const onMove = (e: PointerEvent) => {
         x = (e.clientX / win.innerWidth) * 2 - 1;
@@ -65,8 +67,18 @@ export class IllustrationComponent {
         if (!frame) frame = win.requestAnimationFrame(apply);
       };
 
-      win.addEventListener("pointermove", onMove, { passive: true });
+      // listen to the pointer only while the illustration is on screen
+      let listening = false;
+      const io = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting === listening) return;
+        listening = entry.isIntersecting;
+        if (listening) win.addEventListener("pointermove", onMove, { passive: true });
+        else win.removeEventListener("pointermove", onMove);
+      });
+      io.observe(host);
+
       destroyRef.onDestroy(() => {
+        io.disconnect();
         win.removeEventListener("pointermove", onMove);
         if (frame) win.cancelAnimationFrame(frame);
       });

@@ -1,5 +1,4 @@
-import { afterNextRender, ChangeDetectionStrategy, Component, inject, signal } from "@angular/core";
-import { forkJoin } from "rxjs";
+import { afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from "@angular/core";
 import { GithubService } from "../../../core/services/github.service";
 import { GithubRepoWithLanguages, GithubUser } from "../../../core/models/github.model";
 
@@ -36,21 +35,23 @@ export class GithubProjectsComponent {
   readonly repos = signal<GithubRepoWithLanguages[]>([]);
 
   constructor() {
-    afterNextRender(() => {
-      forkJoin([this.github.getUser(), this.github.getRepos()]).subscribe({
-        next: ([user, repos]) => {
-          this.user.set(user);
+    const abort = new AbortController();
+    inject(DestroyRef).onDestroy(() => abort.abort()); // left the page mid-request
 
-          const sorted = [...repos].sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at));
-
-          this.repos.set(sorted);
-          this.loading.set(false);
-        },
-        error: () => {
-          this.error.set(true);
-          this.loading.set(false);
-        },
-      });
+    afterNextRender(async () => {
+      try {
+        const [user, repos] = await Promise.all([
+          this.github.getUser(abort.signal),
+          this.github.getRepos(abort.signal),
+        ]);
+        this.user.set(user);
+        this.repos.set([...repos].sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at)));
+      } catch {
+        if (abort.signal.aborted) return;
+        this.error.set(true);
+      } finally {
+        this.loading.set(false);
+      }
     });
   }
 

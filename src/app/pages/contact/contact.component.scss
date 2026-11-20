@@ -569,3 +569,12 @@ $type-time: 0.7s;
     box-shadow: 0 0 0 9px rgba(40, 167, 69, 0);
   }
 }
+
+// @defer placeholder for the HTTP client: same footprint, so nothing jumps when it loads
+.http-placeholder {
+  height: 548px;
+
+  @include screen-down("md") {
+    height: 575px;
+  }
+}

@@ -1,5 +1,4 @@
 @use "colors.variables" as *;
-@use "animations.scss" as *;
 @use "responsive.mixin.scss" as *;
 
 $accent: #e38b29;
@@ -534,22 +533,39 @@ $bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
     animation: dashMove 0.8s linear infinite;
   }
 
+  // the packet's box spans the whole travel (link width minus the dot): moving it with
+  // translateX(0 → 100%) needs no layout, unlike animating `left` (compositor only)
   .flow-packet {
     position: absolute;
     top: 50%;
     left: 0;
-    width: 6px;
+    width: calc(100% - 6px);
     height: 6px;
     margin-top: -3px;
-    border-radius: 50%;
-    background: $accent;
-    box-shadow: 0 0 6px $accent;
-    transform: scale(0);
-    animation: packetToApi $flow-cycle linear infinite;
+    animation: packetToApi-move $flow-cycle linear infinite;
+
+    // the dot itself: grows out at the start of the leg, shrinks in at the end
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: $accent;
+      box-shadow: 0 0 6px $accent;
+      transform: scale(0);
+      animation: packetToApi-pop $flow-cycle linear infinite;
+    }
 
     // second leg starts once API has filled up
     &.delay {
-      animation-name: packetToDb;
+      animation-name: packetToDb-move;
+
+      &::before {
+        animation-name: packetToDb-pop;
+      }
     }
   }
 }
@@ -649,9 +665,18 @@ $bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
     width: 8px;
     height: 8px;
     border-radius: 50%;
+    position: relative;
     background: #28c840;
-    box-shadow: 0 0 0 0 rgba(40, 200, 64, 0.6);
-    animation: livePulse 1.6s ease-out infinite;
+
+    // pulse ring: transform + opacity (compositor), not an animated box-shadow (repaint)
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: rgba(40, 200, 64, 0.6);
+      animation: livePulse 1.6s ease-out infinite;
+    }
   }
 
   .coming-desc {
@@ -743,24 +768,28 @@ $bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
 @include node-fill(fillDb, 80%, 92%);
 
 @mixin packet-leg($name, $start, $end) {
-  @keyframes #{$name} {
+  @keyframes #{$name}-move {
     0%,
-    #{$start} {
-      left: 0;
-      transform: scale(0);
-    }
     #{$start + 3%} {
-      left: 0;
-      transform: scale(1);
+      transform: translateX(0);
       animation-timing-function: ease-in-out;
     }
+    #{$end - 3%},
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes #{$name}-pop {
+    0%,
+    #{$start} {
+      transform: scale(0);
+    }
+    #{$start + 3%},
     #{$end - 3%} {
-      left: calc(100% - 6px);
       transform: scale(1);
     }
     #{$end},
     100% {
-      left: calc(100% - 6px);
       transform: scale(0);
     }
   }
@@ -770,11 +799,13 @@ $bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
 @include packet-leg(packetToDb, 52%, 80%);
 
 @keyframes livePulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(40, 200, 64, 0.6);
+  from {
+    transform: scale(1);
+    opacity: 1;
   }
-  100% {
-    box-shadow: 0 0 0 10px rgba(40, 200, 64, 0);
+  to {
+    transform: scale(3.5); // 8px dot + 10px ring each side, like the old 10px shadow
+    opacity: 0;
   }
 }
 
@@ -1012,4 +1043,9 @@ $bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
   .projects-card {
     padding: 40px 20px;
   }
+}
+
+// @defer placeholder for the code window: same footprint, so nothing jumps when it loads
+.code-window-placeholder {
+  height: 435px;
 }

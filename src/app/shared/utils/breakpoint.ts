@@ -1,26 +1,24 @@
-import { inject, Signal } from "@angular/core";
-import { BreakpointObserver } from "@angular/cdk/layout";
-import { toSignal } from "@angular/core/rxjs-interop";
-import { map } from "rxjs";
+import { DestroyRef, inject, Signal, signal } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
 
-/** Signal that is true between tablet and small-desktop widths (768–1279px). */
-export function injectIsMediumBreakpoint(): Signal<boolean> {
-  const breakpointObserver = inject(BreakpointObserver);
-
-  return toSignal(
-    breakpointObserver
-      .observe(["(min-width: 768px) and (max-width: 1279px)"])
-      .pipe(map((r) => r.matches)),
-    { initialValue: false },
-  );
+/**
+ * Signal mirroring a media query. Plain `matchMedia` + one `change` listener: no CDK
+ * BreakpointObserver / RxJS in the page chunks. `false` on the server.
+ */
+export function injectMediaQuery(query: string): Signal<boolean> {
+  const win = inject(DOCUMENT).defaultView;
+  const mql = win?.matchMedia?.(query);
+  const matches = signal(mql?.matches ?? false);
+  if (mql) {
+    const onChange = (e: MediaQueryListEvent) => matches.set(e.matches);
+    mql.addEventListener("change", onChange);
+    inject(DestroyRef).onDestroy(() => mql.removeEventListener("change", onChange));
+  }
+  return matches.asReadonly();
 }
 
-/** Signal that is true on phone widths (≤767px, same as the SCSS "md" breakpoint). */
-export function injectIsMobile(): Signal<boolean> {
-  const breakpointObserver = inject(BreakpointObserver);
+/** True between tablet and small-desktop widths (768–1279px). */
+export const injectIsMediumBreakpoint = () => injectMediaQuery("(min-width: 768px) and (max-width: 1279px)");
 
-  return toSignal(
-    breakpointObserver.observe(["(max-width: 767px)"]).pipe(map((r) => r.matches)),
-    { initialValue: false },
-  );
-}
+/** True on phone widths (≤767px, same as the SCSS "md" breakpoint). */
+export const injectIsMobile = () => injectMediaQuery("(max-width: 767px)");

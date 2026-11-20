@@ -117,6 +117,7 @@ export class CodeFieldComponent {
 
     let w = 0;
     let h = 0;
+    let dpr = 1;
     let particles: Particle[] = [];
     const rings: Ring[] = [];
 
@@ -124,6 +125,11 @@ export class CodeFieldComponent {
     let mx = -9999;
     let my = -9999;
     let active = false;
+    // last pointer position in viewport coords: mapped to the canvas once per frame in
+    // render (one layout read per frame, not one per pointermove event)
+    let cx = -9999;
+    let cy = -9999;
+    let pointerIn = false;
     let tx = 0;
     let ty = 0;
     let px = 0;
@@ -162,7 +168,7 @@ export class CodeFieldComponent {
       const rect = this.host.getBoundingClientRect();
       w = rect.width;
       h = rect.height;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -209,11 +215,15 @@ export class CodeFieldComponent {
 
       ctx.clearRect(0, 0, w, h);
 
+      const c = canvas.getBoundingClientRect();
+      mx = cx - c.left;
+      my = cy - c.top;
+      active = pointerIn && !paused && mx >= 0 && my >= 0 && mx <= c.width && my <= c.height;
+
       // obstacle rect in canvas coordinates
       let ob: { l: number; t: number; r: number; b: number } | null = null;
       const obEl = this.obstacle();
       if (obEl) {
-        const c = canvas.getBoundingClientRect();
         const o = obEl.getBoundingClientRect();
         if (o.width > 0) ob = { l: o.left - c.left, t: o.top - c.top, r: o.right - c.left, b: o.bottom - c.top };
       }
@@ -245,6 +255,7 @@ export class CodeFieldComponent {
 
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
+      let font = ""; // setting ctx.font re-parses the string: only when the size changes
 
       for (const p of particles) {
         const sx = p.x + px * p.depth * parallax;
@@ -338,6 +349,8 @@ export class CodeFieldComponent {
 
         // line from cursor to nearby particles
         if (p.glow > 0.12) {
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // canvas space (the last particle left its matrix)
+          ctx.globalAlpha = 1;
           ctx.beginPath();
           ctx.moveTo(mx, my);
           ctx.lineTo(fx, fy);
@@ -349,23 +362,26 @@ export class CodeFieldComponent {
         const alpha = Math.min(1, 0.13 + p.depth * 0.28 + p.glow * 0.6) * intro;
         const scale = 1 + p.glow * 0.45;
 
-        ctx.save();
-        ctx.translate(fx, fy);
-        ctx.rotate(p.rot);
-        ctx.scale(scale, scale);
+        // translate + rotate + scale in one matrix (no save/restore per particle)
+        const k = dpr * scale;
+        const cos = Math.cos(p.rot) * k;
+        const sin = Math.sin(p.rot) * k;
+        ctx.setTransform(cos, sin, -sin, cos, fx * dpr, fy * dpr);
         ctx.globalAlpha = alpha;
         const color = p.glow > 0.35 ? GLOW_COLOR : p.color;
         if (p.label) {
           ctx.fillStyle = color;
-          ctx.font = `700 ${p.size}px "JetBrains Mono", "Courier New", monospace`;
+          const f = `700 ${p.size}px "JetBrains Mono", "Courier New", monospace`;
+          if (f !== font) ctx.font = font = f;
           ctx.fillText(p.label, 0, 0);
         } else if (p.shape) {
           ctx.strokeStyle = color;
           ctx.lineWidth = 1.6 + p.depth;
           drawShape(p.shape, p.size * 1.1);
         }
-        ctx.restore();
       }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalAlpha = 1;
 
       if (visible && !paused) frame = requestAnimationFrame(render);
     };
@@ -375,15 +391,15 @@ export class CodeFieldComponent {
     };
 
     const onMove = (e: PointerEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mx = e.clientX - rect.left;
-      my = e.clientY - rect.top;
-      active = !paused && mx >= 0 && my >= 0 && mx <= rect.width && my <= rect.height;
+      cx = e.clientX;
+      cy = e.clientY;
+      pointerIn = true;
       tx = (e.clientX / window.innerWidth) * 2 - 1;
       ty = (e.clientY / window.innerHeight) * 2 - 1;
     };
 
     const onLeave = () => {
+      pointerIn = false;
       active = false;
       tx = 0;
       ty = 0;

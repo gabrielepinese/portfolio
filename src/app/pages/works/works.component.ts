@@ -1,15 +1,4 @@
-import {
-  afterNextRender,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  DestroyRef,
-  effect,
-  inject,
-  Injector,
-  signal,
-  untracked,
-} from "@angular/core";
+import { afterNextRender, ChangeDetectionStrategy, Component, inject, signal } from "@angular/core";
 import { DOCUMENT } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import { ItemListComponent } from "../../shared/ui/item-list/item-list.component";
@@ -17,14 +6,11 @@ import { LIST_ITEMS, CompanyList } from "../../core/models/company-list";
 import { MotionService } from "../../shared/services/motion.service";
 import { RevealDirective } from "../../shared/directives/reveal.directive";
 import { GithubProjectsComponent } from "./github-projects/github-projects.component";
+import { injectTitleTypewriter } from "../../shared/utils/typewriter";
+import { scrollBelowNavbar } from "../../shared/utils/scroll";
 
 /** Typed title; a page-coloured "." is typed after it (like "About me." / "Contact me."). */
 const TITLE = "Work";
-/** Idle caret blinks this long after typing, then disappears (≤ 5 s: WCAG 2.2.2). */
-const CARET_LINGER = 5000;
-
-const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
-const jitter = (ms: number) => ms * (0.6 + Math.random() * 0.9);
 const SUBTITLE =
   "A peek into my journey as a Software Engineer: real experiences, projects in the works, and plenty of code on the way.";
 
@@ -54,23 +40,12 @@ export class WorksComponent {
   readonly openIndex = signal(0);
 
   // ── typewriter title (same feel as the Home / Contact headlines) ──
-  private readonly typedCount = signal(0);
-  /** Typed part + still-invisible rest: the ghost keeps the line width stable. */
-  readonly title = computed(() => {
-    const n = this.typedCount();
-    return {
-      shown: TITLE.slice(0, n),
-      hidden: TITLE.slice(n),
-      dot: n > TITLE.length,
-    };
-  });
-  /** Solid caret while keys are pressed, blinking while idle, gone 5 s after typing. */
-  readonly typing = signal(false);
-  readonly caret = signal(false);
+  private readonly hero = injectTitleTypewriter(TITLE, 110);
+  readonly title = this.hero.title;
+  readonly typing = this.hero.typing;
+  readonly caret = this.hero.caret;
   /** Title written: the rest of the hero (subtitle, log, cue) starts. */
-  readonly done = signal(false);
-  /** Bumped on pause/resume/destroy so a stale typing run stops. */
-  private runId = 0;
+  readonly done = this.hero.done;
 
   readonly subtitle = SUBTITLE;
   readonly subtitleWords = SUBTITLE.split(" ");
@@ -114,89 +89,19 @@ export class WorksComponent {
   readonly logStep = 0.28;
 
   constructor() {
-    const injector = inject(Injector);
-    inject(DestroyRef).onDestroy(() => this.runId++);
-
+    // deep link (e.g. Home → /works#projects): land on the section once it's rendered
     afterNextRender(() => {
-      effect(
-        () => {
-          const paused = this.motion.paused();
-          untracked(() => {
-            const id = ++this.runId;
-            if (paused) this.showStatic();
-            else if (!this.done()) void this.type(() => id === this.runId);
-          });
-        },
-        { injector },
-      );
-
       const fragment = this.route.snapshot.fragment;
       if (!fragment) return;
       setTimeout(() => {
-        this.document.getElementById(fragment)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        const target = this.document.getElementById(fragment);
+        if (target) scrollBelowNavbar(target, { instant: this.motion.paused() });
       }, 100);
     });
   }
 
-  /** Reduced motion / paused: title fully written, no caret. */
-  private showStatic(): void {
-    this.typedCount.set(TITLE.length + 1);
-    this.typing.set(false);
-    this.caret.set(false);
-    this.done.set(true);
-  }
-
-  private async type(alive: () => boolean): Promise<void> {
-    this.typedCount.set(0);
-    this.typing.set(true); // solid caret on the empty line, then keys
-    this.caret.set(true);
-    await sleep(500);
-    if (!alive()) return;
-    for (let i = 1; i <= TITLE.length; i++) {
-      this.typedCount.set(i);
-      await sleep(TITLE[i - 1] === " " ? 220 : jitter(110));
-      if (!alive()) return;
-    }
-    await sleep(260); // short beat before the full stop
-    if (!alive()) return;
-    this.typedCount.set(TITLE.length + 1);
-    this.typing.set(false);
-    this.done.set(true);
-    // idle tick-tick for a while, then the caret goes away: less intrusive
-    await sleep(CARET_LINGER);
-    if (alive()) this.caret.set(false);
-  }
-
-  /**
-   * "Read the full log" cue: smooth scroll to the experiences, stopping below the fixed
-   * navbar. Hand-rolled like the Home / Contact cues (scrollIntoView's smooth mode is
-   * instant in some browsers/OS settings); the app scrolls inside `.frame`.
-   */
+  /** "Read the full log" cue: smooth scroll to the experiences, below the fixed navbar. */
   jumpTo(target: HTMLElement): void {
-    const scroller = target.closest<HTMLElement>(".frame");
-    if (!scroller) return;
-
-    const navbar = this.document.querySelector(".navbar-content");
-    const navBottom = navbar ? navbar.getBoundingClientRect().bottom : 0;
-    const gap = 24;
-
-    const from = scroller.scrollTop;
-    const to = Math.max(
-      0,
-      Math.min(
-        from + target.getBoundingClientRect().top - navBottom - gap,
-        scroller.scrollHeight - scroller.clientHeight,
-      ),
-    );
-
-    const duration = 900;
-    const start = performance.now();
-    const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-    const tick = (now: number) => {
-      const p = Math.min(1, (now - start) / duration);
-      scroller.scrollTop = from + (to - from) * ease(p);
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
+    scrollBelowNavbar(target, { instant: this.motion.paused() });
   }
 }

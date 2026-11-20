@@ -17,6 +17,8 @@ import { PageTransitionService } from "../../shared/services/page-transition.ser
 import { MagneticButtonDirective } from "../../shared/directives/magnetic-button.directive";
 import { RevealDirective } from "../../shared/directives/reveal.directive";
 import { injectIsMobile } from "../../shared/utils/breakpoint";
+import { jitter, sleep } from "../../shared/utils/typewriter";
+import { scrollBelowNavbar } from "../../shared/utils/scroll";
 import { CodeFieldComponent } from "./code-field/code-field.component";
 import { CodeWindowComponent } from "./code-window/code-window.component";
 import { BookmarkCueComponent } from "./bookmark-cue/bookmark-cue.component";
@@ -71,8 +73,6 @@ function parseWords(text: string): { word: string; bold: boolean }[] {
     );
 }
 
-const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
-const jitter = (ms: number) => ms * (0.6 + Math.random() * 0.9);
 
 @Component({
   selector: "app-home",
@@ -258,38 +258,9 @@ export class HomeComponent {
     }
   }
 
-  /**
-   * Smooth scroll to "What I do", stopping below the fixed navbar.
-   * Hand-rolled (instead of scrollIntoView) so it's smooth in every browser and the
-   * offset uses the navbar's real height, which changes with the breakpoint.
-   */
+  /** "What I do" cue: smooth scroll to the sections, below the fixed navbar. */
   scrollToSections(): void {
-    const target = this.sections().nativeElement;
-    const scroller = target.closest<HTMLElement>(".frame");
-    if (!scroller) return;
-
-    const navbar = document.querySelector(".navbar-content");
-    const navBottom = navbar ? navbar.getBoundingClientRect().bottom : 0;
-    const gap = 24;
-
-    const from = scroller.scrollTop;
-    const to = Math.max(
-      0,
-      Math.min(
-        from + target.getBoundingClientRect().top - navBottom - gap,
-        scroller.scrollHeight - scroller.clientHeight,
-      ),
-    );
-
-    const duration = 900;
-    const start = performance.now();
-    const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-    const tick = (now: number) => {
-      const p = Math.min(1, (now - start) / duration);
-      scroller.scrollTop = from + (to - from) * ease(p);
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
+    scrollBelowNavbar(this.sections().nativeElement, { instant: this.motion.paused() });
   }
 
   goToAbout(): void {

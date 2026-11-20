@@ -99,7 +99,12 @@
         </p>
       </div>
 
-      <app-github-projects></app-github-projects>
+      <!-- code + GitHub API calls only once the section is about to be seen -->
+      @defer (on viewport; prefetch on idle) {
+        <app-github-projects />
+      } @placeholder {
+        <p class="body18 section-desc gh-placeholder">Fetching live data from GitHub…</p>
+      }
     </section>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, input, output } from "@angular/core";
 import { NgTemplateOutlet } from "@angular/common";
 import { injectIsMobile } from "../../utils/breakpoint";
+import { easeOutCubic, scrollBelowNavbar } from "../../utils/scroll";
 
 let nextId = 0;
 
@@ -50,24 +51,6 @@ export class ItemListComponent {
   }
 
   private keepInView(): void {
-    const scroller = this.host.closest<HTMLElement>(".frame");
-    if (!scroller) return;
-    const navbar = document.querySelector(".navbar-content");
-    const navBottom = navbar ? navbar.getBoundingClientRect().bottom : 0;
-    const top = this.host.getBoundingClientRect().top;
-    const gap = 16;
-    if (top >= navBottom + gap) return;
-
-    const from = scroller.scrollTop;
-    const to = Math.max(0, from + top - navBottom - gap);
-    const duration = 450;
-    const start = performance.now();
-    const ease = (x: number) => 1 - Math.pow(1 - x, 3);
-    const tick = (now: number) => {
-      const p = Math.min(1, (now - start) / duration);
-      scroller.scrollTop = from + (to - from) * ease(p);
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
+    scrollBelowNavbar(this.host, { gap: 16, duration: 450, ease: easeOutCubic, onlyIfHidden: true });
   }
 }

@@ -530,3 +530,9 @@ $git-tag: #f2c46d;
     box-shadow: 0 0 0 9px rgba($redSecondary, 0);
   }
 }
+
+// @defer placeholder for the GitHub block (its real height depends on the live data)
+.gh-placeholder {
+  min-height: 360px;
+  margin: 0;
+}

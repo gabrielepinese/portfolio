@@ -114,7 +114,11 @@
 
     @if (!isMobile()) {
       <div class="intro-code scroll-reveal" appReveal style="--delay: 0.15s">
-        <app-code-window />
+        @defer (on idle) {
+          <app-code-window />
+        } @placeholder {
+          <div class="code-window-placeholder" aria-hidden="true"></div>
+        }
       </div>
     }
   </section>
