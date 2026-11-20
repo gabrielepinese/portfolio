@@ -1,0 +1,81 @@
+<div class="pad">
+  <!-- tab bar + palette -->
+  <div class="pad-bar">
+    <span class="pad-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="tab" aria-hidden="true"><span class="file-icon">SVG</span>sketch.svg<span class="file-close">×</span></span>
+
+    <div class="inks" role="radiogroup" aria-label="Ink colour">
+      @for (c of inks; track c.value) {
+        <button
+          type="button"
+          class="ink"
+          role="radio"
+          [attr.aria-checked]="ink() === c.value"
+          [attr.aria-label]="c.name"
+          [style.--ink]="c.value"
+          (click)="ink.set(c.value)"
+        ></button>
+      }
+    </div>
+  </div>
+
+  <div class="pad-body">
+    <!-- canvas: the drawing is live SVG, the same markup the code pane prints -->
+    <div class="canvas" [class.empty]="strokes().length === 0" [class.active]="drawing()">
+      <svg
+        #board
+        [attr.viewBox]="'0 0 ' + W + ' ' + H"
+        fill="none"
+        [attr.stroke-width]="strokeWidth"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        role="img"
+        aria-label="Drawing area. Draw with a mouse, pen or finger, or use “Draw for me”."
+        (pointerdown)="onDown($event, board)"
+        (pointermove)="onMove($event, board)"
+        (pointerup)="onUp($event)"
+        (pointercancel)="onUp($event)"
+      >
+        @for (p of paths(); track $index) {
+          <path [attr.stroke]="p.color" [attr.d]="p.d" />
+        }
+      </svg>
+      <span class="canvas-hint" aria-hidden="true">✎ draw here</span>
+    </div>
+
+    <!-- code: what the canvas looks like as markup. Decorative (the live region says it). -->
+    <div class="code" aria-hidden="true">
+      <div class="code-scroll" #codeScroll>
+        <div class="ln-row"><span class="ln">1</span><span><span class="tag">&lt;svg</span><span class="attr">&ngsp;viewBox</span>=<span class="str">"0 0 {{ W }} {{ H }}"</span><span class="tag">&gt;</span></span></div>
+        @for (l of codeLines(); track $index; let last = $last) {
+          <div class="ln-row path-row" [class.fresh]="last && (drawing() || autoplaying())">
+            <span class="ln">{{ $index + 2 }}</span>
+            <span class="indent"><span class="tag">&lt;path</span>&ngsp;<span class="swatch" [style.background]="l.color"></span><span class="attr">stroke</span>=<span class="str">"{{ l.color }}"</span><span class="attr">&ngsp;d</span>=<span class="str">"{{ l.d }}"</span><span class="tag">/&gt;</span></span>
+          </div>
+        } @empty {
+          <div class="ln-row"><span class="ln">2</span><span class="indent cm">&lt;!-- your lines land here --&gt;</span></div>
+        }
+        <div class="ln-row"><span class="ln">{{ (codeLines().length || 1) + 2 }}</span><span><span class="tag">&lt;/svg&gt;</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- toolbar + status -->
+  <div class="pad-foot">
+    <div class="actions">
+      <button type="button" class="act primary" (click)="drawForMe()" [disabled]="autoplaying()">
+        <span aria-hidden="true">✦</span> draw for me
+      </button>
+      <button type="button" class="act" (click)="undo()" [disabled]="!strokes().length">undo</button>
+      <button type="button" class="act" (click)="clear()" [disabled]="!strokes().length">clear</button>
+      <button type="button" class="act" (click)="exportSvg()" [disabled]="!strokes().length || autoplaying()">
+        <span aria-hidden="true">↓</span> export .svg
+      </button>
+    </div>
+    <span class="status" aria-hidden="true">
+      {{ strokes().length }} {{ strokes().length === 1 ? "path" : "paths" }} · {{ size() }}
+    </span>
+  </div>
+
+  <p class="sr-only" aria-live="polite">{{ announcement() }}</p>
+</div>

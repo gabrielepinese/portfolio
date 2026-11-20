@@ -9,6 +9,18 @@ $mono: "JetBrains Mono", "Courier New", monospace;
   right: 48px;
   bottom: 44px;
   z-index: 15;
+  transition:
+    opacity 0.2s ease,
+    visibility 0s linear;
+
+  // route transition running (see PageTransitionService)
+  &.leaving {
+    opacity: 0;
+    visibility: hidden; // out of the tab order too
+    transition:
+      opacity 0.2s ease,
+      visibility 0s linear 0.2s;
+  }
 
   @include screen-down("lg") {
     right: 40px;

@@ -1,0 +1,75 @@
+<div class="illo" aria-hidden="true">
+  <div class="layer stripes"></div>
+  <div class="disc"></div>
+
+  @switch (kind()) {
+    @case ("components") {
+      <!-- the same component, instanced three times; the front one opened up -->
+      <svg class="layer shade" viewBox="0 0 400 400">
+        <rect x="80" y="92" width="170" height="120" rx="12" />
+        <rect x="108" y="124" width="170" height="120" rx="12" />
+        <rect x="136" y="156" width="170" height="120" rx="12" />
+        <rect x="330" y="202" width="44" height="26" rx="13" />
+      </svg>
+      <svg class="layer lines" viewBox="0 0 400 400">
+        <rect class="solid" x="80" y="92" width="170" height="120" rx="12" />
+        <path d="M80 118 H250" />
+        <rect class="solid" x="108" y="124" width="170" height="120" rx="12" />
+        <path d="M108 150 H278" />
+        <rect class="solid" x="136" y="156" width="170" height="120" rx="12" />
+        <path d="M136 182 H306" />
+        <circle cx="152" cy="169" r="2.5" />
+        <circle cx="162" cy="169" r="2.5" />
+        <circle cx="172" cy="169" r="2.5" />
+        <circle cx="170" cy="214" r="14" />
+        <path d="M196 207 H282" />
+        <path d="M196 223 H260" />
+        <rect x="152" y="246" width="64" height="18" rx="9" />
+      </svg>
+      <!-- inputs: a toggle wired to the component, and a pointer about to click it -->
+      <svg class="layer lines float" viewBox="0 0 400 400">
+        <path class="dashed" d="M306 215 H330" />
+        <rect class="solid" x="330" y="202" width="44" height="26" rx="13" />
+        <circle class="knob" cx="361" cy="215" r="7" />
+        <path class="solid" d="M226 250 V276 L233 269 L241 283 L246 280.5 L238 267 H248 Z" />
+      </svg>
+    }
+    @case ("architecture") {
+      <!-- layers from the foundations up; the feature lands last -->
+      <svg class="layer shade" viewBox="0 0 400 400">
+          <path d="M90 292 L200 237 L310 292 V308 L200 363 L90 308 Z" />
+          <path d="M90 242 L200 187 L310 242 V258 L200 313 L90 258 Z" />
+          <path d="M90 192 L200 137 L310 192 V208 L200 263 L90 208 Z" />
+          <path d="M90 142 L200 87 L310 142 V158 L200 213 L90 158 Z" />
+        <path d="M164 46 L200 28 L236 46 V74 L200 92 L164 74 Z" />
+      </svg>
+      <svg class="layer lines" viewBox="0 0 400 400">
+          <!-- data -->
+          <path class="solid" d="M90 292 L200 237 L310 292 V308 L200 363 L90 308 Z" />
+          <path d="M90 292 L200 347 L310 292 M200 347 V363" />
+          <path d="M160 292 L200 272 L240 292 L200 312 Z" />
+          <!-- api -->
+          <path class="solid" d="M90 242 L200 187 L310 242 V258 L200 313 L90 258 Z" />
+          <path d="M90 242 L200 297 L310 242 M200 297 V313" />
+          <path d="M145 214.5 L255 269.5" />
+          <!-- services -->
+          <path class="solid" d="M90 192 L200 137 L310 192 V208 L200 263 L90 208 Z" />
+          <path d="M90 192 L200 247 L310 192 M200 247 V263" />
+          <path d="M126.7 173.7 L236.7 228.7" />
+          <path d="M163.3 155.3 L273.3 210.3" />
+          <!-- ui -->
+          <path class="solid" d="M90 142 L200 87 L310 142 V158 L200 213 L90 158 Z" />
+          <path d="M90 142 L200 197 L310 142 M200 197 V213" />
+          <path d="M117.5 128.2 L227.5 183.2" />
+          <path d="M145 114.5 L255 169.5" />
+          <path d="M172.5 100.8 L282.5 155.8" />
+        <path class="dashed" d="M164 142 L200 124 L236 142 L200 160 Z" />
+      </svg>
+      <svg class="layer lines float" viewBox="0 0 400 400">
+        <path class="dashed" d="M200 96 V118" />
+        <path class="solid" d="M164 46 L200 28 L236 46 V74 L200 92 L164 74 Z" />
+        <path d="M164 46 L200 64 L236 46 M200 64 V92" />
+      </svg>
+    }
+  }
+</div>

@@ -1,276 +1,772 @@
 @use "colors.variables" as *;
-@use "animations.scss" as *;
 @use "responsive.mixin.scss" as *;
 
-// ---- Scroll reveal ----
-.reveal {
-  opacity: 0;
-  transform: translateY(36px);
-  transition:
-    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s),
-    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s);
+$mono: "JetBrains Mono", "Courier New", monospace;
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+// $purplePrimary is too light for text on $purple3 (1.6:1): darker shade, ≥ 3:1 for large text
+$purple-text: #6567d4;
+// editor palette: night-blue window, soft syntax colours
+$ed-bg: $purpleStrong;
+$ed-bar: #1e2235;
+$ed-text: rgba(white, 0.82);
+$ed-dim: rgba(white, 0.3);
 
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-// ---- Container override: prevent horizontal overflow on mobile ----
+// The page container (class.mixin) is a centred grid with an implicit `auto` column, which
+// grows to the widest content and pushes the page off-screen on phones. Pin it to the
+// viewport width (same fix as Contact / Work) and clip anything that pokes out sideways.
 .about-container {
   grid-template-columns: minmax(0, 1fr);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
-// ---- Hero ----
-.about-content {
-  position: relative;
-  overflow: hidden;
-}
-
+// ───────────────────────── hero ─────────────────────────
+// Left: kicker, typed title with a blinking caret, subtitle.
+// Right: a profile.ts written line by line. Stacks below "lg".
 .title-container {
-  font-family: "Fraunces", Georgia, serif;
   display: grid;
-  max-width: 1000px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 72px;
   align-items: center;
   position: relative;
 
-  .bigTitle {
-    text-align: left;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: showUp 0.5s ease-out forwards;
-    animation-delay: 0.4s;
-  }
-
-  .body24 {
-    text-align: left;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: showUp 0.5s ease-out forwards;
-    animation-delay: 0.8s;
+  @include screen-down("lg") {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: 48px;
   }
 
   .title-content {
     display: grid;
-    gap: 28px;
-    margin: auto;
+    gap: 24px;
     text-align: left;
-    position: relative;
-    z-index: 1;
+  }
+
+  h1,
+  p {
+    margin: 0;
   }
 }
 
-// ---- Main section ----
-.about-main-section {
-  font-family: "Fraunces", Georgia, serif;
-  display: grid;
-  width: 100%;
-  max-width: 1216px;
-  margin: 0 auto;
-  gap: 160px;
-
-  .about-presentation {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 40px;
-
-    .pres-container {
-      display: inherit;
-      grid-template-rows: fit-content(100%);
-      gap: 24px;
-
-      .heading3 {
-        line-height: 54px;
-
-        @include screen-down("mid") {
-          line-height: 40px;
-        }
-      }
-
-      .body20 {
-        line-height: 40px;
-
-        @include screen-down("lg") {
-          line-height: 32px;
-        }
-      }
-    }
-
-    @include screen-up("mid") {
-      grid-template-columns: 45% auto;
-    }
-
-    @include screen-up("md") {
-      gap: 24px;
-    }
-  }
-
-  .about-drawing-section {
-    display: grid;
-    margin: auto;
-    max-width: 600px;
-    line-height: 40px;
-    position: relative;
-    padding-left: 32px;
-
-    &::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: linear-gradient(
-        180deg,
-        transparent,
-        $purplePrimary 20%,
-        $purplePrimary 80%,
-        transparent
-      );
-      border-radius: 2px;
-      transform: scaleY(0);
-      transform-origin: top;
-      transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-    }
-
-    &.visible::before {
-      transform: scaleY(1);
-    }
+// Below "lg" the stacked hero is taller than the fixed-height content box (class.mixin):
+// let it grow, at least one viewport tall with the content centred (same as Contact / Work).
+.about-content {
+  @include screen-down("lg") {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    height: auto;
+    min-height: 100svh;
+    margin: 0 auto;
+    padding: 96px 0;
   }
 
   @include screen-down("md") {
-    gap: 80px;
+    padding-top: 80px;
+  }
+
+  .readme-cue {
+    align-self: flex-start; // flex column would stretch the pill full-width
   }
 }
 
-// ---- Stack icons ----
-.about-stack-section {
-  // container just acts as observer trigger — children animate individually
-  &.reveal {
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  font-family: $mono;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: $purpleStrong;
+  opacity: 0;
+  animation: fadeUp 0.5s $ease-out 0.15s forwards;
+
+  // trim the line box to the caps: the flex centre is then the optical centre of the
+  // uppercase text, whatever the font metrics (fallback fonts included)
+  .kicker-text {
+    text-box: trim-both cap alphabetic;
+  }
+
+  .kicker-dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $purple-text;
+    animation: statusPulse 1.4s ease-out 0.6s 3;
+  }
+}
+
+// "About me." is typed in (TS), like the other headlines; the full stop in the page
+// colour. Caret: solid while typing, blinking ~1/s while idle, removed after 5 s.
+.title-dot {
+  color: $purplePrimary;
+}
+
+.caret {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 1em;
+  vertical-align: -0.12em;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 2px;
+    width: max(2px, 0.07em);
+    height: 100%;
+    background: $purpleStrong;
+    animation: caretBlink 1.05s steps(1) infinite;
+  }
+}
+
+.typing .caret::after {
+  animation: none;
+}
+
+// Hidden caret stays in the DOM: removing it would change the line box height.
+.caret.off::after {
+  opacity: 0;
+  animation: none;
+}
+
+.ghost {
+  opacity: 0;
+}
+
+// Everything after the title waits for it: animations stay frozen (delays included)
+// until the title is written and .go lands on the hero.
+.about-content:not(.go) {
+  .subtitle .word,
+  .editor,
+  .editor *,
+  .readme-cue {
+    animation-play-state: paused;
+  }
+}
+
+// subtitle: words fade in from a blur
+.subtitle .word {
+  display: inline-block;
+  margin-right: 0.28em;
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(12px);
+  animation: wordIn 0.5s $ease-out forwards;
+  animation-delay: calc(0.05s + var(--i) * 0.03s);
+}
+
+// ── editor ──
+// Window chrome + tabs + profile.ts. Each line prints at --t (seconds after the title).
+.editor {
+  width: 100%;
+  max-width: 560px;
+  justify-self: end;
+  box-sizing: border-box;
+  border-radius: 18px;
+  overflow: hidden;
+  background: $ed-bg;
+  box-shadow:
+    0 30px 60px -30px rgba($purpleStrong, 0.6),
+    0 0 0 1px rgba($purplePrimary, 0.3);
+  font-family: $mono;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: $ed-text;
+  opacity: 0;
+  transform: translateY(24px) scale(0.97);
+  animation: popIn 0.6s $ease-out 0.1s forwards;
+
+  @include screen-down("lg") {
+    justify-self: stretch;
+    max-width: none;
+  }
+
+  @include screen-down("md") {
+    font-size: 12px;
+    border-radius: 14px;
+  }
+}
+
+// IntelliJ-like tab bar, same as the Home window / Contact http client
+.editor-bar {
+  display: flex;
+  align-items: stretch;
+  height: 40px;
+  padding: 0 16px;
+  background: $ed-bar;
+  border-bottom: 1px solid rgba($purplePrimary, 0.2);
+  font-size: 13px;
+  line-height: 1;
+
+  .editor-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding-right: 16px;
+
+    i {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(white, 0.14);
+
+      &:first-child {
+        background: $purplePrimary;
+      }
+    }
+  }
+
+  .editor-tabs {
+    display: flex;
+    min-width: 0;
+  }
+
+  .tab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 14px;
+    color: $ed-dim;
+    white-space: nowrap;
+
+    .file-icon {
+      display: grid;
+      place-items: center;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 3px;
+      background: rgba($purplePrimary, 0.45);
+      color: $ed-bar;
+      font-size: 8px;
+      font-weight: 800;
+    }
+
+    .file-close {
+      font-size: 14px;
+      color: $ed-dim;
+    }
+
+    &.active {
+      background: rgba($purplePrimary, 0.08);
+      color: $ed-text;
+
+      .file-icon {
+        background: $purplePrimary;
+      }
+
+      // active-tab underline sitting on the bar's bottom edge
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 2px;
+        background: $purplePrimary;
+      }
+    }
+
+    // phones: the inactive tab doesn't fit next to the active one
+    @include screen-down("md") {
+      &:not(.active) {
+        display: none;
+      }
+    }
+  }
+}
+
+.editor-body {
+  display: grid;
+  padding: 18px 20px 20px 12px;
+
+  @include screen-down("md") {
+    padding: 14px 14px 16px 6px;
+  }
+}
+
+// line number column fixed, code wraps under itself (hanging indent) on narrow cards
+.code-line {
+  display: grid;
+  grid-template-columns: 3ch minmax(0, 1fr);
+  gap: 1.5ch;
+  opacity: 0;
+  animation: lineIn 0.35s $ease-out var(--t) forwards;
+
+  .ln {
+    text-align: right;
+    color: $ed-dim;
+    user-select: none;
+  }
+
+  .src.indent {
+    padding-left: 2ch;
+  }
+
+  .kw {
+    color: #c792ea;
+  }
+  .var {
+    color: #82aaff;
+  }
+  .prop {
+    color: #f07178;
+  }
+  .str {
+    color: #c3e88d;
+  }
+  .type {
+    color: #ffcb6b;
+  }
+  .op {
+    color: rgba(white, 0.65);
+  }
+  .cm {
+    color: rgba(white, 0.38);
+    font-style: italic;
+  }
+}
+
+.code-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  margin-left: 0.3ch;
+  vertical-align: -0.2em;
+  background: $purplePrimary;
+  // a few blinks, then rest (WCAG 2.2.2)
+  animation: caretBlink 1.05s steps(1) calc(var(--t) + 0.3s) 4;
+}
+
+// ── scroll cue ──
+// Editor-flavoured pill. Shows up after the code, bobs a few times (finite: WCAG 2.2.2).
+.readme-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 56px;
+  padding: 8px 16px 8px 8px;
+  border: 1px solid rgba($purpleStrong, 0.15);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 10px 24px -14px rgba($purpleStrong, 0.45);
+  color: $purpleStrong;
+  font-family: $mono;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  animation:
+    fadeUp 0.45s $ease-out 2.9s forwards,
+    cueBob 1.2s ease-in-out 3.4s 3;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  .cue-arrow {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: $purpleStrong;
+    color: $purple3;
+    font-size: 14px;
+  }
+
+  &:hover {
+    background: $purple2;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $purpleStrong;
+    outline-offset: 3px;
+  }
+
+  @include screen-down("lg") {
+    margin-top: 40px;
+  }
+}
+
+// ───────────────────────── sections ─────────────────────────
+.about-main-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 140px;
+  width: 100%;
+  max-width: 1216px;
+  margin-inline: auto;
+  padding-top: 48px;
+  border-top: 1px solid rgba($purpleStrong, 0.12);
+
+  @include screen-down("md") {
+    gap: 96px;
+  }
+}
+
+.about-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+}
+
+.section-head {
+  display: grid;
+  gap: 14px;
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    line-height: 1.15;
+  }
+
+  .section-desc {
+    max-width: 620px;
+    opacity: 0.8;
+
+    code {
+      font-family: $mono;
+      font-size: 0.85em;
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: $purple2;
+    }
+  }
+}
+
+.accent-dot {
+  color: $purple-text;
+}
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  font-family: $mono;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: $purpleStrong;
+
+  .section-index {
+    display: grid;
+    place-items: center;
+    min-width: 28px;
+    height: 22px;
+    padding: 0 6px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background: $purpleStrong;
+    color: $purple3;
+    letter-spacing: 0;
+  }
+}
+
+// mono "comment" label above a card / row
+.note-label {
+  font-family: $mono;
+  font-size: 13px;
+  font-weight: 700;
+  color: $purple-text;
+}
+
+// ── 01 story ──
+.story-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 64px;
+  align-items: start;
+
+  @include screen-down("lg") {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.story-text {
+  display: grid;
+  gap: 24px;
+
+  .story-lead {
+    line-height: 1.35;
+  }
+
+  .body20 {
+    line-height: 1.8;
+    opacity: 0.8;
+  }
+}
+
+// sketchbook card: a white page with a drawn purple rail
+.sketch-note {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  padding: 28px 28px 28px 36px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 20px 40px -28px rgba($purpleStrong, 0.45);
+  border: 1px solid rgba($purplePrimary, 0.35);
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 28px;
+    bottom: 28px;
+    width: 3px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, $purplePrimary, $purpleSecondary);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 1.2s $ease-out 0.4s;
+  }
+
+  &.in-view::before {
+    transform: none;
+  }
+
+  .body18 {
+    line-height: 1.75;
+    opacity: 0.8;
+  }
+
+  @include screen-down("md") {
+    padding: 22px 20px 22px 32px;
+
+    &::before {
+      left: 14px;
+      top: 22px;
+      bottom: 22px;
+    }
+  }
+}
+
+// ── 02 toolbox ──
+// The list is the reveal trigger; tiles pop in one after the other.
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include screen-down("lg") {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @include screen-down("md") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+}
+
+.stack-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba($purplePrimary, 0.3);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.45s $ease-out calc(var(--i, 0) * 0.05s),
+    transform 0.45s $ease-out calc(var(--i, 0) * 0.05s),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+
+  .in-view > & {
     opacity: 1;
     transform: none;
   }
-  .stack-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 20px;
 
-    @include screen-down("lg") {
-      grid-template-columns: repeat(4, 1fr);
+  .icon-wrap {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: $purple3;
+
+    i {
+      font-size: 24px;
     }
 
-    @include screen-down("md") {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+    .stack-img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    // devicon's "colored" Angular glyph renders washed out: brand red instead
+    .devicon-angular-plain {
+      color: #dd0031;
     }
   }
 
-  .stack-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .stack-label {
+    min-width: 0;
+    font-family: $mono;
+    font-size: 13px;
+    font-weight: 700;
+    color: $purpleStrong;
+    overflow-wrap: anywhere;
+  }
+
+  @include screen-down("md") {
     gap: 10px;
-    cursor: default;
-    opacity: 0;
-    transform: translateY(24px);
-    transition:
-      opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i, 0) * 0.06s),
-      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i, 0) * 0.06s);
+    padding: 12px;
 
     .icon-wrap {
-      width: 80px;
-      height: 80px;
-      border-radius: 20px;
-      background: $purple2;
-      border: 1px solid rgba($purplePrimary, 0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition:
-        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-        box-shadow 0.3s ease,
-        border-color 0.3s;
+      width: 34px;
+      height: 34px;
 
       i {
-        font-size: 38px;
+        font-size: 20px;
       }
 
       .stack-img {
-        width: 38px;
-        height: 38px;
-        object-fit: contain;
+        width: 20px;
+        height: 20px;
       }
     }
 
-    span {
-      font-family: "JetBrains Mono", "Courier New", monospace;
-      font-size: 11px;
-      letter-spacing: 0.6px;
-      opacity: 0.55;
-      text-align: center;
-    }
-
-    &:hover {
-      .icon-wrap {
-        border-color: rgba($purplePrimary, 0.35);
-        box-shadow:
-          0 8px 24px rgba(44, 48, 64, 0.1),
-          0 0 12px rgba($purplePrimary, 0.06);
-      }
-
-      span {
-        opacity: 0.85;
-      }
-    }
-
-    @include screen-up("lg") {
-      &:hover .icon-wrap {
-        transform: translateY(-8px);
-      }
+    .stack-label {
+      font-size: 12px;
     }
   }
 
-  &.visible .stack-icon {
-    opacity: 1;
-    transform: translateY(0);
+  &:hover {
+    border-color: rgba($purple-text, 0.5);
+    box-shadow: 0 10px 24px -16px rgba($purpleStrong, 0.5);
   }
 }
 
-// ---- Footer CTA ----
-.about-footer-container {
+// ── 03 how I build ──
+.focus-panels {
+  display: grid;
+  gap: 72px;
+
+  @include screen-down("md") {
+    gap: 56px;
+  }
+}
+
+.focus-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: center;
+
+  &--reverse {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+
+    .focus-row__visual {
+      order: -1;
+    }
+  }
+
+  @include screen-down("mid") {
+    &,
+    &--reverse {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+
+    .focus-row__visual {
+      order: -1;
+    }
+  }
+
+  &__text {
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h3 {
+      margin-bottom: 4px;
+      line-height: 1.25;
+    }
+  }
+
+  &__visual {
+    min-width: 0;
+    width: 100%;
+    max-width: 420px;
+    justify-self: center;
+
+    // stacked: a bit smaller, centred above the text
+    @include screen-down("mid") {
+      max-width: 340px;
+    }
+  }
+}
+
+.focus-item {
+  line-height: 1.75;
+  opacity: 0.8;
+}
+
+// ── CTA ──
+.about-cta {
   display: grid;
   justify-items: center;
-  gap: 36px;
-  z-index: 1;
-  margin-top: 200px;
+  gap: 24px;
+  padding: 64px 32px;
+  border-radius: 24px;
+  background: #fff;
+  border: 1px solid rgba($purplePrimary, 0.35);
   text-align: center;
 
-  .cta-divider {
-    width: 48px;
-    height: 3px;
-    border-radius: 2px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      $purplePrimary,
-      transparent
-    );
-    margin-bottom: 24px;
+  @include screen-down("md") {
+    padding: 48px 20px;
+  }
+
+  h2,
+  p {
+    margin: 0;
   }
 
   .heading1 {
     color: $purpleStrong;
+    line-height: 1.15;
   }
 
   .cta-body {
-    max-width: 480px;
+    max-width: 520px;
     line-height: 1.8;
+    opacity: 0.8;
   }
 
   .secondary-btn.about-btn {
+    margin-top: 12px;
     background: transparent;
     border: 3px solid $purpleStrong;
     border-radius: 8px;
@@ -286,9 +782,7 @@
       position: absolute;
       inset: 0;
       background: $purpleSecondary;
-      -webkit-clip-path: inset(100% 0 0 0);
       clip-path: inset(100% 0 0 0);
-      -webkit-transition: -webkit-clip-path 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       transition: clip-path 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 0;
     }
@@ -316,178 +810,88 @@
       }
     }
 
-    .btn-arrow {
-      display: inline-block;
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
     &:hover {
       color: $purpleStrong;
-      box-shadow: inset 0 0 0 1px rgba(white, 0.28);
 
       &::before {
-        -webkit-clip-path: inset(0% 0 0 0);
         clip-path: inset(0% 0 0 0);
       }
 
       .btn-text {
         transform: translateY(-100%);
       }
+    }
 
-      .btn-arrow {
-        transform: translateX(5px);
-      }
+    &:focus-visible {
+      outline: 2px solid $purpleStrong;
+      outline-offset: 3px;
     }
   }
 }
 
-// ---- Skills section ----
-.skills-section {
-  display: grid;
-  gap: 64px;
-}
-
-.skills-header {
-  display: grid;
-  gap: 20px;
-  max-width: 640px;
-
-  .heading3 {
-    margin-bottom: 16px;
-  }
-
-  .body20 {
-    line-height: 1.8;
-    opacity: 0.7;
-  }
-}
-
-// ---- Focus panels (2-row layout) ----
-.focus-panels {
-  display: grid;
-  gap: 80px;
-
-  @include screen-down("md") {
-    gap: 64px;
-  }
-}
-
-.focus-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 56px;
-  align-items: center;
-  min-width: 0;
-
-  @include screen-down("mid") {
-    grid-template-columns: 1fr;
-    gap: 40px;
-
-    .focus-row__visual {
-      order: -1;
-    }
-  }
-
-  @include screen-down("md") {
-    gap: 32px;
-  }
-
-  &--reverse {
-    grid-template-columns: 1fr 2fr;
-
-    @include screen-up("mid") {
-      .focus-row__visual {
-        order: -1;
-      }
-    }
-    @include screen-down("mid") {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-  }
-
-  &__text {
-    display: grid;
-    min-width: 0;
-  }
-
-  &__visual {
-    border-radius: 20px;
-    overflow: hidden;
-    min-width: 0;
-
-    svg,
-    img {
-      width: 100%;
-      height: auto;
-      display: block;
-      max-width: 100%;
-    }
-
-    @include screen-down("mid") {
-      max-height: 280px;
-
-      svg,
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center top;
-      }
-    }
-
-    @include screen-down("md") {
-      max-height: 220px;
-    }
-
-    .svg-float-a {
-      animation: svgFloatUp 6s ease-in-out infinite;
-      animation-play-state: paused;
-    }
-
-    .svg-float-b {
-      animation: svgFloatDown 8s ease-in-out infinite;
-      animation-play-state: paused;
-    }
-  }
-}
-
-.focus-item {
-  line-height: 1.75;
-  opacity: 0.75;
-
-}
-
-@keyframes svgFloatUp {
+// ───────────────────────── keyframes ─────────────────────────
+@keyframes caretBlink {
   0%,
   100% {
-    transform: translateY(0);
+    opacity: 1;
   }
   50% {
-    transform: translateY(-10px);
+    opacity: 0;
   }
 }
 
-@keyframes svgFloatDown {
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes lineIn {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes cueBob {
   0%,
   100% {
-    transform: translateY(0);
+    transform: none;
   }
   50% {
-    transform: translateY(10px);
+    transform: translateY(5px);
   }
 }
 
-.reveal.visible {
-  .svg-float-a {
-    animation-play-state: running;
-  }
-  .svg-float-b {
-    animation-play-state: running;
+@keyframes popIn {
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
-.opacityT {
-  opacity: 0.75;
+@keyframes wordIn {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
 }
 
+@keyframes statusPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($purple-text, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 9px rgba($purple-text, 0);
+  }
+}

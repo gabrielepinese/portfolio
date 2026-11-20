@@ -1,0 +1,356 @@
+@use "colors.variables" as *;
+@use "responsive.mixin.scss" as *;
+
+$mono: "JetBrains Mono", "Courier New", monospace;
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+// night-blue IDE chrome (same family as the hero editor); text colours ≥ 4.5:1 on $bg
+$bg: $purpleStrong;
+$bg-deep: #1e2235;
+$fg: rgba(white, 0.86);
+$muted: rgba(white, 0.55);
+
+:host {
+  display: block;
+}
+
+.pad {
+  overflow: hidden;
+  border: 1.5px solid $purpleStrong;
+  border-radius: 14px;
+  background: $bg;
+  color: $fg;
+  font-family: $mono;
+  font-size: 13px;
+  box-shadow:
+    10px 10px 0 $purplePrimary,
+    0 30px 60px -25px rgba($purpleStrong, 0.6);
+
+  @include screen-down("md") {
+    font-size: 12px;
+    box-shadow: 6px 6px 0 $purplePrimary;
+  }
+}
+
+// ── tab bar + ink palette ──
+.pad-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 40px;
+  padding: 0 14px;
+  background: $bg-deep;
+  font-size: 13px;
+  border-bottom: 1px solid rgba($purplePrimary, 0.2);
+
+  .pad-dots {
+    display: inline-flex;
+    gap: 7px;
+
+    // phones: tab + ink palette need the whole bar
+    @include screen-down("md") {
+      display: none;
+    }
+
+    i {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(white, 0.14);
+
+      &:first-child {
+        background: $purplePrimary;
+      }
+    }
+  }
+
+  // active tab like the Home window / Contact http client: tint + underline on the bar edge
+  .tab {
+    position: relative;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 14px;
+    background: rgba($purplePrimary, 0.08);
+    color: $fg;
+    line-height: 1;
+    white-space: nowrap;
+
+    .file-icon {
+      display: grid;
+      place-items: center;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 3px;
+      background: $purplePrimary;
+      color: $bg-deep;
+      font-size: 8px;
+      font-weight: 800;
+    }
+
+    .file-close {
+      font-size: 14px;
+      color: $muted;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: $purplePrimary;
+    }
+
+    // phones: room for the ink palette
+    @include screen-down("md") {
+      .file-close {
+        display: none;
+      }
+    }
+  }
+}
+
+.inks {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.ink {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 2px solid rgba(white, 0.25);
+  border-radius: 50%;
+  background: var(--ink);
+  cursor: pointer;
+  transition:
+    transform 0.2s $ease-out,
+    border-color 0.2s ease;
+
+  &[aria-checked="true"] {
+    border-color: white;
+    transform: scale(1.15);
+  }
+
+  &:hover {
+    border-color: rgba(white, 0.7);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $purplePrimary;
+    outline-offset: 2px;
+  }
+
+  // touch: a bigger hit area without a bigger dot
+  @include screen-down("md") {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+// ── canvas | code ──
+.pad-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+
+  @include screen-down("mid") {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.canvas {
+  position: relative;
+  background-color: #fff;
+  // dotted paper
+  background-image: radial-gradient(rgba($purpleStrong, 0.16) 1.2px, transparent 1.2px);
+  background-size: 20px 20px;
+  background-position: 10px 10px;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    cursor: crosshair;
+    touch-action: none; // the finger draws instead of scrolling the page
+    user-select: none;
+  }
+
+  .canvas-hint {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: rgba($purpleStrong, 0.4);
+    font-size: 14px;
+    letter-spacing: 1px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &.empty .canvas-hint {
+    opacity: 1;
+  }
+}
+
+.code {
+  position: relative;
+  min-width: 0;
+  border-left: 1px solid rgba($purplePrimary, 0.2);
+
+  @include screen-down("mid") {
+    border-left: 0;
+    border-top: 1px solid rgba($purplePrimary, 0.2);
+  }
+}
+
+// fills the canvas height on wide screens; newest lines stay in view (column-reverse trick
+// would reverse reading order, so the pane just scrolls)
+.code-scroll {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  padding: 16px 16px 16px 8px;
+  line-height: 1.85;
+
+  @include screen-down("mid") {
+    position: static;
+    max-height: 220px;
+  }
+}
+
+.ln-row {
+  display: grid;
+  grid-template-columns: 3ch max-content;
+  gap: 1.5ch;
+  white-space: pre;
+
+  .ln {
+    text-align: right;
+    color: rgba(white, 0.3);
+    user-select: none;
+  }
+
+  .indent {
+    padding-left: 2ch;
+  }
+
+  .tag {
+    color: #82aaff;
+  }
+  .attr {
+    color: #f07178;
+  }
+  .str {
+    color: #c3e88d;
+  }
+  .cm {
+    color: $muted;
+    font-style: italic;
+  }
+
+  .swatch {
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin-right: 0.6ch;
+    border-radius: 50%;
+    vertical-align: -0.05em;
+    box-shadow: 0 0 0 1px rgba(white, 0.35);
+  }
+}
+
+.path-row {
+  animation: lineIn 0.3s $ease-out;
+
+  // the line being drawn right now
+  &.fresh {
+    background: rgba($purplePrimary, 0.12);
+    box-shadow: inset 2px 0 0 $purplePrimary;
+  }
+}
+
+// ── toolbar + status ──
+.pad-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: $bg-deep;
+  border-top: 1px solid rgba($purplePrimary, 0.2);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.act {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba($purplePrimary, 0.4);
+  border-radius: 8px;
+  background: transparent;
+  color: $fg;
+  font-family: $mono;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: rgba($purplePrimary, 0.15);
+    border-color: $purplePrimary;
+  }
+
+  &.primary {
+    background: $purplePrimary;
+    border-color: $purplePrimary;
+    color: $purpleStrong;
+
+    &:hover:not(:disabled) {
+      background: $purple1;
+      border-color: $purple1;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $purplePrimary;
+    outline-offset: 2px;
+  }
+}
+
+.status {
+  color: $muted;
+  font-size: 12px;
+}
+
+@keyframes lineIn {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

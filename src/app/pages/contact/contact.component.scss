@@ -83,6 +83,12 @@ $green-text: #5f8f5b;
   opacity: 0;
   animation: fadeUp 0.5s $ease-out 0.15s forwards;
 
+  // trim the line box to the caps: the flex centre is then the optical centre of the
+  // uppercase text, whatever the font metrics (fallback fonts included)
+  .kicker-text {
+    text-box: trim-both cap alphabetic;
+  }
+
   .kicker-dot {
     width: 8px;
     height: 8px;
